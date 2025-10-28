@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SmartSupport - Система поддержки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -2353,37 +2353,37 @@
         /* Специфические улучшения для экранов с очень маленькой высотой */
         @media (max-height: 500px) and (orientation: landscape) {
             .chat-messages {
-                padding: 4px 8px;
+                padding: 8px 12px;
             }
            
             .message {
-                padding: 4px 8px;
-                margin-bottom: 2px;
+                padding: 8px 12px;
+                margin-bottom: 4px;
             }
            
             .message-text {
-                font-size: 11px;
-                line-height: 1.3;
+                font-size: 13px;
+                line-height: 1.4;
             }
            
             .message-time {
-                font-size: 8px;
-                margin-top: 2px;
+                font-size: 10px;
+                margin-top: 4px;
             }
            
             .chat-input-container {
-                padding: 4px 8px;
+                padding: 8px 12px;
             }
            
             .chat-input {
-                min-height: 28px;
-                padding: 4px 8px;
-                font-size: 11px;
+                min-height: 36px;
+                padding: 8px 12px;
+                font-size: 13px;
             }
            
             .send-btn {
-                padding: 4px 8px;
-                font-size: 10px;
+                padding: 8px 12px;
+                font-size: 12px;
             }
            
             /* Улучшение модальных окон */
@@ -2531,16 +2531,17 @@
                 flex: 1;
                 justify-content: flex-end;
                 gap: 8px;
+                flex-wrap: wrap;
             }
            
             .mobile-header-actions {
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 gap: 8px;
             }
            
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 0 0 auto;
+            .action-buttons-row {
+                flex-wrap: wrap;
+                gap: 8px;
             }
            
             .status-dropdown-btn,
@@ -3117,20 +3118,20 @@
         /* ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
         @media (max-width: 1024px) and (orientation: landscape) {
             .chat-view-actions {
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 justify-content: space-between;
                 width: 100%;
             }
            
             .mobile-header-actions {
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 justify-content: flex-start;
                 flex: 1;
                 min-width: 0;
             }
            
             .action-buttons-row {
-                flex-wrap: nowrap;
+                flex-wrap: wrap;
                 justify-content: flex-end;
                 flex: 1;
                 min-width: 0;
@@ -3271,6 +3272,7 @@
            
             /* Улучшение отображения для мобильных устройств */
             .ticket-chat-view.active {
+                display: flex;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -3281,7 +3283,6 @@
                 background: var(--bg-white);
                 animation: slideInRight 0.3s ease-out;
                 overflow: hidden;
-                display: flex;
                 flex-direction: column;
             }
            
@@ -5593,10 +5594,6 @@
                     this.style.height = (this.scrollHeight) + 'px';
                 });
                
-                // Автоматически фокусируемся на поле ввода при открытии чата
-                setTimeout(() => {
-                    chatInput.focus();
-                }, 100);
             }
             // Setup file attachment functionality
             setupFileAttachment();
