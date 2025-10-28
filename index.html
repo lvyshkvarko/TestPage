@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>SmartSupport - Система поддержки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -2954,6 +2954,9 @@
                 will-change: transform;
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
+                /* Предотвращение изменений при появлении клавиатуры */
+                height: auto;
+                min-height: 64px;
             }
 
             .chat-input {
@@ -2964,6 +2967,9 @@
                 /* Предотвращение прыжков при фокусе */
                 transform: translateZ(0);
                 -webkit-transform: translateZ(0);
+                /* Стабильность размеров */
+                box-sizing: border-box;
+                resize: none;
             }
 
             .send-btn {
@@ -3008,6 +3014,9 @@
             .chat-messages {
                 will-change: scroll-position;
                 -webkit-overflow-scrolling: touch;
+                /* Фиксированная высота для предотвращения изменений */
+                height: calc(100vh - 280px);
+                max-height: calc(100vh - 280px);
             }
 
             /* Убираем overflow: hidden, чтобы не блокировать прокрутку */
