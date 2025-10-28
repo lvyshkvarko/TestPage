@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SmartSupport - Система поддержки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1263,6 +1263,9 @@
             max-height: 120px;
             font-family: inherit;
             transition: var(--transition);
+            /* Prevent zoom on iOS */
+            -webkit-text-size-adjust: 100%;
+            -webkit-appearance: none;
         }
         .chat-input:focus {
             border-color: var(--primary-color);
@@ -1283,20 +1286,36 @@
                 min-width: 48px;
                 height: 48px;
             }
-           
+
             /* Add margin to send button to move it slightly right */
             .chat-input-row .send-btn {
                 margin-left: 12px;
             }
-           
+
             .chat-input-row .send-btn i,
             .chat-input-row .attach-btn i {
                 font-size: 18px;
             }
-           
+
             /* Move paper plane icon slightly right inside the button */
             .chat-input-row .send-btn i.fa-paper-plane {
                 margin-left: 2px;
+            }
+
+            /* Prevent keyboard jumping on mobile */
+            .chat-input-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+                padding: 12px 16px;
+                z-index: 100;
+            }
+
+            .chat-messages {
+                padding-bottom: 80px; /* Space for fixed input on mobile */
             }
         }
         .send-btn {
@@ -2353,37 +2372,37 @@
         /* Специфические улучшения для экранов с очень маленькой высотой */
         @media (max-height: 500px) and (orientation: landscape) {
             .chat-messages {
-                padding: 8px 12px;
+                padding: 4px 8px;
             }
            
             .message {
-                padding: 8px 12px;
-                margin-bottom: 4px;
+                padding: 4px 8px;
+                margin-bottom: 2px;
             }
            
             .message-text {
-                font-size: 13px;
-                line-height: 1.4;
+                font-size: 11px;
+                line-height: 1.3;
             }
            
             .message-time {
-                font-size: 10px;
-                margin-top: 4px;
+                font-size: 8px;
+                margin-top: 2px;
             }
            
             .chat-input-container {
-                padding: 8px 12px;
+                padding: 4px 8px;
             }
            
             .chat-input {
-                min-height: 36px;
-                padding: 8px 12px;
-                font-size: 13px;
+                min-height: 28px;
+                padding: 4px 8px;
+                font-size: 11px;
             }
            
             .send-btn {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 4px 8px;
+                font-size: 10px;
             }
            
             /* Улучшение модальных окон */
@@ -2418,29 +2437,29 @@
                 grid-template-columns: 1fr 3fr;
                 gap: 12px;
             }
-           
+
             .tickets-list {
                 max-height: calc(100vh - 80px);
                 border-radius: var(--radius-lg);
             }
-           
+
             .ticket-chat-view {
                 display: flex !important;
                 position: static;
                 border-radius: var(--radius-xl);
                 max-height: calc(100vh - 80px);
             }
-           
+
             .ticket-chat-view.active {
                 position: static;
                 animation: none;
             }
-           
+
             .tickets-scroll-container {
                 max-height: calc(100vh - 80px);
                 overflow-y: auto;
             }
-           
+
             .ticket-chat-card {
                 padding: 8px;
                 display: flex;
@@ -2448,125 +2467,132 @@
                 gap: 12px;
                 border-bottom: 1px solid var(--border-color);
             }
-           
+
             .ticket-chat-card.active {
                 background: #ecfdf5;
                 border-left: 4px solid var(--primary-color);
             }
-           
+
             .chat-card-header {
                 margin-bottom: 0;
                 flex: 1;
                 min-width: 0;
             }
-           
+
             .chat-user-info {
                 min-width: 0;
             }
-           
+
             .chat-user-avatar {
                 width: 32px;
                 height: 32px;
                 font-size: 14px;
                 flex-shrink: 0;
             }
-           
+
             .chat-user-details {
                 min-width: 0;
             }
-           
+
             .chat-user-name {
                 font-size: 13px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-           
+
             .chat-time {
                 font-size: 11px;
             }
-           
+
             .chat-status-badge {
                 padding: 4px 8px;
                 font-size: 10px;
                 white-space: nowrap;
             }
-           
+
             .chat-preview {
                 display: none;
             }
-           
+
             .chat-preview-footer {
                 margin-top: 0;
                 display: none;
             }
-           
+
             .chat-view-header {
                 padding: 8px 12px;
                 flex-wrap: nowrap;
                 gap: 12px;
             }
-           
+
             .chat-view-user {
                 flex: 0 0 auto;
                 min-width: 0;
             }
-           
+
             .chat-view-avatar {
                 width: 36px;
                 height: 36px;
                 font-size: 16px;
             }
-           
+
             .chat-view-details h3 {
                 font-size: 14px;
                 margin-bottom: 2px;
             }
-           
+
             .chat-view-details p {
                 font-size: 12px;
             }
-           
+
             .chat-view-actions {
                 flex: 1;
-                justify-content: flex-end;
-                gap: 8px;
+                justify-content: space-between;
+                gap: 12px;
                 flex-wrap: wrap;
             }
-           
+
             .mobile-header-actions {
                 flex-wrap: wrap;
                 gap: 8px;
+                width: 100%;
             }
-           
+
+            .status-dropdown,
+            .priority-dropdown {
+                flex: 1;
+                min-width: 100px;
+            }
+
+            .status-dropdown-btn,
+            .priority-dropdown-btn {
+                min-width: 100px;
+                padding: 8px 10px;
+                font-size: 12px;
+                width: 100%;
+            }
+
             .action-buttons-row {
                 flex-wrap: wrap;
                 gap: 8px;
+                width: 100%;
+                justify-content: space-between;
             }
-           
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                min-width: 120px;
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-           
-            .action-buttons-row {
-                flex-wrap: nowrap;
-                gap: 8px;
-            }
-           
+
             .btn-secondary,
             .btn-primary {
-                padding: 8px 12px;
+                padding: 8px 10px;
                 font-size: 12px;
                 white-space: nowrap;
+                flex: 1;
+                min-width: 80px;
             }
-           
+
             .close-chat-btn {
                 display: none !important;
             }
-           
+
             .chat-messages {
                 flex: 1;
                 padding: 8px 12px;
@@ -2575,29 +2601,29 @@
                 flex-direction: column;
                 gap: 12px;
             }
-           
+
             .message {
                 max-width: 85%;
                 padding: 10px 14px;
                 margin-bottom: 4px;
             }
-           
+
             .message-text {
                 font-size: 13px;
                 line-height: 1.4;
             }
-           
+
             .message-time {
                 font-size: 10px;
                 margin-top: 4px;
             }
-           
+
             .message-system {
                 max-width: 80%;
                 padding: 8px 12px;
                 font-size: 11px;
             }
-           
+
             .chat-input-container {
                 padding: 8px 12px;
                 border-top: 1px solid var(--border-color);
@@ -2605,12 +2631,12 @@
                 position: sticky;
                 bottom: 0;
             }
-           
+
             .chat-input-row {
                 gap: 8px;
                 align-items: center;
             }
-           
+
             .chat-input {
                 min-height: 40px;
                 padding: 10px 14px;
@@ -2619,15 +2645,15 @@
                 border-radius: var(--radius);
                 max-height: 80px;
             }
-           
+
             .send-btn {
-                padding: 10px 16px;
+                padding: 10px 12px;
                 font-size: 13px;
                 white-space: nowrap;
                 border-radius: var(--radius);
                 min-width: auto;
             }
-           
+
             .send-btn i {
                 font-size: 14px;
             }
@@ -2811,6 +2837,99 @@
             .chat-messages::-webkit-scrollbar-thumb {
                 background: var(--text-light);
                 border-radius: 2px;
+            }
+        }
+       
+        /* Исправление для работы с клавиатурой в мобильной версии */
+        @media (max-width: 1024px) {
+            .chat-input-container {
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+                z-index: 10;
+            }
+
+            .chat-messages {
+                max-height: calc(100vh - 220px);
+                overflow-y: auto;
+            }
+        }
+
+        /* Специфические исправления для клавиатуры в портретной ориентации */
+        @media (max-width: 1024px) and (orientation: portrait) {
+            .chat-messages {
+                max-height: calc(100vh - 300px);
+                transition: max-height 0.3s ease;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .chat-input-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+                z-index: 100;
+                padding: 16px 20px;
+            }
+
+            .ticket-chat-view.active .chat-input-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+            }
+        }
+
+        /* Специфические исправления для клавиатуры в ландшафтной ориентации */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .chat-messages {
+                max-height: calc(100vh - 200px);
+                transition: max-height 0.3s ease;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                flex: 1 1 auto;
+                min-height: 0;
+            }
+
+            .chat-input-container {
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+                z-index: 10;
+                padding: 12px 16px;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Специфические исправления для маленьких экранов в landscape (iPhone SE и подобные) */
+        @media (max-width: 667px) and (orientation: landscape) {
+            .chat-messages {
+                max-height: calc(100vh - 180px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                flex: 1 1 auto;
+                min-height: 0;
+            }
+
+            .chat-input-container {
+                padding: 8px 12px;
+            }
+
+            .chat-input {
+                min-height: 36px;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .send-btn {
+                padding: 8px 14px;
+                font-size: 13px;
             }
         }
         /* ИСПРАВЛЕНИЯ ДЛЯ ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
@@ -3118,20 +3237,20 @@
         /* ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
         @media (max-width: 1024px) and (orientation: landscape) {
             .chat-view-actions {
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
                 justify-content: space-between;
                 width: 100%;
             }
            
             .mobile-header-actions {
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
                 justify-content: flex-start;
                 flex: 1;
                 min-width: 0;
             }
            
             .action-buttons-row {
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
                 justify-content: flex-end;
                 flex: 1;
                 min-width: 0;
@@ -3183,10 +3302,24 @@
         @media (max-width: 1024px) and (orientation: landscape) {
             .status-dropdown {
                 margin-right: 8px;
+                flex: 1;
+                min-width: 0;
             }
            
             .status-dropdown-btn {
                 min-width: 120px;
+                width: 100%;
+                justify-content: space-between;
+            }
+           
+            .priority-dropdown {
+                flex: 1;
+                min-width: 0;
+            }
+           
+            .priority-dropdown-btn {
+                width: 100%;
+                justify-content: space-between;
             }
         }
         /* Убедимся, что все кнопки видны и не перекрываются */
@@ -3210,39 +3343,72 @@
         /* НОВЫЕ СТИЛИ ДЛЯ ИЗМЕНЕНИЯ РАСПОЛОЖЕНИЯ КНОПОК В ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
         @media (max-width: 1024px) and (orientation: landscape) {
             .chat-view-actions {
-                flex-direction: row;
-                gap: 8px;
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
             }
-           
+
             .mobile-header-actions {
                 width: 100%;
                 justify-content: space-between;
-                order: 2;
+                order: 1;
+                flex-direction: row;
+                gap: 8px;
             }
-           
+
             .action-buttons-row {
                 width: 100%;
                 justify-content: space-between;
-                order: 1;
-                margin-bottom: 8px;
+                order: 2;
+                flex-direction: row;
+                gap: 8px;
             }
-           
+
             .status-dropdown,
             .priority-dropdown {
                 flex: 1;
-                margin-right: 8px;
+                min-width: 100px;
             }
-           
+
             .status-dropdown:last-child,
             .priority-dropdown:last-child {
                 margin-right: 0;
             }
-           
+
             .btn-secondary,
             .btn-primary {
                 flex: 1;
-                min-width: 0;
+                min-width: 80px;
                 justify-content: center;
+            }
+        }
+
+        /* Дополнительные исправления для очень маленьких экранов в горизонтальной ориентации */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .chat-view-actions {
+                gap: 8px;
+            }
+
+            .mobile-header-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .action-buttons-row {
+                flex-direction: column;
+                gap: 6px;
+            }
+
+            .status-dropdown,
+            .priority-dropdown {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .btn-secondary,
+            .btn-primary {
+                width: 100%;
+                min-width: auto;
             }
         }
         /* Дополнительные улучшения для iPhone 14 Pro Max и других больших устройств */
@@ -3264,15 +3430,14 @@
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-           
+
             .chat-messages {
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-           
+
             /* Улучшение отображения для мобильных устройств */
             .ticket-chat-view.active {
-                display: flex;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -3283,25 +3448,65 @@
                 background: var(--bg-white);
                 animation: slideInRight 0.3s ease-out;
                 overflow: hidden;
+                display: flex;
                 flex-direction: column;
             }
-           
+
             .chat-messages {
                 max-height: calc(100vh - 250px);
+                flex: 1;
+                overflow-y: auto;
             }
-           
+
             .chat-input-container {
                 flex-shrink: 0;
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
             }
         }
         /* Улучшение отображения сообщений */
         .message {
             margin-bottom: 8px;
         }
+
         /* Уменьшение отступов в области чата для экономии места */
         .chat-input-container {
             padding-top: 16px;
             padding-bottom: 16px;
+        }
+
+        /* Дополнительные исправления для предотвращения прыгающей клавиатуры */
+        @media (max-width: 1024px) {
+            .chat-input {
+                font-size: 16px; /* Предотвращает зум на iOS */
+                -webkit-appearance: none;
+                border-radius: var(--radius-lg);
+            }
+
+            .chat-input:focus {
+                outline: none;
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            }
+
+            /* Предотвращение прокрутки страницы при фокусе на input */
+            .chat-input:focus {
+                transform: translateZ(0);
+            }
+
+            /* Улучшение стабильности контейнера ввода */
+            .chat-input-container {
+                will-change: transform;
+                transform: translateZ(0);
+            }
+
+            /* Обеспечение видимости сообщений в чате */
+            .chat-messages {
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
         /* НОВЫЕ СТИЛИ ДЛЯ ПРИКРЕПЛЕНИЯ ФАЙЛОВ */
         .attach-btn {
@@ -5594,6 +5799,12 @@
                     this.style.height = (this.scrollHeight) + 'px';
                 });
                
+                // Автоматически фокусируемся на поле ввода при открытии чата
+                setTimeout(() => {
+                    chatInput.focus();
+                    // Предотвращаем прыжки клавиатуры на мобильных устройствах
+                    chatInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
             }
             // Setup file attachment functionality
             setupFileAttachment();
@@ -6699,5 +6910,4 @@
         setInterval(checkForNewTickets, 30000); // Check every 30 seconds
     </script>
 </body>
-
 </html>
