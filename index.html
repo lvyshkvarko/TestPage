@@ -2910,7 +2910,7 @@
         /* Специфические исправления для маленьких экранов в landscape (iPhone SE и подобные) */
         @media (max-width: 667px) and (orientation: landscape) {
             .tickets-container {
-                grid-template-columns: 200px 1fr;
+                grid-template-columns: 180px 1fr;
                 gap: 8px;
             }
 
@@ -2945,11 +2945,15 @@
                 padding: 12px 16px;
                 position: fixed;
                 bottom: 0;
-                left: 208px; /* 200px + 8px gap */
+                left: 188px; /* 180px + 8px gap */
                 right: 0;
                 background: var(--bg-white);
                 border-top: 1px solid var(--border-color);
                 z-index: 100;
+                /* Стабилизация для предотвращения прыжков клавиатуры */
+                will-change: transform;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .chat-input {
@@ -2957,6 +2961,9 @@
                 padding: 10px 14px;
                 font-size: 16px; /* Предотвращает зум на iOS */
                 -webkit-appearance: none;
+                /* Предотвращение прыжков при фокусе */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
             }
 
             .send-btn {
@@ -2965,7 +2972,7 @@
             }
 
             .message {
-                max-width: 85%;
+                max-width: 90%;
                 padding: 12px 16px;
             }
 
@@ -2995,6 +3002,17 @@
             .chat-last-message {
                 font-size: 12px;
                 -webkit-line-clamp: 1;
+            }
+
+            /* Дополнительная стабилизация для предотвращения прыжков клавиатуры */
+            .chat-messages {
+                will-change: scroll-position;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Убираем overflow: hidden, чтобы не блокировать прокрутку */
+            .main-content {
+                height: 100vh;
             }
         }
         /* ИСПРАВЛЕНИЯ ДЛЯ ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
