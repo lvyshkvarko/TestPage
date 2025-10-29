@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>SmartSupport - Система поддержки</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1425,6 +1425,9 @@
             background: var(--bg-white);
             padding-top: 16px;
             padding-bottom: 16px;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
         .chat-input-row {
@@ -2493,10 +2496,23 @@
             
             .chat-input-container {
                 padding: 12px;
-                position: sticky;
+                position: fixed;
                 bottom: 0;
+                left: 0;
+                right: 0;
                 background: var(--bg-white);
                 border-top: 1px solid var(--border-color);
+                z-index: 90;
+                /* Предотвращаем влияние клавиатуры на позиционирование */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                /* Убеждаемся, что контейнер остается на месте */
+                will-change: transform;
+                /* Дополнительные свойства для стабильности */
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                -webkit-perspective: 1000px;
+                perspective: 1000px;
             }
             
             .chat-input-row {
@@ -3614,12 +3630,12 @@
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-            
+
             .chat-messages {
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-            
+
             /* Улучшение отображения для мобильных устройств */
             .ticket-chat-view.active {
                 position: fixed;
@@ -3635,13 +3651,27 @@
                 display: flex;
                 flex-direction: column;
             }
-            
+
             .chat-messages {
                 max-height: calc(100vh - 350px);
             }
-            
+
             .chat-input-container {
                 flex-shrink: 0;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+                padding: 16px;
+                z-index: 90;
+            }
+
+            /* Корректировка высоты сообщений при фиксированном поле ввода */
+            .ticket-chat-view.active .chat-messages {
+                max-height: calc(100vh - 120px);
+                padding-bottom: 80px; /* Дополнительное пространство для поля ввода */
             }
         }
 
@@ -6084,7 +6114,7 @@
                         <button class="attach-btn" onclick="showTemplatesSelectionModal()">
                             <i class="fas fa-plus"></i>
                         </button>
-                        <textarea class="chat-input" id="chatInput" placeholder="Введите сообщение..." rows="1"></textarea>
+                        <textarea class="chat-input" id="chatInput" placeholder="Введите сообщение..." rows="1" inputmode="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" readonly></textarea>
                         <button class="send-btn" onclick="sendChatMessage()">
                             <i class="fas fa-paper-plane"></i>
                             <span class="send-text">${isMobileLandscape ? 'Отпр.' : 'Отправить'}</span>
@@ -6122,6 +6152,24 @@
                         chatInput.focus();
                     }, 100);
                 }
+
+                // Предотвращаем автоматическое открытие клавиатуры на мобильных устройствах
+                chatInput.setAttribute('inputmode', 'text');
+                chatInput.setAttribute('autocomplete', 'off');
+                chatInput.setAttribute('autocorrect', 'off');
+                chatInput.setAttribute('autocapitalize', 'off');
+                chatInput.setAttribute('spellcheck', 'false');
+
+                // Убираем readonly только при клике на поле ввода
+                chatInput.addEventListener('click', function() {
+                    this.removeAttribute('readonly');
+                    this.focus();
+                });
+
+                // Возвращаем readonly при потере фокуса
+                chatInput.addEventListener('blur', function() {
+                    this.setAttribute('readonly', 'true');
+                });
             }
 
             // Setup file attachment functionality
@@ -6938,6 +6986,7 @@
             if (template) {
                 const chatInput = document.getElementById('chatInput');
                 if (chatInput) {
+                    chatInput.removeAttribute('readonly');
                     chatInput.value = template.content;
                     chatInput.focus();
                 }
