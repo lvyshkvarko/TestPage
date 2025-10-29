@@ -4827,7 +4827,6 @@
         let templateToDelete = null;
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
-        let prevWidth = window.innerWidth;
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
         const header = document.getElementById('header');
@@ -5234,8 +5233,6 @@
         }
        
         function handleResize() {
-            const widthChanged = window.innerWidth !== prevWidth;
-            prevWidth = window.innerWidth;
             const wasMobile = isMobile;
             isMobile = window.innerWidth <= 768;
            
@@ -5244,7 +5241,7 @@
             }
            
             // Перерисовываем чат при изменении ориентации
-            if (currentTicket && widthChanged) {
+            if (currentTicket) {
                 renderChatView();
             }
         }
@@ -5591,9 +5588,11 @@
                 });
                
                 // Автоматически фокусируемся на поле ввода при открытии чата
-                setTimeout(() => {
-                    chatInput.focus();
-                }, 100);
+                if (isMobilePortrait) {
+                    setTimeout(() => {
+                        chatInput.focus();
+                    }, 100);
+                }
             }
             // Setup file attachment functionality
             setupFileAttachment();
