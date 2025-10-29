@@ -572,6 +572,18 @@
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
+            position: relative;
+        }
+        .filters-btn {
+            display: none;
+        }
+        .filters-wrapper {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            opacity: 1;
+            transform: translateY(0);
+            transition: var(--transition);
         }
         @media (max-width: 768px) {
             .tickets-controls {
@@ -2143,6 +2155,58 @@
                 width: 36px;
                 height: 36px;
             }
+          
+            .filters-btn {
+                display: flex !important;
+            }
+          
+            .filters-wrapper {
+                display: none;
+                position: absolute;
+                top: calc(100% + 8px);
+                left: 0;
+                background: var(--bg-white);
+                padding: 16px;
+                box-shadow: var(--shadow-lg);
+                border-radius: var(--radius);
+                z-index: 1000;
+                border: 1px solid var(--border-color);
+                flex-direction: column;
+                gap: 12px;
+                opacity: 0;
+                transform: translateY(-10px);
+                transition: var(--transition);
+                width: max-content;
+                min-width: 200px;
+            }
+          
+            .filters-wrapper.show {
+                display: flex;
+                opacity: 1;
+                transform: translateY(0);
+            }
+          
+            .tickets-controls {
+                flex-wrap: nowrap;
+                gap: 12px;
+            }
+          
+            .search-input {
+                flex: 1;
+                min-width: 150px;
+            }
+          
+            .btn-primary {
+                white-space: nowrap;
+            }
+          
+            .filter-group {
+                width: 100%;
+            }
+          
+            .select-filter {
+                width: 100%;
+            }
         }
         /* Исправление для приоритета высокий в дашборде */
         .priority-high .ticket-subject {
@@ -2174,6 +2238,249 @@
         /* Адаптация для горизонтальной ориентации на мобильных устройствах - ОБРАЩЕНИЯ */
         @media (max-width: 1024px) and (orientation: landscape) {
             /* Улучшение отображения чата в горизонтальной ориентации */
+            .ticket-chat-view.active {
+                height: 100vh;
+                overflow: hidden;
+            }
+          
+            .chat-messages {
+                max-height: calc(100vh - 200px) !important;
+                padding: 12px;
+                overflow-y: auto;
+            }
+          
+            .message {
+                max-width: 90% !important;
+                padding: 10px 14px;
+            }
+          
+            .chat-input-container {
+                padding: 12px;
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                border-top: 1px solid var(--border-color);
+            }
+          
+            .chat-input-row {
+                gap: 8px;
+            }
+          
+            .chat-input {
+                min-height: 40px;
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+          
+            .send-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                white-space: nowrap;
+            }
+          
+            /* Улучшение отображения списка обращений */
+            .tickets-list {
+                max-height: calc(100vh - 150px);
+            }
+          
+            .ticket-chat-card {
+                padding: 12px;
+            }
+          
+            .chat-user-avatar {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+          
+            .chat-user-name {
+                font-size: 14px;
+            }
+          
+            .chat-subject {
+                font-size: 13px;
+            }
+          
+            .chat-last-message {
+                font-size: 12px;
+                -webkit-line-clamp: 1;
+            }
+        }
+        /* Адаптация для горизонтальной ориентации на мобильных устройствах - ПОЛЬЗОВАТЕЛИ */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            /* Улучшение модального окна редактирования пользователя */
+            .edit-user-modal .modal {
+                max-height: 85vh;
+                overflow-y: auto;
+                margin: 10px;
+                padding: 16px;
+            }
+          
+            .edit-user-modal .modal-actions {
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                padding-top: 16px;
+                margin-top: 16px;
+                border-top: 1px solid var(--border-color);
+            }
+          
+            .avatar-selection {
+                gap: 8px;
+                justify-content: center;
+            }
+          
+            .avatar-option {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+          
+            .form-row {
+                gap: 12px;
+            }
+          
+            .form-input {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+          
+            .password-reset-info {
+                padding: 12px;
+                font-size: 12px;
+            }
+          
+            /* Улучшение отображения списка пользователей */
+            .users-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 16px;
+            }
+          
+            .user-card {
+                padding: 16px;
+            }
+          
+            .user-avatar {
+                font-size: 32px;
+            }
+          
+            .user-details h3 {
+                font-size: 16px;
+            }
+          
+            .user-details p {
+                font-size: 13px;
+            }
+          
+            .role-badge {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+        }
+        /* Дополнительные улучшения для очень маленьких экранов в горизонтальной ориентации */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .page-content {
+                padding: 16px 12px;
+            }
+          
+            .tickets-header {
+                margin-bottom: 16px;
+            }
+          
+            .users-header {
+                margin-bottom: 16px;
+            }
+          
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 16px;
+            }
+          
+            /* Улучшение модального окна уведомлений */
+            .notification-modal .modal {
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+          
+            .notification-modal .modal-actions {
+                position: sticky;
+                bottom: 0;
+                background: var(--bg-white);
+                padding-top: 16px;
+                margin-top: 16px;
+                border-top: 1px solid var(--border-color);
+                flex-wrap: wrap;
+            }
+          
+            .notification-modal .modal-actions button {
+                flex: 1;
+                min-width: 120px;
+            }
+        }
+        /* Специфические улучшения для экранов с очень маленькой высотой */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .chat-messages {
+                max-height: calc(100vh - 180px) !important;
+                padding: 4px 8px;
+            }
+          
+            .message {
+                padding: 4px 8px;
+                margin-bottom: 2px;
+            }
+          
+            .message-text {
+                font-size: 11px;
+                line-height: 1.3;
+            }
+          
+            .message-time {
+                font-size: 8px;
+                margin-top: 2px;
+            }
+          
+            .chat-input-container {
+                padding: 4px 8px;
+            }
+          
+            .chat-input {
+                min-height: 28px;
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+          
+            .send-btn {
+                padding: 4px 8px;
+                font-size: 10px;
+            }
+          
+            /* Улучшение модальных окон */
+            .modal {
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+          
+            .modal-title {
+                font-size: 20px;
+                margin-bottom: 16px;
+            }
+          
+            .form-group {
+                margin-bottom: 12px;
+            }
+          
+            .form-input {
+                padding: 8px 12px;
+            }
+          
+            .modal-actions {
+                margin-top: 16px;
+            }
+        }
+        /* НОВЫЕ СТИЛИ ДЛЯ ИСПРАВЛЕНИЯ ПРОБЛЕМ */
+        /* Исправление адаптации для горизонтальной ориентации в разделе "Обращения" */
+        @media (max-width: 1024px) and (orientation: landscape) {
             .tickets-container {
                 height: calc(100vh - 120px);
                 grid-template-columns: 1fr 1.5fr;
@@ -3621,11 +3928,6 @@
         .editor-content.html-mode:focus {
             outline: 1px solid var(--primary-color);
         }
-@media (orientation: landscape) {
-    .filter-group {
-        display: none !important;
-    }
-}
     </style>
 </head>
 <body>
@@ -3778,33 +4080,38 @@
             <div class="tickets-header">
                 <h1 class="page-title">Обращения</h1>
                 <div class="tickets-controls">
-                    <div class="filter-group">
-                        <span class="filter-label">Статус:</span>
-                        <select class="select-filter" id="statusFilter">
-                            <option value="all">Все статусы</option>
-                            <option value="new">Новые</option>
-                            <option value="in-progress">В работе</option>
-                            <option value="waiting">Ожидание</option>
-                            <option value="resolved">Решённые</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <span class="filter-label">Приоритет:</span>
-                        <select class="select-filter" id="priorityFilter">
-                            <option value="all">Все приоритеты</option>
-                            <option value="low">Легкий</option>
-                            <option value="medium">Средний</option>
-                            <option value="high">Высокий</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <span class="filter-label">Канал:</span>
-                        <select class="select-filter" id="channelFilter">
-                            <option value="all">Все каналы</option>
-                            <option value="email">Email</option>
-                            <option value="telegram">Telegram</option>
-                            <option value="vk">VK</option>
-                        </select>
+                    <button class="btn-secondary filters-btn" id="filtersBtn">
+                        <i class="fas fa-filter"></i> Фильтры
+                    </button>
+                    <div class="filters-wrapper">
+                        <div class="filter-group">
+                            <span class="filter-label">Статус:</span>
+                            <select class="select-filter" id="statusFilter">
+                                <option value="all">Все статусы</option>
+                                <option value="new">Новые</option>
+                                <option value="in-progress">В работе</option>
+                                <option value="waiting">Ожидание</option>
+                                <option value="resolved">Решённые</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <span class="filter-label">Приоритет:</span>
+                            <select class="select-filter" id="priorityFilter">
+                                <option value="all">Все приоритеты</option>
+                                <option value="low">Легкий</option>
+                                <option value="medium">Средний</option>
+                                <option value="high">Высокий</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <span class="filter-label">Канал:</span>
+                            <select class="select-filter" id="channelFilter">
+                                <option value="all">Все каналы</option>
+                                <option value="email">Email</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="vk">VK</option>
+                            </select>
+                        </div>
                     </div>
                     <input type="text" class="search-input" id="searchTickets" placeholder="Поиск по обращениям...">
                     <button class="btn-primary" id="newTicketBtn">
@@ -4418,7 +4725,7 @@
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проверим вашу оплату', time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 + 30 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проблема решена, попробуйте сейчас', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
                     { sender: 'user', text: 'Спасибо, всё работает!', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000) },
-                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000) }
+                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 1000 + 15 * 60 * 1000) }
                 ]
             }
         ];
@@ -4620,6 +4927,7 @@
         const channelFilter = document.getElementById('channelFilter');
         const searchTickets = document.getElementById('searchTickets');
         const newTicketBtn = document.getElementById('newTicketBtn');
+        const filtersBtn = document.getElementById('filtersBtn');
       
         // Kanban elements
         const kanbanContainer = document.getElementById('kanbanContainer');
@@ -4921,11 +5229,12 @@
           
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn')) {
+                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn') && !e.target.matches('.filters-btn')) {
                     const dropdowns = document.querySelectorAll('.status-dropdown-content, .priority-dropdown-content');
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('show');
                     });
+                    document.querySelector('.filters-wrapper').classList.remove('show');
                 }
             });
           
@@ -4961,6 +5270,13 @@
             confirmDeleteTemplate.addEventListener('click', deleteTemplate);
             cancelDeleteTemplate.addEventListener('click', () => hideModal(deleteTemplateModal));
             templateList.addEventListener('click', selectTemplate);
+          
+            // Filters button toggle
+            filtersBtn.addEventListener('click', toggleFilters);
+        }
+      
+        function toggleFilters() {
+            document.querySelector('.filters-wrapper').classList.toggle('show');
         }
       
         function setupModalCloseHandlers() {
@@ -5485,7 +5801,7 @@
                 fileAttachment.remove();
             }
         }
-      
+
         function toggleStatusDropdown() {
             const dropdown = document.getElementById('statusDropdown');
             dropdown.classList.toggle('show');
