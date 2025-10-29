@@ -680,11 +680,11 @@
                 grid-template-columns: 1fr;
                 height: auto;
             }
-           
+            
             .ticket-chat-view {
                 display: none;
             }
-           
+            
             .ticket-chat-view.active {
                 display: flex;
                 position: fixed;
@@ -971,7 +971,7 @@
                 align-items: stretch;
                 gap: 8px;
             }
-           
+            
             .priority-dropdown-btn,
             .btn-secondary,
             .btn-primary {
@@ -1248,7 +1248,7 @@
         .chat-input-row {
             display: flex;
             gap: 12px;
-            align-items: center; /* Center align items vertically */
+            align-items: center;  /* Center align items vertically */
         }
         .chat-input {
             flex: 1;
@@ -1283,17 +1283,17 @@
                 min-width: 48px;
                 height: 48px;
             }
-           
+            
             /* Add margin to send button to move it slightly right */
             .chat-input-row .send-btn {
                 margin-left: 12px;
             }
-           
+            
             .chat-input-row .send-btn i,
             .chat-input-row .attach-btn i {
                 font-size: 18px;
             }
-           
+            
             /* Move paper plane icon slightly right inside the button */
             .chat-input-row .send-btn i.fa-paper-plane {
                 margin-left: 2px;
@@ -1618,7 +1618,7 @@
             width: 18px;
             height: 18px;
             border-radius: 4px;
-            border: 2-digit solid var(--border-color);
+            border: 2px solid var(--border-color);
             accent-color: var(--primary-color);
             transition: var(--transition);
         }
@@ -1751,21 +1751,21 @@
                 width: 280px;
                 box-shadow: var(--shadow-lg);
             }
-           
+            
             .sidebar.open {
                 transform: translateX(0);
                 animation: slideInLeft 0.3s ease-out;
             }
-           
+            
             @keyframes slideInLeft {
                 from { transform: translateX(-100%); }
                 to { transform: translateX(0); }
             }
-           
+            
             .header, .main-content {
                 margin-left: 0 !important;
             }
-           
+            
             .overlay {
                 position: fixed;
                 top: 0;
@@ -1776,7 +1776,7 @@
                 z-index: 90;
                 display: none;
             }
-           
+            
             .overlay.active {
                 display: block;
                 animation: fadeIn 0.3s ease-out;
@@ -1897,39 +1897,39 @@
                 max-height: 90vh;
                 overflow-y: auto;
             }
-           
+            
             .edit-user-modal .modal-actions {
                 flex-direction: column;
                 gap: 10px;
             }
-           
+            
             .edit-user-modal .modal-actions button {
                 width: 100%;
             }
-           
+            
             /* Выравнивание статуса и приоритета в мобильной версии */
             .chat-view-actions {
                 flex-direction: column;
                 gap: 12px;
             }
-           
+            
             .mobile-header-actions,
             .action-buttons-row {
                 width: 100%;
                 justify-content: space-between;
             }
-           
+            
             .status-dropdown,
             .priority-dropdown {
                 width: 100%;
             }
-           
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
                 min-width: 100%;
                 justify-content: space-between;
             }
-           
+            
             .status-label {
                 display: block;
                 margin-bottom: 8px;
@@ -1942,30 +1942,30 @@
                 margin: 10px;
                 padding: 16px;
             }
-           
+            
             .form-row {
                 flex-direction: column;
                 gap: 0;
             }
-           
+            
             .avatar-selection {
                 justify-content: center;
             }
-           
+            
             .password-reset-info {
                 font-size: 12px;
                 padding: 12px;
             }
-           
+            
             /* Улучшение отображения статуса и приоритета */
             .chat-view-header {
                 padding: 12px;
             }
-           
+            
             .chat-view-actions {
                 gap: 8px;
             }
-           
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
                 padding: 8px 12px;
@@ -2046,34 +2046,34 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-           
+            
             .chat-view-user {
                 width: 100%;
                 margin-bottom: 12px;
             }
-           
+            
             .chat-view-actions {
                 width: 100%;
                 justify-content: space-between;
             }
-           
+            
             .mobile-header-actions {
                 width: 100%;
                 justify-content: space-between;
                 margin-bottom: 12px;
             }
-           
+            
             .action-buttons-row {
                 width: 100%;
                 justify-content: space-between;
             }
-           
-            .status-dropdown,
+            
+            .status-dropdown, 
             .priority-dropdown {
                 flex: 1;
                 margin-right: 8px;
             }
-           
+            
             .status-dropdown:last-child,
             .priority-dropdown:last-child {
                 margin-right: 0;
@@ -2084,17 +2084,17 @@
                 flex-direction: column;
                 gap: 8px;
             }
-           
-            .status-dropdown,
+            
+            .status-dropdown, 
             .priority-dropdown {
                 margin-right: 0;
                 margin-bottom: 8px;
             }
-           
+            
             .action-buttons-row {
                 flex-direction: column;
             }
-           
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
                 width: 100%;
@@ -2105,39 +2105,39 @@
             .tickets-container {
                 height: calc(100vh - 150px);
             }
-           
+            
             .chat-messages {
                 max-height: calc(100vh - 300px);
             }
-           
+            
             .chat-view-header {
                 padding: 12px;
             }
-           
+            
             .chat-view-actions {
                 flex-wrap: nowrap;
             }
-           
+            
             .mobile-header-actions {
                 flex-wrap: nowrap;
             }
-           
+            
             .action-buttons-row {
                 flex-wrap: nowrap;
             }
-           
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
                 min-width: 120px;
                 font-size: 12px;
                 padding: 8px 12px;
             }
-           
+            
             .btn-primary, .btn-secondary {
                 padding: 8px 12px;
                 font-size: 12px;
             }
-           
+            
             .close-chat-btn {
                 width: 36px;
                 height: 36px;
@@ -2177,18 +2177,18 @@
                 height: 100vh;
                 overflow: hidden;
             }
-           
+            
             .chat-messages {
                 max-height: calc(100vh - 200px) !important;
                 padding: 12px;
                 overflow-y: auto;
             }
-           
+            
             .message {
                 max-width: 90% !important;
                 padding: 10px 14px;
             }
-           
+            
             .chat-input-container {
                 padding: 12px;
                 position: sticky;
@@ -2196,46 +2196,46 @@
                 background: var(--bg-white);
                 border-top: 1px solid var(--border-color);
             }
-           
+            
             .chat-input-row {
                 gap: 8px;
             }
-           
+            
             .chat-input {
                 min-height: 40px;
                 padding: 10px 14px;
                 font-size: 14px;
             }
-           
+            
             .send-btn {
                 padding: 10px 16px;
                 font-size: 13px;
                 white-space: nowrap;
             }
-           
+            
             /* Улучшение отображения списка обращений */
             .tickets-list {
                 max-height: calc(100vh - 150px);
             }
-           
+            
             .ticket-chat-card {
                 padding: 12px;
             }
-           
+            
             .chat-user-avatar {
                 width: 36px;
                 height: 36px;
                 font-size: 16px;
             }
-           
+            
             .chat-user-name {
                 font-size: 14px;
             }
-           
+            
             .chat-subject {
                 font-size: 13px;
             }
-           
+            
             .chat-last-message {
                 font-size: 12px;
                 -webkit-line-clamp: 1;
@@ -2250,7 +2250,7 @@
                 margin: 10px;
                 padding: 16px;
             }
-           
+            
             .edit-user-modal .modal-actions {
                 position: sticky;
                 bottom: 0;
@@ -2259,54 +2259,54 @@
                 margin-top: 16px;
                 border-top: 1px solid var(--border-color);
             }
-           
+            
             .avatar-selection {
                 gap: 8px;
                 justify-content: center;
             }
-           
+            
             .avatar-option {
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
             }
-           
+            
             .form-row {
                 gap: 12px;
             }
-           
+            
             .form-input {
                 padding: 10px 12px;
                 font-size: 14px;
             }
-           
+            
             .password-reset-info {
                 padding: 12px;
                 font-size: 12px;
             }
-           
+            
             /* Улучшение отображения списка пользователей */
             .users-grid {
                 grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
                 gap: 16px;
             }
-           
+            
             .user-card {
                 padding: 16px;
             }
-           
+            
             .user-avatar {
                 font-size: 32px;
             }
-           
+            
             .user-details h3 {
                 font-size: 16px;
             }
-           
+            
             .user-details p {
                 font-size: 13px;
             }
-           
+            
             .role-badge {
                 padding: 6px 12px;
                 font-size: 11px;
@@ -2317,26 +2317,26 @@
             .page-content {
                 padding: 16px 12px;
             }
-           
+            
             .tickets-header {
                 margin-bottom: 16px;
             }
-           
+            
             .users-header {
                 margin-bottom: 16px;
             }
-           
+            
             .page-title {
                 font-size: 24px;
                 margin-bottom: 16px;
             }
-           
+            
             /* Улучшение модального окна уведомлений */
             .notification-modal .modal {
                 max-height: 80vh;
                 overflow-y: auto;
             }
-           
+            
             .notification-modal .modal-actions {
                 position: sticky;
                 bottom: 0;
@@ -2346,7 +2346,7 @@
                 border-top: 1px solid var(--border-color);
                 flex-wrap: wrap;
             }
-           
+            
             .notification-modal .modal-actions button {
                 flex: 1;
                 min-width: 120px;
@@ -2356,457 +2356,66 @@
         @media (max-height: 500px) and (orientation: landscape) {
             .chat-messages {
                 max-height: calc(100vh - 180px) !important;
-                padding: 8px 12px;
+                padding: 4px 8px;
             }
-           
+            
             .message {
-                padding: 8px 12px;
-                margin-bottom: 4px;
+                padding: 4px 8px;
+                margin-bottom: 2px;
             }
-           
+            
             .message-text {
-                font-size: 13px;
-                line-height: 1.4;
+                font-size: 11px;
+                line-height: 1.3;
             }
-           
+            
             .message-time {
-                font-size: 10px;
-                margin-top: 4px;
+                font-size: 8px;
+                margin-top: 2px;
             }
-           
+            
             .chat-input-container {
-                padding: 8px 12px;
+                padding: 4px 8px;
             }
-           
+            
             .chat-input {
-                min-height: 36px;
-                padding: 8px 12px;
-                font-size: 13px;
+                min-height: 28px;
+                padding: 4px 8px;
+                font-size: 11px;
             }
-           
+            
             .send-btn {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 4px 8px;
+                font-size: 10px;
             }
-           
+            
             /* Улучшение модальных окон */
             .modal {
                 padding: 20px;
                 max-height: 90vh;
                 overflow-y: auto;
             }
-           
+            
             .modal-title {
                 font-size: 20px;
                 margin-bottom: 16px;
             }
-           
+            
             .form-group {
                 margin-bottom: 12px;
             }
-           
+            
             .form-input {
                 padding: 8px 12px;
             }
-           
+            
             .modal-actions {
                 margin-top: 16px;
             }
         }
         /* НОВЫЕ СТИЛИ ДЛЯ ИСПРАВЛЕНИЯ ПРОБЛЕМ */
-        /* Исправление адаптации для горизонтальной ориентации в разделе "Обращения" */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .tickets-container {
-                height: calc(100vh - 120px);
-                grid-template-columns: 1fr 1.5fr;
-                gap: 16px;
-            }
-           
-            .tickets-list {
-                max-height: calc(100vh - 120px);
-                border-radius: var(--radius-lg);
-            }
-           
-            .ticket-chat-view {
-                display: flex !important;
-                position: static;
-                border-radius: var(--radius-xl);
-                max-height: calc(100vh - 120px);
-            }
-           
-            .ticket-chat-view.active {
-                position: static;
-                animation: none;
-            }
-           
-            .tickets-scroll-container {
-                max-height: calc(100vh - 120px);
-                overflow-y: auto;
-            }
-           
-            .ticket-chat-card {
-                padding: 12px;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                border-bottom: 1px solid var(--border-color);
-            }
-           
-            .ticket-chat-card.active {
-                background: #ecfdf5;
-                border-left: 4px solid var(--primary-color);
-            }
-           
-            .chat-card-header {
-                margin-bottom: 0;
-                flex: 1;
-                min-width: 0;
-            }
-           
-            .chat-user-info {
-                min-width: 0;
-            }
-           
-            .chat-user-avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
-                flex-shrink: 0;
-            }
-           
-            .chat-user-details {
-                min-width: 0;
-            }
-           
-            .chat-user-name {
-                font-size: 13px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-           
-            .chat-time {
-                font-size: 11px;
-            }
-           
-            .chat-status-badge {
-                padding: 4px 8px;
-                font-size: 10px;
-                white-space: nowrap;
-            }
-           
-            .chat-preview {
-                display: none;
-            }
-           
-            .chat-preview-footer {
-                margin-top: 0;
-                display: none;
-            }
-           
-            .chat-view-header {
-                padding: 12px 16px;
-                flex-wrap: nowrap;
-                gap: 12px;
-            }
-           
-            .chat-view-user {
-                flex: 0 0 auto;
-                min-width: 0;
-            }
-           
-            .chat-view-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-           
-            .chat-view-details h3 {
-                font-size: 14px;
-                margin-bottom: 2px;
-            }
-           
-            .chat-view-details p {
-                font-size: 12px;
-            }
-           
-            .chat-view-actions {
-                flex: 1;
-                justify-content: flex-end;
-                gap: 8px;
-            }
-           
-            .mobile-header-actions {
-                flex-wrap: nowrap;
-                gap: 8px;
-            }
-           
-            .action-buttons-row {
-                flex-wrap: nowrap;
-                gap: 8px;
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                padding: 8px 12px;
-                font-size: 12px;
-                white-space: nowrap;
-            }
-           
-            .close-chat-btn {
-                display: none !important;
-            }
-           
-            .chat-messages {
-                flex: 1;
-                max-height: calc(100vh - 220px) !important;
-                padding: 12px 16px;
-                overflow-y: auto;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-            }
-           
-            .message {
-                max-width: 85%;
-                padding: 10px 14px;
-                margin-bottom: 4px;
-            }
-           
-            .message-text {
-                font-size: 13px;
-                line-height: 1.4;
-            }
-           
-            .message-time {
-                font-size: 10px;
-                margin-top: 4px;
-            }
-           
-            .message-system {
-                max-width: 80%;
-                padding: 8px 12px;
-                font-size: 11px;
-            }
-           
-            .chat-input-container {
-                padding: 12px 16px;
-                border-top: 1px solid var(--border-color);
-                background: var(--bg-white);
-                position: sticky;
-                bottom: 0;
-            }
-           
-            .chat-input-row {
-                gap: 8px;
-                align-items: center;
-            }
-           
-            .chat-input {
-                min-height: 40px;
-                padding: 10px 14px;
-                font-size: 14px;
-                line-height: 1.4;
-                border-radius: var(--radius);
-                max-height: 80px;
-            }
-           
-            .send-btn {
-                padding: 10px 16px;
-                font-size: 13px;
-                white-space: nowrap;
-                border-radius: var(--radius);
-                min-width: auto;
-            }
-           
-            .send-btn i {
-                font-size: 14px;
-            }
-        }
-        /* Специфические улучшения для очень маленьких экранов в горизонтальной ориентации */
-        @media (max-height: 400px) and (orientation: landscape) {
-            .chat-messages {
-                max-height: calc(100vh - 140px) !important;
-                padding: 4px 8px;
-            }
-           
-            .message {
-                padding: 4px 8px;
-                margin-bottom: 2px;
-            }
-           
-            .message-text {
-                font-size: 11px;
-                line-height: 1.3;
-            }
-           
-            .message-time {
-                font-size: 8px;
-                margin-top: 2px;
-            }
-           
-            .chat-input-container {
-                padding: 4px 8px;
-            }
-           
-            .chat-input {
-                min-height: 28px;
-                padding: 4px 8px;
-                font-size: 11px;
-            }
-           
-            .send-btn {
-                padding: 4px 8px;
-                font-size: 10px;
-            }
-        }
-        /* Исправление для модального окна редактирования пользователя */
-        .edit-user-modal .modal {
-            max-width: 600px;
-            width: 90%;
-        }
-        @media (max-width: 768px) {
-            .edit-user-modal .modal {
-                max-width: 95%;
-                margin: 10px;
-                padding: 20px;
-                max-height: 90vh;
-                overflow-y: auto;
-            }
-           
-            .edit-user-modal .modal-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-           
-            .edit-user-modal .modal-actions button {
-                width: 100%;
-                margin: 0;
-            }
-        }
-        @media (max-width: 480px) {
-            .edit-user-modal .modal {
-                margin: 5px;
-                padding: 16px;
-            }
-           
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-           
-            .avatar-selection {
-                justify-content: center;
-            }
-           
-            .password-reset-info {
-                font-size: 12px;
-                padding: 12px;
-            }
-        }
-        /* Стили для нового модального окна сброса пароля */
-        .password-reset-modal .modal {
-            max-width: 500px;
-        }
-        .reset-link-container {
-            background: var(--bg-light);
-            border-radius: var(--radius);
-            padding: 16px;
-            margin: 16px 0;
-            border: 1px solid var(--border-color);
-        }
-        .reset-link {
-            font-family: monospace;
-            font-size: 14px;
-            color: var(--primary-dark);
-            text-decoration: underline;
-            word-break: break-all;
-            padding: 8px;
-            background: var(--bg-white);
-            border-radius: var(--radius-sm);
-            border: 1px dashed var(--primary-color);
-        }
-        .copy-btn {
-            margin-top: 12px;
-            width: 100%;
-            padding: 10px;
-            background: var(--primary-light);
-            color: var(--primary-dark);
-            border: 1px solid var(--primary-color);
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .copy-btn:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-        .copy-btn.copied {
-            background: var(--primary-color);
-            color: white;
-        }
-        /* Улучшение отображения кнопок в модальном окне редактирования пользователя */
-        .edit-user-modal .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            flex-wrap: wrap;
-        }
-        @media (max-width: 768px) {
-            .edit-user-modal .modal-actions {
-                flex-direction: column;
-            }
-           
-            .edit-user-modal .modal-actions button {
-                width: 100%;
-            }
-        }
-        /* Исправление для очень маленьких экранов */
-        @media (max-width: 360px) {
-            .edit-user-modal .modal {
-                padding: 12px;
-            }
-           
-            .avatar-option {
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
-            }
-           
-            .form-input {
-                padding: 8px 12px;
-            }
-           
-            .modal-actions button {
-                padding: 10px;
-            }
-        }
-        /* Плавная анимация для переключения между состояниями */
-        .ticket-chat-card {
-            transition: all 0.3s ease;
-        }
-        .chat-input-container {
-            transition: all 0.3s ease;
-        }
-        /* Улучшение скроллбаров для лучшего UX */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .tickets-scroll-container::-webkit-scrollbar {
-                width: 4px;
-            }
-           
-            .chat-messages::-webkit-scrollbar {
-                width: 4px;
-            }
-           
-            .tickets-scroll-container::-webkit-scrollbar-thumb,
-            .chat-messages::-webkit-scrollbar-thumb {
-                background: var(--text-light);
-                border-radius: 2px;
-            }
-        }
+
         /* ИСПРАВЛЕНИЯ ДЛЯ ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
-        /* Исправление для отображения информации о пользователе в вертикальной ориентации */
         @media (max-width: 1024px) and (orientation: portrait) {
             .chat-view-header {
                 padding: 12px 16px;
@@ -2814,7 +2423,7 @@
                 align-items: flex-start;
                 gap: 12px;
             }
-           
+            
             .chat-view-user {
                 width: 100%;
                 display: flex;
@@ -2822,19 +2431,19 @@
                 gap: 12px;
                 margin-bottom: 0;
             }
-           
+            
             .chat-view-avatar {
                 width: 44px;
                 height: 44px;
                 font-size: 18px;
                 flex-shrink: 0;
             }
-           
+            
             .chat-view-details {
                 flex: 1;
                 min-width: 0;
             }
-           
+            
             .chat-view-details h3 {
                 font-size: 16px;
                 margin-bottom: 4px;
@@ -2842,21 +2451,21 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-           
+            
             .chat-view-details p {
                 font-size: 14px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-           
+            
             .chat-view-actions {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
             }
-           
+            
             .mobile-header-actions {
                 display: flex;
                 align-items: center;
@@ -2864,7 +2473,7 @@
                 width: 100%;
                 justify-content: space-between;
             }
-           
+            
             .close-chat-btn {
                 display: flex !important;
                 width: 40px;
@@ -2880,31 +2489,31 @@
                 transition: var(--transition);
                 flex-shrink: 0;
             }
-           
+            
             .close-chat-btn:hover {
                 background: var(--border-color);
             }
-           
+            
             .status-dropdown,
             .priority-dropdown {
                 flex: 1;
                 min-width: 0;
             }
-           
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
                 width: 100%;
                 min-width: auto;
                 justify-content: space-between;
             }
-           
+            
             .action-buttons-row {
                 display: flex;
                 gap: 8px;
                 width: 100%;
                 justify-content: space-between;
             }
-           
+            
             .btn-secondary,
             .btn-primary {
                 flex: 1;
@@ -2916,353 +2525,19 @@
                 text-overflow: ellipsis;
             }
         }
-        /* ИСПРАВЛЕНИЯ ДЛЯ ДИАПАЗОНА 819-1024px ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (min-width: 819px) and (max-width: 1024px) and (orientation: portrait) {
-            .chat-view-header {
-                padding: 16px 20px;
-            }
-           
-            .chat-view-actions {
-                gap: 16px;
-            }
-           
-            .mobile-header-actions {
-                gap: 16px;
-            }
-           
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 0 0 calc(50% - 8px);
-            }
-           
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                min-width: 140px;
-                font-size: 14px;
-                padding: 12px 16px;
-            }
-           
-            .action-buttons-row {
-                gap: 12px;
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                flex: 0 0 calc(50% - 6px);
-                padding: 12px 16px;
-                font-size: 14px;
-            }
-           
-            .close-chat-btn {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
-            }
-        }
-        /* ИСПРАВЛЕНИЯ ДЛЯ УЗКИХ ЭКРАНОВ ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (max-width: 818px) and (orientation: portrait) {
-            .chat-view-actions {
-                gap: 10px;
-            }
-           
-            .mobile-header-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-           
-            .status-dropdown,
-            .priority-dropdown {
-                width: 100%;
-            }
-           
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                width: 100%;
-            }
-           
-            .action-buttons-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-        /* ДОПОЛНИТЕЛЬНЫЕ МЕДИА-ЗАПРОСЫ ДЛЯ ТОЧНОЙ НАСТРОЙКИ */
-        @media (min-width: 819px) and (max-width: 850px) and (orientation: portrait) {
-            .chat-view-actions {
-                flex-direction: column;
-            }
-           
-            .mobile-header-actions {
-                width: 100%;
-                margin-bottom: 12px;
-            }
-           
-            .action-buttons-row {
-                width: 100%;
-            }
-           
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 0 0 calc(50% - 6px);
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                flex: 0 0 calc(50% - 6px);
-            }
-        }
-        @media (min-width: 851px) and (max-width: 1024px) and (orientation: portrait) {
-            .chat-view-actions {
-                flex-direction: row;
-                align-items: center;
-            }
-           
-            .mobile-header-actions {
-                flex: 1;
-                margin-bottom: 0;
-                margin-right: 16px;
-            }
-           
-            .action-buttons-row {
-                flex: 0 0 auto;
-            }
-        }
-        /* ГАРАНТИЯ ВИДИМОСТИ ВСЕХ ЭЛЕМЕНТОВ */
-        .chat-view-actions {
-            position: relative;
-            z-index: 2;
-        }
-        .mobile-header-actions {
-            position: relative;
-            z-index: 3;
-        }
-        .action-buttons-row {
-            position: relative;
-            z-index: 3;
-        }
-        /* ПРЕДОТВРАЩЕНИЕ НАЛОЖЕНИЯ */
-        .chat-view-header {
-            position: relative;
-            z-index: 10;
-            overflow: visible;
-        }
-        .status-dropdown-content,
-        .priority-dropdown-content {
-            z-index: 1000;
-        }
-        /* УЛУЧШЕНИЕ ВНЕШНЕГО ВИДА КНОПОК */
-        .btn-secondary,
-        .btn-primary {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        .status-dropdown-btn,
-        .priority-dropdown-btn {
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        /* ДОПОЛНИТЕЛЬНЫЕ МЕДИА-ЗАПРОСЫ ДЛЯ ТОЧНОЙ НАСТРОЙКИ */
-        @media (min-width: 819px) and (max-width: 850px) and (orientation: portrait) {
-            .chat-view-actions {
-                flex-direction: column;
-            }
-           
-            .mobile-header-actions {
-                width: 100%;
-                margin-bottom: 12px;
-            }
-           
-            .action-buttons-row {
-                width: 100%;
-            }
-           
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 0 0 calc(50% - 6px);
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                flex: 0 0 calc(50% - 6px);
-            }
-        }
-        @media (min-width: 851px) and (max-width: 1024px) and (orientation: portrait) {
-            .chat-view-actions {
-                flex-direction: row;
-                align-items: center;
-            }
-           
-            .mobile-header-actions {
-                flex: 1;
-                margin-bottom: 0;
-                margin-right: 16px;
-            }
-           
-            .action-buttons-row {
-                flex: 0 0 auto;
-            }
-        }
-        /* ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .chat-view-actions {
-                flex-wrap: nowrap;
-                justify-content: space-between;
-                width: 100%;
-            }
-           
-            .mobile-header-actions {
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-                flex: 1;
-                min-width: 0;
-            }
-           
-            .action-buttons-row {
-                flex-wrap: nowrap;
-                justify-content: flex-end;
-                flex: 1;
-                min-width: 0;
-            }
-           
-            .status-dropdown-btn {
-                min-width: 120px;
-                margin-right: 8px;
-            }
-           
-            .priority-dropdown-btn {
-                min-width: 120px;
-            }
-           
-            .btn-secondary, .btn-primary {
-                min-width: auto;
-                white-space: nowrap;
-            }
-        }
-        /* Дополнительные исправления для очень маленьких экранов в горизонтальной ориентации */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .chat-view-actions {
-                flex-direction: row;
-                align-items: center;
-            }
-           
-            .mobile-header-actions {
-                flex: 0 0 auto;
-            }
-           
-            .action-buttons-row {
-                flex: 1;
-                justify-content: flex-end;
-            }
-           
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                min-width: 100px;
-                font-size: 12px;
-                padding: 6px 10px;
-            }
-           
-            .btn-secondary, .btn-primary {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-        }
-        /* Исправление для кнопки status-dropdown-btn в мобильной версии горизонтальной ориентации */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .status-dropdown {
-                margin-right: 8px;
-            }
-           
-            .status-dropdown-btn {
-                min-width: 120px;
-            }
-        }
-        /* Убедимся, что все кнопки видны и не перекрываются */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .chat-view-header {
-                align-items: center;
-            }
-           
-            .chat-view-actions {
-                align-items: center;
-            }
-           
-            .mobile-header-actions {
-                align-items: center;
-            }
-           
-            .action-buttons-row {
-                align-items: center;
-            }
-        }
-        /* НОВЫЕ СТИЛИ ДЛЯ ИЗМЕНЕНИЯ РАСПОЛОЖЕНИЯ КНОПОК В ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .chat-view-actions {
-                flex-direction: column;
-                gap: 8px;
-            }
-           
-            .mobile-header-actions {
-                width: 100%;
-                justify-content: space-between;
-                order: 2;
-            }
-           
-            .action-buttons-row {
-                width: 100%;
-                justify-content: space-between;
-                order: 1;
-                margin-bottom: 8px;
-            }
-           
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 1;
-                margin-right: 8px;
-            }
-           
-            .status-dropdown:last-child,
-            .priority-dropdown:last-child {
-                margin-right: 0;
-            }
-           
-            .btn-secondary,
-            .btn-primary {
-                flex: 1;
-                min-width: 0;
-                justify-content: center;
-            }
-        }
-        /* Дополнительные улучшения для iPhone 14 Pro Max и других больших устройств */
-        @media (max-width: 1024px) and (orientation: landscape) and (min-height: 375px) {
-            .chat-view-header {
-                padding: 10px 14px;
-            }
-           
-            .chat-messages {
-                max-height: calc(100vh - 200px) !important;
-            }
-           
-            .chat-input-container {
-                padding: 10px 14px;
-            }
-        }
+
         /* ИСПРАВЛЕНИЯ ДЛЯ ПРОБЛЕМ С ПРОКРУТКОЙ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
         @media (max-width: 1024px) {
             .tickets-scroll-container {
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-           
+            
             .chat-messages {
                 -webkit-overflow-scrolling: touch;
                 overflow-y: auto;
             }
-           
+            
             /* Улучшение отображения для мобильных устройств */
             .ticket-chat-view.active {
                 position: fixed;
@@ -3278,24 +2553,27 @@
                 display: flex;
                 flex-direction: column;
             }
-           
+            
             .chat-messages {
                 max-height: calc(100vh - 350px);
             }
-           
+            
             .chat-input-container {
                 flex-shrink: 0;
             }
         }
+
         /* Улучшение отображения сообщений */
         .message {
             margin-bottom: 8px;
         }
+
         /* Уменьшение отступов в области чата для экономии места */
         .chat-input-container {
             padding-top: 16px;
             padding-bottom: 16px;
         }
+
         /* НОВЫЕ СТИЛИ ДЛЯ ПРИКРЕПЛЕНИЯ ФАЙЛОВ */
         .attach-btn {
             padding: 14px 16px;
@@ -3399,6 +2677,7 @@
         .file-cancel-btn:hover {
             color: #dc2626;
         }
+
         /* Анимация загрузки файла */
         @keyframes pulseUpload {
             0% { transform: scale(1); }
@@ -3408,6 +2687,7 @@
         .file-attachment.uploading {
             animation: pulseUpload 2s infinite;
         }
+
         /* Стили для различных типов файлов */
         .file-preview-image {
             max-width: 200px;
@@ -3417,41 +2697,44 @@
             margin-top: 8px;
             border: 1px solid var(--border-color);
         }
+
         /* Адаптация для мобильных устройств */
         @media (max-width: 768px) {
             .file-attachment {
                 padding: 12px;
             }
-           
+            
             .file-icon {
                 width: 32px;
                 height: 32px;
                 font-size: 16px;
             }
-           
+            
             .file-name {
                 font-size: 14px;
             }
-           
+            
             .file-preview-image {
                 max-width: 150px;
                 max-height: 100px;
             }
         }
+
         /* Исправление расположения кнопок ввода для мобильных устройств */
         @media (max-width: 480px) {
             .chat-input-row {
                 gap: 8px;
             }
-           
+            
             .attach-btn {
                 padding: 12px;
             }
-           
+            
             .send-btn {
                 padding: 12px 16px;
             }
         }
+
         /* Knowledge Base Styles */
         .knowledge-header {
             display: flex;
@@ -3603,6 +2886,7 @@
             justify-content: flex-end;
             gap: 12px;
         }
+
         /* Исправления для предотвращения закрытия статьи при выделении текста */
         .article-viewer .modal {
             position: relative;
@@ -3619,6 +2903,7 @@
             position: relative;
             z-index: 1;
         }
+
         /* Улучшение редактора статей */
         .editor-content[contenteditable="true"] {
             min-height: 300px;
@@ -3631,6 +2916,7 @@
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
         }
+
         /* Templates Page */
         .templates-header {
             display: flex;
@@ -3706,6 +2992,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+
         /* Template Modal */
         .template-modal .modal {
             max-width: 600px;
@@ -3736,6 +3023,7 @@
             overflow-y: auto;
             max-height: 300px;
         }
+
         /* НОВЫЕ СТИЛИ ДЛЯ ИКОНОК СТАТЕЙ */
         .article-icon {
             width: 24px;
@@ -3774,6 +3062,7 @@
             border-color: var(--primary-color);
             background: var(--primary-light);
         }
+
         /* НОВЫЕ СТИЛИ ДЛЯ КНОПОК УДАЛЕНИЯ И РЕДАКТИРОВАНИЯ */
         .article-action-btn {
             padding: 8px 16px;
@@ -3806,6 +3095,7 @@
         .article-action-btn.delete:hover {
             background: var(--border-color);
         }
+
         /* УНИФИКАЦИЯ КНОПОК УДАЛЕНИЯ И РЕДАКТИРОВАНИЯ */
         .action-buttons {
             display: flex;
@@ -3843,6 +3133,7 @@
         .action-buttons .btn-delete:hover {
             background: var(--border-color);
         }
+
         /* НОВЫЕ СТИЛИ ДЛЯ РЕДАКТОРА С ЭМОДЗИ И КНОПКОЙ HTML */
         .editor-btn.html-toggle {
             font-family: monospace;
@@ -3863,11 +3154,58 @@
         .editor-content.html-mode:focus {
             outline: 1px solid var(--primary-color);
         }
+
+        /* ИСПРАВЛЕНИЕ ПРОБЛЕМЫ С ДЕРГАНИЕМ КЛАВИАТУРЫ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
+        .chat-input.prevent-auto-focus {
+            /* Специальный класс для предотвращения автоматического фокуса */
+            pointer-events: none;
+        }
+        
+        .chat-input.allow-focus {
+            /* Класс, разрешающий фокус после явного действия пользователя */
+            pointer-events: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-input-container {
+                position: relative;
+            }
+            
+            .chat-input {
+                /* На мобильных устройствах изначально блокируем фокус */
+                pointer-events: none;
+            }
+            
+            .chat-input:focus {
+                /* При явном фокусе пользователем разрешаем взаимодействие */
+                pointer-events: auto;
+            }
+            
+            .chat-input-row {
+                position: relative;
+            }
+            
+            /* Добавляем прозрачный оверлей для захвата тапов на мобильных устройствах */
+            .input-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 5;
+                cursor: text;
+            }
+            
+            .input-overlay.hidden {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Mobile overlay -->
     <div class="overlay" id="overlay"></div>
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -3878,7 +3216,7 @@
                 <div class="logo-text">SmartSupport</div>
             </div>
         </div>
-       
+        
         <nav class="sidebar-nav">
             <button class="nav-item active" data-page="dashboard">
                 <i class="fas fa-home nav-icon"></i>
@@ -3913,7 +3251,7 @@
                 <span class="nav-text">Настройки</span>
             </button>
         </nav>
-       
+        
         <div class="user-profile">
             <div class="profile-card">
                 <div class="profile-info">
@@ -3926,6 +3264,7 @@
             </div>
         </div>
     </div>
+
     <!-- Header -->
     <div class="header" id="header">
         <div class="header-content">
@@ -3940,12 +3279,13 @@
             </div>
         </div>
     </div>
+
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <!-- Dashboard Page -->
         <div id="dashboardPage" class="page-content">
             <h1 class="page-title">Дашборд</h1>
-           
+            
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-content">
@@ -3958,7 +3298,7 @@
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="stat-card">
                     <div class="stat-content">
                         <div class="stat-icon icon-blue">
@@ -3970,7 +3310,7 @@
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="stat-card">
                     <div class="stat-content">
                         <div class="stat-icon icon-amber">
@@ -3982,7 +3322,7 @@
                         </div>
                     </div>
                 </div>
-               
+                
                 <div class="stat-card">
                     <div class="stat-content">
                         <div class="stat-icon icon-purple">
@@ -4010,6 +3350,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Tickets Page -->
         <div id="ticketsPage" class="page-content hidden">
             <div class="tickets-header">
@@ -4072,6 +3413,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Kanban Page -->
         <div id="kanbanPage" class="page-content hidden">
             <h1 class="page-title">Канбан-доска</h1>
@@ -4079,6 +3421,7 @@
                 <!-- Kanban columns will be populated dynamically -->
             </div>
         </div>
+
         <div id="analyticsPage" class="page-content hidden">
             <h1 class="page-title">Аналитика</h1>
             <div class="analytics-grid">
@@ -4122,6 +3465,7 @@
                 </div>
             </div>
         </div>
+
         <div id="usersPage" class="page-content hidden">
             <div class="users-header">
                 <h1 class="page-title">Пользователи</h1>
@@ -4143,6 +3487,7 @@
                 <!-- Users will be dynamically populated -->
             </div>
         </div>
+
         <!-- Knowledge Base Page -->
         <div id="knowledgePage" class="page-content hidden">
             <div class="knowledge-header">
@@ -4159,6 +3504,7 @@
                 <!-- Articles will be populated dynamically -->
             </div>
         </div>
+
         <!-- Templates Page -->
         <div id="templatesPage" class="page-content hidden">
             <div class="templates-header">
@@ -4175,6 +3521,7 @@
                 <!-- Templates will be populated dynamically -->
             </div>
         </div>
+
         <div id="settingsPage" class="page-content hidden">
             <h1 class="page-title">Настройки</h1>
             <div class="settings-grid">
@@ -4226,16 +3573,19 @@
             </div>
         </div>
     </div>
+
     <!-- Toast notification -->
     <div class="toast hidden" id="toast">
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">Операция выполнена успешно</span>
     </div>
+
     <!-- Notification toast -->
     <div class="notification-toast hidden" id="notificationToast">
         <i class="fas fa-check-circle"></i>
         <span id="notificationToastMessage">Уведомление</span>
     </div>
+
     <!-- Add User Modal -->
     <div id="addUserModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4267,6 +3617,7 @@
             </div>
         </div>
     </div>
+
     <!-- Delete Confirmation Modal -->
     <div id="deleteUserModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4281,6 +3632,7 @@
             </div>
         </div>
     </div>
+
     <!-- New Ticket Modal -->
     <div id="newTicketModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4318,6 +3670,7 @@
             </div>
         </div>
     </div>
+
     <!-- Notifications Modal -->
     <div id="notificationsModal" class="modal-overlay hidden">
         <div class="modal notification-modal">
@@ -4334,6 +3687,7 @@
             </div>
         </div>
     </div>
+
     <!-- Edit User Modal -->
     <div id="editUserModal" class="modal-overlay hidden">
         <div class="modal edit-user-modal">
@@ -4397,6 +3751,7 @@
             </div>
         </div>
     </div>
+
     <!-- Password Reset Modal -->
     <div id="passwordResetModal" class="modal-overlay hidden">
         <div class="modal password-reset-modal">
@@ -4417,6 +3772,7 @@
             </div>
         </div>
     </div>
+
     <!-- New Article Modal -->
     <div id="newArticleModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4485,6 +3841,7 @@
             </div>
         </div>
     </div>
+
     <!-- Article Viewer Modal -->
     <div id="articleViewerModal" class="modal-overlay hidden">
         <div class="modal article-viewer">
@@ -4500,6 +3857,7 @@
             </div>
         </div>
     </div>
+
     <!-- Delete Article Confirmation Modal -->
     <div id="deleteArticleModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4514,6 +3872,7 @@
             </div>
         </div>
     </div>
+
     <!-- New Template Modal -->
     <div id="newTemplateModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4535,6 +3894,7 @@
             </div>
         </div>
     </div>
+
     <!-- Edit Template Modal -->
     <div id="editTemplateModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4556,6 +3916,7 @@
             </div>
         </div>
     </div>
+
     <!-- Delete Template Confirmation Modal -->
     <div id="deleteTemplateModal" class="modal-overlay hidden">
         <div class="modal">
@@ -4570,6 +3931,7 @@
             </div>
         </div>
     </div>
+
     <!-- Templates Selection Modal -->
     <div id="templatesSelectionModal" class="modal-overlay hidden">
         <div class="modal template-modal">
@@ -4585,6 +3947,7 @@
             </div>
         </div>
     </div>
+
     <script>
         // Sample data
         let tickets = JSON.parse(localStorage.getItem('smartSupportTickets')) || [
@@ -4659,63 +4022,65 @@
                 ]
             }
         ];
+
         const users = JSON.parse(localStorage.getItem('smartSupportUsers')) || [
-            {
-                id: 1,
-                name: 'Анна',
+            { 
+                id: 1, 
+                name: 'Анна', 
                 lastName: 'Волкова',
                 login: 'avolkova',
-                email: 'anna@smartsupport.ru',
-                role: 'operator1',
-                status: 'online',
+                email: 'anna@smartsupport.ru', 
+                role: 'operator1', 
+                status: 'online', 
                 avatar: '👩‍💻',
                 passwordSet: true
             },
-            {
-                id: 2,
-                name: 'Дмитрий',
+            { 
+                id: 2, 
+                name: 'Дмитрий', 
                 lastName: 'Соколов',
                 login: 'dsokolov',
-                email: 'dmitry@smartsupport.ru',
-                role: 'operator2',
-                status: 'online',
+                email: 'dmitry@smartsupport.ru', 
+                role: 'operator2', 
+                status: 'online', 
                 avatar: '👨‍💻',
                 passwordSet: true
             },
-            {
-                id: 3,
-                name: 'Ольга',
+            { 
+                id: 3, 
+                name: 'Ольга', 
                 lastName: 'Иванова',
                 login: 'oivanova',
-                email: 'olga@smartsupport.ru',
-                role: 'admin',
-                status: 'online',
+                email: 'olga@smartsupport.ru', 
+                role: 'admin', 
+                status: 'online', 
                 avatar: '👩‍💼',
                 passwordSet: true
             },
-            {
-                id: 4,
-                name: 'Михаил',
+            { 
+                id: 4, 
+                name: 'Михаил', 
                 lastName: 'Петров',
                 login: 'mpetrov',
-                email: 'mikhail@smartsupport.ru',
-                role: 'manager',
-                status: 'away',
+                email: 'mikhail@smartsupport.ru', 
+                role: 'manager', 
+                status: 'away', 
                 avatar: '👨‍💼',
                 passwordSet: false
             },
-            {
-                id: 5,
-                name: 'Игорь',
+            { 
+                id: 5, 
+                name: 'Игорь', 
                 lastName: 'Сидоров',
                 login: 'isidorov',
-                email: 'igor@smartsupport.ru',
-                role: 'developer',
-                status: 'offline',
+                email: 'igor@smartsupport.ru', 
+                role: 'developer', 
+                status: 'offline', 
                 avatar: '👨‍🔧',
                 passwordSet: true
             }
         ];
+
         let articles = JSON.parse(localStorage.getItem('smartSupportArticles')) || [
             {
                 id: 1,
@@ -4760,11 +4125,13 @@
                 icon: '🔧'
             }
         ];
+
         let templates = JSON.parse(localStorage.getItem('smartSupportTemplates')) || [
             { id: 1, title: 'Приветствие', content: 'Здравствуйте! Чем могу помочь?' },
             { id: 2, title: 'Прощание', content: 'Спасибо за обращение! Хорошего дня!' },
             { id: 3, title: 'Техническая проблема', content: 'Пожалуйста, опишите проблему подробнее.' }
         ];
+
         const roleLabels = {
             operator1: 'Оператор 1-й линии',
             operator2: 'Оператор 2-й линии',
@@ -4772,39 +4139,46 @@
             manager: 'Руководитель',
             developer: 'Разработчик'
         };
+
         const statusLabels = {
             new: 'Новое',
             'in-progress': 'В работе',
             waiting: 'Ожидание',
             resolved: 'Решено'
         };
+
         const statusColors = {
             new: 'status-badge-new',
             'in-progress': 'status-badge-in-progress',
             waiting: 'status-badge-waiting',
             resolved: 'status-badge-resolved'
         };
+
         const statusDotColors = {
             new: 'dot-new',
             'in-progress': 'dot-in-progress',
             waiting: 'dot-waiting',
             resolved: 'dot-resolved'
         };
+
         const priorityLabels = {
             low: 'Легкий',
             medium: 'Средний',
             high: 'Высокий'
         };
+
         const priorityColors = {
             low: 'priority-low',
             medium: 'priority-medium',
             high: 'priority-high'
         };
+
         const channelLabels = {
             email: 'Email',
             telegram: 'Telegram',
             vk: 'VK'
         };
+
         // State
         let currentPage = 'dashboard';
         let sidebarOpen = true;
@@ -4819,6 +4193,7 @@
             { id: 2, title: 'Изменен статус', message: 'Обращение #2 переведено в статус "В работе"', time: new Date(Date.now() - 5 * 60 * 60 * 1000), read: false },
             { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в систему', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
         ];
+
         let filteredArticles = [...articles];
         let currentArticle = null;
         let articleEditMode = false;
@@ -4827,6 +4202,7 @@
         let templateToDelete = null;
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
+
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
         const header = document.getElementById('header');
@@ -4840,14 +4216,14 @@
         const overlay = document.getElementById('overlay');
         const notificationToast = document.getElementById('notificationToast');
         const notificationToastMessage = document.getElementById('notificationToastMessage');
-       
+        
         // Dashboard elements
         const totalTickets = document.getElementById('totalTickets');
         const resolvedTickets = document.getElementById('resolvedTickets');
         const pendingTickets = document.getElementById('pendingTickets');
         const recentTickets = document.getElementById('recentTickets');
         const statusStats = document.getElementById('statusStats');
-       
+        
         // Tickets elements
         const ticketsList = document.getElementById('ticketsList');
         const chatViewContent = document.getElementById('chatViewContent');
@@ -4856,15 +4232,15 @@
         const channelFilter = document.getElementById('channelFilter');
         const searchTickets = document.getElementById('searchTickets');
         const newTicketBtn = document.getElementById('newTicketBtn');
-       
+        
         // Kanban elements
         const kanbanContainer = document.getElementById('kanbanContainer');
-       
+        
         // Users elements
         const usersGrid = document.getElementById('usersGrid');
         const userFilter = document.getElementById('userFilter');
         const addUserBtn = document.getElementById('addUserBtn');
-       
+        
         // Knowledge Base elements
         const searchArticles = document.getElementById('searchArticles');
         const newArticleBtn = document.getElementById('newArticleBtn');
@@ -4883,7 +4259,7 @@
         const confirmDeleteArticle = document.getElementById('confirmDeleteArticle');
         const cancelDeleteArticle = document.getElementById('cancelDeleteArticle');
         const articleIconSelection = document.getElementById('articleIconSelection');
-       
+        
         // Templates elements
         const searchTemplates = document.getElementById('searchTemplates');
         const newTemplateBtn = document.getElementById('newTemplateBtn');
@@ -4904,7 +4280,7 @@
         const cancelDeleteTemplate = document.getElementById('cancelDeleteTemplate');
         const templatesSelectionModal = document.getElementById('templatesSelectionModal');
         const templateList = document.getElementById('templateList');
-       
+        
         // Modal elements
         const addUserModal = document.getElementById('addUserModal');
         const deleteUserModal = document.getElementById('deleteUserModal');
@@ -4927,7 +4303,7 @@
         const resetLink = document.getElementById('resetLink');
         const copyResetLink = document.getElementById('copyResetLink');
         const closePasswordReset = document.getElementById('closePasswordReset');
-       
+        
         // Edit user form elements
         const editUserName = document.getElementById('editUserName');
         const editUserLastName = document.getElementById('editUserLastName');
@@ -4935,9 +4311,11 @@
         const editUserEmail = document.getElementById('editUserEmail');
         const editUserRole = document.getElementById('editUserRole');
         const avatarSelection = document.getElementById('avatarSelection');
+
         // Toast
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
+
         // Initialize
         function init() {
             updateDashboardStats();
@@ -4953,22 +4331,23 @@
             addCloseButtonToEditModal();
             updateLayout();
             updateNotificationBadge();
-           
+            
             // Check for new tickets on load
             checkForNewTickets();
-           
+            
             // Save initial data to localStorage
             saveData();
-           
+            
             // Setup auto-resize for template textareas
             setupTemplateTextareas();
-           
+            
             // Setup editor toolbar
             setupEditorToolbar();
-           
+            
             // Setup article icon selection
             setupArticleIconSelection();
         }
+
         // Setup article icon selection
         function setupArticleIconSelection() {
             if (articleIconSelection) {
@@ -4986,6 +4365,7 @@
                 });
             }
         }
+
         // Setup editor toolbar functionality
         function setupEditorToolbar() {
             document.addEventListener('click', function(e) {
@@ -4993,11 +4373,11 @@
                     const btn = e.target.closest('.editor-btn');
                     const command = btn.dataset.command;
                     const value = btn.dataset.value || null;
-                   
+                    
                     // Получаем активный редактор
                     let activeEditor = null;
                     let editorContainer = null;
-                   
+                    
                     if (!newArticleModal.classList.contains('hidden')) {
                         activeEditor = document.getElementById('newArticleContent');
                         editorContainer = newArticleModal.querySelector('.article-edit-container');
@@ -5005,32 +4385,33 @@
                         activeEditor = document.getElementById('editArticleContent');
                         editorContainer = articleViewerModal.querySelector('.article-edit-container');
                     }
-                   
+                    
                     if (activeEditor && command) {
                         // Обработка переключения HTML режима
                         if (command === 'toggleHTML') {
                             toggleHTMLMode(activeEditor, editorContainer, btn);
                             return;
                         }
-                       
+                        
                         // Если активен HTML режим, игнорируем другие команды
                         if (activeEditor.classList.contains('html-mode')) {
                             showToast('Переключитесь в визуальный режим для форматирования', true);
                             return;
                         }
-                       
+                        
                         // Фокусируемся на редакторе перед выполнением команды
                         activeEditor.focus();
-                       
+                        
                         // Выполняем команду форматирования
                         document.execCommand(command, false, value);
-                       
+                        
                         // Обновляем состояние кнопок
                         updateEditorButtons(activeEditor);
                     }
                 }
             });
         }
+
         // Функция для переключения HTML режима
         function toggleHTMLMode(editor, container, button) {
             if (editor.classList.contains('html-mode')) {
@@ -5038,7 +4419,7 @@
                 editor.classList.remove('html-mode');
                 editor.contentEditable = 'true';
                 button.classList.remove('active');
-               
+                
                 // Восстанавливаем нормальное отображение содержимого
                 try {
                     editor.innerHTML = editor.textContent;
@@ -5049,33 +4430,34 @@
                 // Переключаемся в HTML режим
                 editor.classList.add('html-mode');
                 button.classList.add('active');
-               
+                
                 // Сохраняем HTML содержимое как текст
                 const htmlContent = editor.innerHTML;
                 editor.textContent = htmlContent;
                 editor.contentEditable = 'true';
             }
-           
+            
             // Фокусируемся на редакторе
             editor.focus();
         }
+
         // Update editor buttons state
         function updateEditorButtons(editor) {
             const buttons = document.querySelectorAll('.editor-btn[data-command]');
             buttons.forEach(btn => {
                 const command = btn.dataset.command;
                 const value = btn.dataset.value || null;
-               
+                
                 try {
                     const state = document.queryCommandState(command);
                     const valueState = document.queryCommandValue(command);
-                   
+                    
                     if (state) {
                         btn.classList.add('active');
                     } else {
                         btn.classList.remove('active');
                     }
-                   
+                    
                     if (value && valueState === value) {
                         btn.classList.add('active');
                     }
@@ -5084,6 +4466,7 @@
                 }
             });
         }
+
         // Setup auto-resize for template textareas
         function setupTemplateTextareas() {
             const textareas = [newTemplateContent, editTemplateContent];
@@ -5093,20 +4476,23 @@
                 }
             });
         }
+
         function autoResizeTextarea() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
         }
+
         // Event Listeners
         function setupEventListeners() {
             menuToggle.addEventListener('click', toggleSidebar);
-           
+            
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     const page = item.dataset.page;
                     switchPage(page);
                 });
             });
+
             // Tickets filters
             statusFilter.addEventListener('change', filterTickets);
             priorityFilter.addEventListener('change', filterTickets);
@@ -5121,18 +4507,18 @@
             cancelDeleteUser.addEventListener('click', () => hideModal(deleteUserModal));
             confirmNewTicket.addEventListener('click', createNewTicket);
             cancelNewTicket.addEventListener('click', () => hideModal(newTicketModal));
-           
+            
             notificationBtn.addEventListener('click', showNotificationsModal);
             closeNotifications.addEventListener('click', () => hideModal(notificationsModal));
             markAllReadBtn.addEventListener('click', markAllNotificationsAsRead);
-           
+            
             saveUserBtn.addEventListener('click', saveUser);
             cancelEditUser.addEventListener('click', () => hideModal(editUserModal));
             resetPasswordBtn.addEventListener('click', showPasswordResetModal);
-           
+            
             copyResetLink.addEventListener('click', copyResetLinkToClipboard);
             closePasswordReset.addEventListener('click', () => hideModal(passwordResetModal));
-           
+            
             // Avatar selection
             avatarSelection.addEventListener('click', (e) => {
                 if (e.target.classList.contains('avatar-option')) {
@@ -5144,17 +4530,17 @@
                     e.target.classList.add('selected');
                 }
             });
-           
+            
             // Close modal when clicking outside
             [addUserModal, deleteUserModal, newTicketModal, notificationsModal, editUserModal, passwordResetModal].forEach(modal => {
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) hideModal(modal);
                 });
             });
-           
+            
             // Handle window resize
             window.addEventListener('resize', handleResize);
-           
+            
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
                 if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn')) {
@@ -5164,7 +4550,7 @@
                     });
                 }
             });
-           
+            
             // Close sidebar when clicking on overlay (mobile)
             overlay.addEventListener('click', () => {
                 if (isMobile) {
@@ -5172,21 +4558,23 @@
                     overlay.classList.remove('active');
                 }
             });
+
             // Knowledge base listeners
             searchArticles.addEventListener('input', filterArticles);
             newArticleBtn.addEventListener('click', showNewArticleModal);
             confirmNewArticle.addEventListener('click', createNewArticle);
             cancelNewArticle.addEventListener('click', () => hideModal(newArticleModal));
-           
+            
             // Исправление: предотвращаем закрытие модального окна при клике на содержимое
             articleViewerModal.addEventListener('click', (e) => {
                 if (e.target === articleViewerModal) {
                     hideModal(articleViewerModal);
                 }
             });
-           
+            
             confirmDeleteArticle.addEventListener('click', deleteArticle);
             cancelDeleteArticle.addEventListener('click', () => hideModal(deleteArticleModal));
+
             // Templates listeners
             searchTemplates.addEventListener('input', filterTemplates);
             newTemplateBtn.addEventListener('click', showNewTemplateModal);
@@ -5198,7 +4586,7 @@
             cancelDeleteTemplate.addEventListener('click', () => hideModal(deleteTemplateModal));
             templateList.addEventListener('click', selectTemplate);
         }
-       
+        
         function setupModalCloseHandlers() {
             // Закрытие по клику вне модального окна
             document.addEventListener('click', (e) => {
@@ -5206,7 +4594,7 @@
                     hideModal(e.target);
                 }
             });
-           
+            
             // Закрытие по клавише Escape
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
@@ -5217,11 +4605,11 @@
                 }
             });
         }
-       
+        
         function addCloseButtonToEditModal() {
             const editModal = document.getElementById('editUserModal');
             const modalContent = editModal.querySelector('.modal');
-           
+            
             // Добавляем кнопку закрытия, если её еще нет
             if (!modalContent.querySelector('.modal-close-btn')) {
                 const closeButton = document.createElement('button');
@@ -5231,20 +4619,21 @@
                 modalContent.insertBefore(closeButton, modalContent.firstChild);
             }
         }
-       
+        
         function handleResize() {
             const wasMobile = isMobile;
             isMobile = window.innerWidth <= 768;
-           
+            
             if (wasMobile !== isMobile) {
                 updateLayout();
             }
-           
+            
             // Перерисовываем чат при изменении ориентации
             if (currentTicket) {
                 renderChatView();
             }
         }
+
         // Sidebar Toggle
         function toggleSidebar() {
             if (isMobile) {
@@ -5255,6 +4644,7 @@
                 updateLayout();
             }
         }
+
         function updateLayout() {
             if (isMobile) {
                 header.style.marginLeft = '0';
@@ -5272,10 +4662,11 @@
                 }
             }
         }
+
         // Page Navigation
         function switchPage(page) {
             currentPage = page;
-           
+            
             // Update active nav item
             navItems.forEach(item => {
                 if (item.dataset.page === page) {
@@ -5284,7 +4675,7 @@
                     item.classList.remove('active');
                 }
             });
-           
+            
             // Show/hide page content
             pageContents.forEach(content => {
                 if (content.id === `${page}Page`) {
@@ -5293,13 +4684,13 @@
                     content.classList.add('hidden');
                 }
             });
-           
+            
             // Close sidebar on mobile after navigation
             if (isMobile) {
                 sidebar.classList.remove('open');
                 overlay.classList.remove('active');
             }
-           
+            
             // Refresh page-specific content
             if (page === 'dashboard') {
                 updateDashboardStats();
@@ -5317,12 +4708,14 @@
                 renderTemplates();
             }
         }
+
         // Dashboard Functions
         function updateDashboardStats() {
             totalTickets.textContent = tickets.length;
             resolvedTickets.textContent = tickets.filter(t => t.status === 'resolved').length;
             pendingTickets.textContent = tickets.filter(t => t.status === 'waiting').length;
         }
+
         function renderRecentTickets() {
             const recent = tickets.slice(0, 3);
             recentTickets.innerHTML = recent.map(ticket => `
@@ -5340,12 +4733,13 @@
                     </div>
                 </div>
             `).join('');
-           
+            
             // Исправление для приоритета высокий - делаем текст белым
             document.querySelectorAll('.priority-high').forEach(element => {
                 element.style.color = 'white';
             });
         }
+
         function renderStatusStats() {
             const statusCounts = {
                 new: tickets.filter(t => t.status === 'new').length,
@@ -5363,6 +4757,7 @@
                 </div>
             `).join('');
         }
+
         // Tickets Functions
         function filterTickets() {
             const status = statusFilter.value;
@@ -5372,38 +4767,39 @@
             filteredTickets = tickets.filter(ticket => {
                 // Status filter
                 if (status !== 'all' && ticket.status !== status) return false;
-               
+                
                 // Priority filter
                 if (priority !== 'all' && ticket.priority !== priority) return false;
-               
+                
                 // Channel filter
                 if (channel !== 'all' && ticket.channel !== channel) return false;
-               
+                
                 // Search filter
-                if (search && !ticket.subject.toLowerCase().includes(search) &&
+                if (search && !ticket.subject.toLowerCase().includes(search) && 
                     !ticket.message.toLowerCase().includes(search) &&
                     !ticket.user.name.toLowerCase().includes(search)) {
                     return false;
                 }
-               
+                
                 return true;
             });
             renderTicketsList();
-           
+            
             // Clear selected ticket if it's not in filtered results
             if (currentTicket && !filteredTickets.find(t => t.id === currentTicket.id)) {
                 currentTicket = null;
                 renderChatView();
             }
         }
+
         function renderTicketsList() {
             // Sort tickets by update time (newest first)
             const sortedTickets = [...filteredTickets].sort((a, b) => new Date(b.updated) - new Date(a.updated));
-           
+            
             ticketsList.innerHTML = sortedTickets.map(ticket => {
                 const lastMessage = ticket.messages[ticket.messages.length - 1];
                 const isActive = currentTicket && currentTicket.id === ticket.id;
-               
+                
                 return `
                     <div class="ticket-chat-card ${isActive ? 'active' : ''}" onclick="selectTicket(${ticket.id})">
                         <div class="chat-card-header">
@@ -5430,17 +4826,19 @@
                 `;
             }).join('');
         }
+
         function selectTicket(ticketId) {
             currentTicket = tickets.find(t => t.id === ticketId);
             renderTicketsList();
             renderChatView();
-           
+            
             // On mobile, show the chat view in full screen
             const isMobilePortrait = window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches;
             if (isMobilePortrait) {
                 ticketChatView.classList.add('active');
             }
         }
+
         function renderChatView() {
             if (!currentTicket) {
                 chatViewContent.innerHTML = `
@@ -5454,16 +4852,17 @@
                 `;
                 return;
             }
+
             // Определяем, находимся ли мы в портретной ориентации на мобильном устройстве
             const isMobilePortrait = window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches;
             const isMobileLandscape = window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches;
-           
+            
             let messagesHtml = '';
             let previousDate = null;
             let previousSender = null;
             let previousAgentName = null;
             currentTicket.messages.forEach(message => {
-                const messageDate = new Date(message.time).toLocaleDateString('ru-RU', { day: '2-digit', month: 'long' });
+                const messageDate = new Date(message.time).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
                 if (!previousDate || messageDate !== previousDate) {
                     messagesHtml += `<div class="message date-header">${messageDate}</div>`;
                     previousDate = messageDate;
@@ -5484,6 +4883,11 @@
                 `;
                 previousSender = message.sender;
             });
+
+            // ИСПРАВЛЕНИЕ ПРОБЛЕМЫ С ДЕРГАНИЕМ КЛАВИАТУРЫ
+            // На мобильных устройствах добавляем специальный класс для предотвращения автоматического фокуса
+            const chatInputClass = isMobile ? 'prevent-auto-focus' : '';
+            
             chatViewContent.innerHTML = `
                 <div class="chat-view-header">
                     <div class="chat-view-user">
@@ -5509,7 +4913,7 @@
                                 </button>
                                 <div class="status-dropdown-content" id="statusDropdown">
                                     ${Object.entries(statusLabels).map(([status, label]) => `
-                                        <div class="status-option ${currentTicket.status === status ? 'active' : ''}"
+                                        <div class="status-option ${currentTicket.status === status ? 'active' : ''}" 
                                              onclick="changeTicketStatus('${status}')">
                                             <div class="status-dot-small ${statusDotColors[status]}"></div>
                                             ${label}
@@ -5526,7 +4930,7 @@
                                 </button>
                                 <div class="priority-dropdown-content" id="priorityDropdown">
                                     ${Object.entries(priorityLabels).map(([priority, label]) => `
-                                        <div class="priority-option ${currentTicket.priority === priority ? 'active' : ''}"
+                                        <div class="priority-option ${currentTicket.priority === priority ? 'active' : ''}" 
                                              onclick="changeTicketPriority('${priority}')">
                                             <div class="priority-dot ${priorityColors[priority]}"></div>
                                             ${label}
@@ -5551,6 +4955,7 @@
                     ${messagesHtml}
                 </div>
                 <div class="chat-input-container">
+                    ${isMobile ? '<div class="input-overlay" id="inputOverlay"></div>' : ''}
                     <div class="chat-input-row">
                         <button class="attach-btn" id="attachBtn" type="button">
                             <i class="fas fa-paperclip"></i>
@@ -5558,7 +4963,7 @@
                         <button class="attach-btn" onclick="showTemplatesSelectionModal()">
                             <i class="fas fa-plus"></i>
                         </button>
-                        <textarea class="chat-input" id="chatInput" placeholder="Введите сообщение..." rows="1"></textarea>
+                        <textarea class="chat-input ${chatInputClass}" id="chatInput" placeholder="Введите сообщение..." rows="1"></textarea>
                         <button class="send-btn" onclick="sendChatMessage()">
                             <i class="fas fa-paper-plane"></i>
                             <span class="send-text">${isMobileLandscape ? 'Отпр.' : 'Отправить'}</span>
@@ -5567,11 +4972,13 @@
                     </div>
                 </div>
             `;
+
             // Scroll to bottom of messages
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
+
             // Add enter key support for message input
             const chatInput = document.getElementById('chatInput');
             if (chatInput) {
@@ -5581,22 +4988,52 @@
                         sendChatMessage();
                     }
                 });
+
                 // Auto-resize textarea
                 chatInput.addEventListener('input', function() {
                     this.style.height = 'auto';
                     this.style.height = (this.scrollHeight) + 'px';
                 });
-               
-                // Автоматически фокусируемся на поле ввода при открытии чата
-                if (!isMobilePortrait) {
+                
+                // ИСПРАВЛЕНИЕ: Убираем автоматический фокус на мобильных устройствах
+                // Фокусируемся только на десктопе
+                if (!isMobile) {
                     setTimeout(() => {
                         chatInput.focus();
                     }, 100);
+                } else {
+                    // На мобильных устройствах добавляем обработчик для оверлея
+                    const inputOverlay = document.getElementById('inputOverlay');
+                    if (inputOverlay) {
+                        inputOverlay.addEventListener('click', () => {
+                            // Убираем класс, блокирующий фокус, и фокусируемся
+                            chatInput.classList.remove('prevent-auto-focus');
+                            chatInput.classList.add('allow-focus');
+                            chatInput.focus();
+                            // Скрываем оверлей после первого тапа
+                            inputOverlay.classList.add('hidden');
+                        });
+                    }
                 }
             }
+
             // Setup file attachment functionality
             setupFileAttachment();
         }
+
+        // Добавляем функцию для ручного фокуса на поле ввода
+        function focusChatInput() {
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                // На мобильных устройствах убираем класс, блокирующий фокус
+                if (isMobile) {
+                    chatInput.classList.remove('prevent-auto-focus');
+                    chatInput.classList.add('allow-focus');
+                }
+                chatInput.focus();
+            }
+        }
+
         // File attachment functionality
         function setupFileAttachment() {
             const attachBtn = document.getElementById('attachBtn');
@@ -5608,6 +5045,7 @@
                 fileInput.addEventListener('change', handleFileSelection);
             }
         }
+
         function handleFileSelection(event) {
             const files = event.target.files;
             if (!files || files.length === 0) return;
@@ -5618,17 +5056,18 @@
             // Reset file input
             event.target.value = '';
         }
+
         function displayFileAttachment(file) {
             const chatMessages = document.getElementById('chatMessages');
             if (!chatMessages) return;
             // Create file attachment element
             const fileAttachment = document.createElement('div');
             fileAttachment.className = 'file-attachment uploading';
-           
+            
             // Get file icon based on file type
             const fileIcon = getFileIcon(file);
             const fileSize = formatFileSize(file.size);
-           
+            
             fileAttachment.innerHTML = `
                 <div class="file-icon">
                     <i class="${fileIcon}"></i>
@@ -5648,16 +5087,17 @@
             `;
             // Add to chat
             chatMessages.appendChild(fileAttachment);
-           
+            
             // Scroll to bottom
             chatMessages.scrollTop = chatMessages.scrollHeight;
             // Simulate file upload progress
             simulateFileUpload(fileAttachment, file);
         }
+
         function getFileIcon(file) {
             const fileType = file.type.split('/')[0];
             const extension = file.name.split('.').pop().toLowerCase();
-           
+            
             if (fileType === 'image') return 'fas fa-image';
             if (fileType === 'video') return 'fas fa-video';
             if (fileType === 'audio') return 'fas fa-music';
@@ -5668,9 +5108,10 @@
                 if (['ppt', 'pptx'].includes(extension)) return 'fas fa-file-powerpoint';
                 if (['zip', 'rar', '7z'].includes(extension)) return 'fas fa-file-archive';
             }
-           
+            
             return 'fas fa-file';
         }
+
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
@@ -5678,26 +5119,27 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
+
         function simulateFileUpload(fileAttachment, file) {
             const progressBar = fileAttachment.querySelector('.file-progress-bar');
             let progress = 0;
-           
+            
             const interval = setInterval(() => {
                 progress += Math.random() * 10;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
-                   
+                    
                     // Upload complete
                     setTimeout(() => {
                         fileAttachment.classList.remove('uploading');
                         progressBar.style.width = '100%';
-                       
+                        
                         // Replace cancel button with remove button
                         const cancelBtn = fileAttachment.querySelector('.file-cancel-btn');
                         cancelBtn.innerHTML = '<i class="fas fa-trash"></i>';
                         cancelBtn.onclick = () => fileAttachment.remove();
-                       
+                        
                         // Add preview for images
                         if (file.type.startsWith('image/')) {
                             const reader = new FileReader();
@@ -5711,41 +5153,43 @@
                         }
                     }, 500);
                 }
-               
+                
                 progressBar.style.width = progress + '%';
             }, 200);
         }
+
         function cancelFileUpload(button) {
             const fileAttachment = button.closest('.file-attachment');
             if (fileAttachment) {
                 fileAttachment.remove();
             }
         }
-       
+        
         function toggleStatusDropdown() {
             const dropdown = document.getElementById('statusDropdown');
             dropdown.classList.toggle('show');
         }
-       
+        
         function changeTicketStatus(newStatus) {
             if (!currentTicket || currentTicket.status === newStatus) return;
-           
+            
             const oldStatus = currentTicket.status;
             currentTicket.status = newStatus;
             currentTicket.updated = new Date();
-           
+            
             // Add system message about status change
             const systemMessage = {
                 sender: 'system',
                 text: `Статус изменён с "${statusLabels[oldStatus]}" на "${statusLabels[newStatus]}"`,
                 time: new Date()
             };
-           
+            
             currentTicket.messages.push(systemMessage);
-           
+            
             // Close dropdown
-            document.getElementById('statusDropdown').classList.remove('show');
-           
+            const dropdown = document.getElementById('statusDropdown');
+            dropdown.classList.remove('show');
+            
             // Update UI
             renderChatView();
             renderTicketsList();
@@ -5753,69 +5197,74 @@
             renderStatusStats();
             renderRecentTickets();
             saveData();
-           
+            
             showToast(`Статус обращения изменен на "${statusLabels[newStatus]}"`);
         }
+
         function togglePriorityDropdown() {
             const dropdown = document.getElementById('priorityDropdown');
             dropdown.classList.toggle('show');
         }
+
         function changeTicketPriority(newPriority) {
             if (!currentTicket || currentTicket.priority === newPriority) return;
-           
+            
             const oldPriority = currentTicket.priority;
             currentTicket.priority = newPriority;
             currentTicket.updated = new Date();
-           
+            
             // Add system message about priority change
             const systemMessage = {
                 sender: 'system',
                 text: `Приоритет изменён с "${priorityLabels[oldPriority]}" на "${priorityLabels[newPriority]}"`,
                 time: new Date()
             };
-           
+            
             currentTicket.messages.push(systemMessage);
-           
+            
             // Close dropdown
-            document.getElementById('priorityDropdown').classList.remove('show');
-           
+            const dropdown = document.getElementById('priorityDropdown');
+            dropdown.classList.remove('show');
+            
             // Update UI
             renderChatView();
             renderTicketsList();
             saveData();
-           
+            
             showToast(`Приоритет обращения изменен на "${priorityLabels[newPriority]}"`);
         }
+
         function transferToSecondLine() {
             if (!currentTicket) return;
             // Находим оператора 2-й линии
             const secondLineOperator = users.find(user => user.role === 'operator2');
-           
+            
             if (secondLineOperator) {
                 currentTicket.assignee = secondLineOperator.name;
                 currentTicket.updated = new Date();
-               
+                
                 const systemMessage = {
                     sender: 'system',
                     text: `Обращение передано оператору 2-й линии: ${secondLineOperator.name}`,
                     time: new Date()
                 };
-               
+                
                 currentTicket.messages.push(systemMessage);
-               
+                
                 renderChatView();
                 renderTicketsList();
                 saveData();
-               
+                
                 showToast(`Обращение передано ${secondLineOperator.name}`);
             } else {
                 showToast('Оператор 2-й линии не найден', true);
             }
         }
-       
+        
         function closeChatView() {
             ticketChatView.classList.remove('active');
         }
+
         function sendChatMessage() {
             const chatInput = document.getElementById('chatInput');
             if (!chatInput || !chatInput.value.trim() || !currentTicket) return;
@@ -5830,38 +5279,40 @@
             currentTicket.status = currentTicket.status === 'new' ? 'in-progress' : currentTicket.status;
             chatInput.value = '';
             chatInput.style.height = 'auto';
-           
+            
             renderChatView();
             renderTicketsList();
             updateDashboardStats();
             renderStatusStats();
             renderRecentTickets();
             saveData();
-           
+            
             showToast('Сообщение отправлено');
         }
+
         function resolveCurrentTicket() {
             if (!currentTicket) return;
             currentTicket.status = 'resolved';
             currentTicket.updated = new Date();
-           
+            
             const systemMessage = {
                 sender: 'system',
                 text: 'Статус изменён на "Решено"',
                 time: new Date()
             };
-           
+            
             currentTicket.messages.push(systemMessage);
-           
+            
             renderChatView();
             renderTicketsList();
             updateDashboardStats();
             renderStatusStats();
             renderRecentTickets();
             saveData();
-           
+            
             showToast('Обращение решено');
         }
+
         function createNewTicket() {
             const subject = document.getElementById('ticketSubject').value;
             const message = document.getElementById('ticketMessage').value;
@@ -5884,31 +5335,32 @@
                         { sender: 'user', text: message, time: new Date() }
                     ]
                 };
-               
+                
                 tickets.push(newTicket);
                 filteredTickets = [...tickets];
-               
+                
                 // Reset form
                 document.getElementById('ticketSubject').value = '';
                 document.getElementById('ticketMessage').value = '';
                 document.getElementById('ticketChannel').value = 'email';
                 document.getElementById('ticketPriority').value = 'low';
-               
+                
                 hideModal(newTicketModal);
                 renderTicketsList();
                 updateDashboardStats();
                 renderStatusStats();
                 renderRecentTickets();
                 saveData();
-               
+                
                 showToast('Новое обращение создано');
-               
+                
                 // Switch to tickets page
                 switchPage('tickets');
             } else {
                 showToast('Пожалуйста, заполните все поля', true);
             }
         }
+
         // Kanban Functions
         function renderKanban() {
             const columns = [
@@ -5937,12 +5389,15 @@
                 `;
             }).join('');
         }
+
         function allowDrop(event) {
             event.preventDefault();
         }
+
         function dragTicket(event, ticketId) {
             draggedTicket = ticketId;
         }
+
         function dropTicket(event, newStatus) {
             event.preventDefault();
             if (draggedTicket) {
@@ -5955,27 +5410,29 @@
                     renderStatusStats();
                     renderTicketsList();
                     saveData();
-                   
+                    
                     // Update current ticket if it's the one being dragged
                     if (currentTicket && currentTicket.id === draggedTicket) {
                         currentTicket = ticket;
                         renderChatView();
                     }
-                   
+                    
                     showToast(`Статус обращения изменен на "${statusLabels[newStatus]}"`);
                 }
                 draggedTicket = null;
             }
         }
+
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
-            filteredArticles = articles.filter(article =>
+            filteredArticles = articles.filter(article => 
                 article.title.toLowerCase().includes(search) ||
                 article.content.toLowerCase().includes(search)
             );
             renderArticles();
         }
+
         function renderArticles() {
             articlesGrid.innerHTML = filteredArticles.map(article => `
                 <div class="article-card" onclick="openArticle(${article.id})">
@@ -5992,17 +5449,19 @@
                 </div>
             `).join('');
         }
+
         // Вспомогательная функция для удаления HTML тегов
         function stripHtml(html) {
             const tmp = document.createElement('div');
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || '';
         }
+
         function showNewArticleModal() {
             newArticleTitle.value = '';
             newArticleContent.innerHTML = '';
             selectedArticleIcon = '📝';
-           
+            
             // Reset icon selection
             document.querySelectorAll('.article-icon-option').forEach(icon => {
                 icon.classList.remove('selected');
@@ -6011,14 +5470,15 @@
             if (articleIconSelection && articleIconSelection.firstElementChild) {
                 articleIconSelection.firstElementChild.classList.add('selected');
             }
-           
+            
             showModal(newArticleModal);
-           
+            
             // Фокусируемся на заголовке
             setTimeout(() => {
                 newArticleTitle.focus();
             }, 100);
         }
+
         function createNewArticle() {
             const title = newArticleTitle.value.trim();
             const content = newArticleContent.innerHTML.trim();
@@ -6026,7 +5486,7 @@
                 const newArticle = {
                     id: Math.max(...articles.map(a => a.id), 0) + 1,
                     title,
-                    content: newArticleContent.classList.contains('html-mode') ?
+                    content: newArticleContent.classList.contains('html-mode') ? 
                             newArticleContent.textContent : content,
                     icon: selectedArticleIcon,
                     updated: new Date()
@@ -6036,29 +5496,31 @@
                 renderArticles();
                 saveData();
                 hideModal(newArticleModal);
-               
+                
                 // Сбрасываем состояние редактора
                 newArticleContent.classList.remove('html-mode');
                 const htmlBtn = newArticleModal.querySelector('[data-command="toggleHTML"]');
                 if (htmlBtn) htmlBtn.classList.remove('active');
-               
+                
                 showToast('Статья создана');
             } else {
                 showToast('Заполните заголовок и содержание', true);
             }
         }
+
         function openArticle(articleId) {
             currentArticle = articles.find(a => a.id === articleId);
             articleEditMode = false;
             renderArticleViewer();
             showModal(articleViewerModal);
         }
+
         function editArticle(articleId) {
             currentArticle = articles.find(a => a.id === articleId);
             articleEditMode = true;
             renderArticleViewer();
             showModal(articleViewerModal);
-           
+            
             // Убеждаемся, что редактор в визуальном режиме при открытии
             setTimeout(() => {
                 const editContent = document.getElementById('editArticleContent');
@@ -6069,13 +5531,14 @@
                 }
             }, 100);
         }
+
         function renderArticleViewer() {
             if (!currentArticle) return;
             if (articleEditMode) {
                 articleViewerTitle.innerHTML = `
                     <input type="text" class="form-input" id="editArticleTitle" value="${currentArticle.title}">
                 `;
-               
+                
                 articleViewerContent.innerHTML = `
                     <div class="form-group">
                         <label class="form-label">Иконка</label>
@@ -6133,7 +5596,7 @@
                     <button class="btn-primary" onclick="saveArticleChanges()">Сохранить</button>
                     <button class="btn-cancel" onclick="toggleArticleEditMode()">Отмена</button>
                 `;
-               
+                
                 // Настройка выбора иконки для редактирования
                 const editIconSelection = document.getElementById('editArticleIconSelection');
                 if (editIconSelection) {
@@ -6148,7 +5611,7 @@
                         }
                     });
                 }
-               
+                
                 // Обновляем состояние кнопок редактора
                 setTimeout(() => {
                     const editor = document.getElementById('editArticleContent');
@@ -6174,6 +5637,7 @@
                 `;
             }
         }
+
         function showDeleteArticleModal(articleId) {
             if (articleId) {
                 currentArticle = articles.find(a => a.id === articleId);
@@ -6183,16 +5647,18 @@
                 showModal(deleteArticleModal);
             }
         }
+
         function toggleArticleEditMode() {
             articleEditMode = !articleEditMode;
             renderArticleViewer();
         }
+
         function saveArticleChanges() {
             const editTitle = document.getElementById('editArticleTitle');
             const editContent = document.getElementById('editArticleContent');
             if (editTitle && editContent && currentArticle) {
                 currentArticle.title = editTitle.value.trim();
-                currentArticle.content = editContent.classList.contains('html-mode') ?
+                currentArticle.content = editContent.classList.contains('html-mode') ? 
                                        editContent.textContent : editContent.innerHTML.trim();
                 currentArticle.updated = new Date();
                 articleEditMode = false;
@@ -6202,6 +5668,7 @@
                 showToast('Статья обновлена');
             }
         }
+
         function deleteArticle() {
             if (currentArticle) {
                 const index = articles.findIndex(a => a.id === currentArticle.id);
@@ -6216,15 +5683,17 @@
                 }
             }
         }
+
         // Templates Functions
         function filterTemplates() {
             const search = searchTemplates.value.toLowerCase();
-            filteredTemplates = templates.filter(template =>
+            filteredTemplates = templates.filter(template => 
                 template.title.toLowerCase().includes(search) ||
                 template.content.toLowerCase().includes(search)
             );
             renderTemplates();
         }
+
         function renderTemplates() {
             templatesGrid.innerHTML = filteredTemplates.map(template => `
                 <div class="template-card" onclick="openTemplate(${template.id})">
@@ -6241,11 +5710,13 @@
                 </div>
             `).join('');
         }
+
         function showNewTemplateModal() {
             newTemplateTitle.value = '';
             newTemplateContent.value = '';
             showModal(newTemplateModal);
         }
+
         function createNewTemplate() {
             const title = newTemplateTitle.value.trim();
             const content = newTemplateContent.value.trim();
@@ -6265,18 +5736,21 @@
                 showToast('Заполните заголовок и текст', true);
             }
         }
+
         function openTemplate(templateId) {
             currentTemplate = templates.find(t => t.id === templateId);
             templateEditMode = false;
             renderTemplateViewer();
             showModal(editTemplateModal);
         }
+
         function editTemplate(templateId) {
             currentTemplate = templates.find(t => t.id === templateId);
             templateEditMode = true;
             renderTemplateViewer();
             showModal(editTemplateModal);
         }
+
         function renderTemplateViewer() {
             if (!currentTemplate) return;
             editTemplateTitle.value = currentTemplate.title;
@@ -6289,6 +5763,7 @@
                 saveTemplateBtn.textContent = 'Редактировать';
             }
         }
+
         function saveTemplateChanges() {
             if (!templateEditMode) {
                 templateEditMode = true;
@@ -6308,6 +5783,7 @@
                 showToast('Заполните заголовок и текст', true);
             }
         }
+
         function showDeleteTemplateModal(templateId) {
             if (templateId) {
                 currentTemplate = templates.find(t => t.id === templateId);
@@ -6315,6 +5791,7 @@
             deleteTemplateText.textContent = `Вы уверены, что хотите удалить шаблон "${currentTemplate.title}"?`;
             showModal(deleteTemplateModal);
         }
+
         function deleteTemplate() {
             const index = templates.findIndex(t => t.id === currentTemplate.id);
             if (index !== -1) {
@@ -6327,6 +5804,7 @@
                 showToast('Шаблон удален');
             }
         }
+
         function showTemplatesSelectionModal() {
             templateList.innerHTML = templates.map(template => `
                 <div class="template-item" onclick="selectTemplate(${template.id})">
@@ -6336,6 +5814,7 @@
             `).join('');
             showModal(templatesSelectionModal);
         }
+
         function selectTemplate(templateId) {
             const template = templates.find(t => t.id === templateId);
             if (template) {
@@ -6347,6 +5826,7 @@
                 hideModal(templatesSelectionModal);
             }
         }
+
         // Users Management
         function renderUsers() {
             const filter = userFilter.value;
@@ -6384,17 +5864,18 @@
                 </div>
             `).join('');
         }
+
         function editUser(userId) {
             userToEdit = users.find(u => u.id === userId);
             if (!userToEdit) return;
-           
+            
             // Заполняем форму данными пользователя
             editUserName.value = userToEdit.name;
             editUserLastName.value = userToEdit.lastName;
             editUserLogin.value = userToEdit.login;
             editUserEmail.value = userToEdit.email;
             editUserRole.value = userToEdit.role;
-           
+            
             // Выбираем текущий аватар
             document.querySelectorAll('.avatar-option').forEach(avatar => {
                 avatar.classList.remove('selected');
@@ -6402,14 +5883,15 @@
                     avatar.classList.add('selected');
                 }
             });
-           
+            
             showModal(editUserModal);
         }
+
         function saveUser() {
             if (!userToEdit) return;
-           
+            
             const selectedAvatar = document.querySelector('.avatar-option.selected');
-           
+            
             // Обновляем данные пользователя
             userToEdit.name = editUserName.value;
             userToEdit.lastName = editUserLastName.value;
@@ -6417,33 +5899,35 @@
             userToEdit.email = editUserEmail.value;
             userToEdit.role = editUserRole.value;
             userToEdit.avatar = selectedAvatar ? selectedAvatar.dataset.avatar : userToEdit.avatar;
-           
+            
             renderUsers();
             hideModal(editUserModal);
             saveData();
-           
+            
             showToast('Данные пользователя обновлены');
         }
+
         function showPasswordResetModal() {
             if (!userToEdit) return;
-           
+            
             // Генерируем ссылку для сброса пароля
             const token = generateToken();
             const resetLinkValue = `${window.location.origin}/reset-password?token=${token}&user=${userToEdit.id}`;
-           
+            
             resetLink.textContent = resetLinkValue;
             copyResetLink.classList.remove('copied');
             copyResetLink.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку';
-           
+            
             showModal(passwordResetModal);
         }
+
         function copyResetLinkToClipboard() {
             const textToCopy = resetLink.textContent;
-           
+            
             navigator.clipboard.writeText(textToCopy).then(() => {
                 copyResetLink.classList.add('copied');
                 copyResetLink.innerHTML = '<i class="fas fa-check"></i> Ссылка скопирована';
-               
+                
                 setTimeout(() => {
                     copyResetLink.classList.remove('copied');
                     copyResetLink.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку';
@@ -6453,15 +5937,18 @@
                 showToast('Не удалось скопировать ссылку', true);
             });
         }
+
         function generateToken() {
             return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         }
+
         function confirmDelete(userId) {
             userToDelete = userId;
             const user = users.find(u => u.id === userId);
             deleteUserText.textContent = `Вы уверены, что хотите удалить пользователя ${user.name} ${user.lastName} с должностью ${roleLabels[user.role]}?`;
             showModal(deleteUserModal);
         }
+
         function deleteUser() {
             if (userToDelete) {
                 const index = users.findIndex(u => u.id === userToDelete);
@@ -6475,6 +5962,7 @@
                 hideModal(deleteUserModal);
             }
         }
+
         function addNewUser() {
             const name = document.getElementById('newUserName').value;
             const email = document.getElementById('newUserEmail').value;
@@ -6495,18 +5983,18 @@
                 renderUsers();
                 hideModal(addUserModal);
                 saveData();
-               
+                
                 // Reset form
                 document.getElementById('newUserName').value = '';
                 document.getElementById('newUserEmail').value = '';
                 document.getElementById('newUserRole').value = 'operator1';
-               
+                
                 showToast('Пользователь добавлен');
             } else {
                 showToast('Пожалуйста, заполните все поля', true);
             }
         }
-       
+        
         // Notification functions
         function updateNotificationBadge() {
             const unreadCount = notifications.filter(n => !n.read).length;
@@ -6517,10 +6005,10 @@
                 notificationBadge.classList.add('hidden');
             }
         }
-       
+        
         function showNotificationsModal() {
             const notificationList = document.getElementById('notificationList');
-           
+            
             if (notifications.length > 0) {
                 notificationList.innerHTML = notifications.map(notification => `
                     <div class="notification-item ${notification.read ? 'read' : ''}">
@@ -6540,10 +6028,10 @@
                     </div>
                 `;
             }
-           
+            
             showModal(notificationsModal);
         }
-       
+        
         function toggleNotificationRead(notificationId) {
             const notification = notifications.find(n => n.id === notificationId);
             if (notification) {
@@ -6551,12 +6039,12 @@
                 saveData();
                 updateNotificationBadge();
                 showNotificationsModal();
-               
+                
                 const action = notification.read ? 'прочитали' : 'сделали активным';
                 showNotificationToast(`Вы ${action} уведомление`);
             }
         }
-       
+        
         function markAllNotificationsAsRead() {
             let hasUnread = false;
             notifications.forEach(notification => {
@@ -6565,7 +6053,7 @@
                     hasUnread = true;
                 }
             });
-           
+            
             if (hasUnread) {
                 saveData();
                 updateNotificationBadge();
@@ -6575,16 +6063,16 @@
                 showToast('Нет непрочитанных уведомлений');
             }
         }
-       
+        
         function showNotificationToast(message) {
             notificationToastMessage.textContent = message;
             notificationToast.classList.remove('hidden');
-           
+            
             setTimeout(() => {
                 notificationToast.classList.add('hidden');
             }, 2000);
         }
-       
+        
         function checkForNewTickets() {
             // Simulate receiving new tickets
             if (Math.random() < 0.3) { // 30% chance
@@ -6604,10 +6092,10 @@
                         { sender: 'user', text: 'Это тестовое обращение, созданное автоматически', time: new Date() }
                     ]
                 };
-               
+                
                 tickets.push(newTicket);
                 filteredTickets = [...tickets];
-               
+                
                 // Add notification
                 const newNotification = {
                     id: Math.max(...notifications.map(n => n.id)) + 1,
@@ -6617,20 +6105,21 @@
                     read: false
                 };
                 notifications.push(newNotification);
-               
+                
                 updateDashboardStats();
                 renderStatusStats();
                 renderRecentTickets();
                 updateNotificationBadge();
                 saveData();
-               
+                
                 if (currentPage === 'tickets') {
                     renderTicketsList();
                 }
-               
+                
                 showToast('Получено новое обращение');
             }
         }
+
         // Utility Functions
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
@@ -6642,46 +6131,49 @@
             const days = Math.floor(hours / 24);
             return `${days} дн назад`;
         }
+
         function formatTime(date) {
-            return new Date(date).toLocaleTimeString('ru-RU', {
-                hour: '2-digit',
-                minute: '2-digit'
+            return new Date(date).toLocaleTimeString('ru-RU', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
             });
         }
+
         function showModal(modal) {
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы под модальным окном
-           
+            
             // Автоматическая прокрутка к верху модального окна
             setTimeout(() => {
                 modal.scrollTop = 0;
             }, 10);
         }
+
         function hideModal(modal) {
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto'; // Разрешаем прокрутку
         }
-       
+        
         function showToast(message, isError = false) {
             toastMessage.textContent = message;
             toast.classList.remove('error');
             toast.classList.remove('hidden');
-           
+            
             if (isError) {
                 toast.classList.add('error');
                 toast.querySelector('i').className = 'fas fa-exclamation-circle';
             } else {
                 toast.querySelector('i').className = 'fas fa-check-circle';
             }
-           
+            
             toast.classList.add('show');
-           
+            
             setTimeout(() => {
                 toast.classList.remove('show');
                 toast.classList.add('hidden');
             }, 3000);
         }
-       
+        
         function saveData() {
             localStorage.setItem('smartSupportTickets', JSON.stringify(tickets));
             localStorage.setItem('smartSupportUsers', JSON.stringify(users));
@@ -6689,9 +6181,10 @@
             localStorage.setItem('smartSupportArticles', JSON.stringify(articles));
             localStorage.setItem('smartSupportTemplates', JSON.stringify(templates));
         }
+
         // Initialize the app
         document.addEventListener('DOMContentLoaded', init);
-       
+        
         // Simulate receiving new tickets periodically
         setInterval(checkForNewTickets, 30000); // Check every 30 seconds
     </script>
