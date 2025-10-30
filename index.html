@@ -2569,9 +2569,9 @@
             }
           
             .chat-view-header {
-                padding: 12px 16px;
+                padding: 8px 12px;
                 flex-wrap: nowrap;
-                gap: 12px;
+                gap: 8px;
             }
           
             .chat-view-user {
@@ -2580,40 +2580,40 @@
             }
           
             .chat-view-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
             }
           
             .chat-view-details h3 {
-                font-size: 14px;
+                font-size: 13px;
                 margin-bottom: 2px;
             }
           
             .chat-view-details p {
-                font-size: 12px;
+                font-size: 11px;
             }
           
             .chat-view-actions {
                 flex: 1;
                 justify-content: flex-end;
-                gap: 8px;
+                gap: 4px;
             }
           
             .mobile-header-actions {
                 flex-wrap: nowrap;
-                gap: 8px;
+                gap: 4px;
             }
           
             .action-buttons-row {
                 flex-wrap: nowrap;
-                gap: 8px;
+                gap: 4px;
             }
           
             .btn-secondary,
             .btn-primary {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 6px 10px;
+                font-size: 11px;
                 white-space: nowrap;
             }
           
@@ -2623,38 +2623,38 @@
           
             .chat-messages {
                 flex: 1;
-                max-height: calc(100vh - 220px) !important;
-                padding: 12px 16px;
+                max-height: calc(100vh - 180px) !important;
+                padding: 8px 12px;
                 overflow-y: auto;
                 display: flex;
                 flex-direction: column;
-                gap: 12px;
+                gap: 8px;
             }
           
             .message {
-                max-width: 85%;
-                padding: 10px 14px;
+                max-width: 90%;
+                padding: 8px 12px;
                 margin-bottom: 4px;
             }
           
             .message-text {
-                font-size: 13px;
-                line-height: 1.4;
+                font-size: 12px;
+                line-height: 1.3;
             }
           
             .message-time {
-                font-size: 10px;
+                font-size: 9px;
                 margin-top: 4px;
             }
           
             .message-system {
                 max-width: 80%;
-                padding: 8px 12px;
-                font-size: 11px;
+                padding: 6px 10px;
+                font-size: 10px;
             }
           
             .chat-input-container {
-                padding: 12px 16px;
+                padding: 8px 12px;
                 border-top: 1px solid var(--border-color);
                 background: var(--bg-white);
                 position: sticky;
@@ -2662,29 +2662,29 @@
             }
           
             .chat-input-row {
-                gap: 8px;
+                gap: 4px;
                 align-items: center;
             }
           
             .chat-input {
-                min-height: 40px;
-                padding: 10px 14px;
-                font-size: 14px;
-                line-height: 1.4;
+                min-height: 36px;
+                padding: 8px 12px;
+                font-size: 13px;
+                line-height: 1.3;
                 border-radius: var(--radius);
-                max-height: 80px;
+                max-height: 72px;
             }
           
             .send-btn {
-                padding: 10px 16px;
-                font-size: 13px;
+                padding: 8px 12px;
+                font-size: 12px;
                 white-space: nowrap;
                 border-radius: var(--radius);
                 min-width: auto;
             }
           
             .send-btn i {
-                font-size: 14px;
+                font-size: 12px;
             }
         }
         /* Специфические улучшения для очень маленьких экранов в горизонтальной ориентации */
@@ -3927,151 +3927,236 @@
         .editor-content.html-mode:focus {
             outline: 1px solid var(--primary-color);
         }
-        /* НОВЫЕ СТИЛИ ДЛЯ ОПТИМИЗАЦИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
+        /* Улучшение адаптивности в разделе обращений */
         @media (max-width: 1024px) and (orientation: landscape) {
-            /* Уменьшаем высоту хедера чата */
-            .chat-view-header {
-                padding: 8px 12px;
-                min-height: auto;
-            }
-            
-            /* Уменьшаем размер аватара и текста */
-            .chat-view-avatar {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
-            }
-            
-            .chat-view-details h3 {
-                font-size: 13px;
-                margin-bottom: 2px;
-            }
-            
-            .chat-view-details p {
-                font-size: 11px;
-            }
-            
-            /* Компактные кнопки */
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                padding: 6px 10px;
-                font-size: 11px;
-                min-width: 100px;
-            }
-            
-            .btn-secondary,
-            .btn-primary {
-                padding: 6px 10px;
-                font-size: 11px;
-            }
-            
-            /* Уменьшаем отступы в области сообщений */
-            .chat-messages {
-                padding: 8px 12px;
-                max-height: calc(100vh - 160px) !important;
-            }
-            
-            /* Компактные сообщения */
-            .message {
-                padding: 8px 12px;
-                margin-bottom: 4px;
-            }
-            
-            .message-text {
-                font-size: 12px;
-                line-height: 1.3;
-            }
-            
-            .message-time {
-                font-size: 9px;
-                margin-top: 2px;
-            }
-            
-            /* Уменьшаем высоту области ввода */
             .chat-input-container {
-                padding: 8px 12px;
+                padding: 8px;
             }
-            
+          
+            .chat-input-row {
+                gap: 4px;
+            }
+          
             .chat-input {
                 min-height: 36px;
                 padding: 8px 12px;
                 font-size: 13px;
+                max-height: 72px;
             }
-            
-            .attach-btn,
+          
             .send-btn {
                 padding: 8px 12px;
+                font-size: 12px;
             }
-            
-            /* Уменьшаем высоту списка обращений */
+          
+            .attach-btn {
+                padding: 8px;
+            }
+          
+            .chat-messages {
+                padding: 8px;
+                gap: 8px;
+            }
+          
+            .message {
+                padding: 8px 12px;
+            }
+          
+            .message-text {
+                font-size: 13px;
+            }
+          
+            .message-time {
+                font-size: 10px;
+            }
+          
+            .tickets-header {
+                padding: 0 8px;
+                margin-bottom: 8px;
+            }
+          
+            .tickets-controls {
+                gap: 8px;
+            }
+          
+            .search-input {
+                min-width: 120px;
+            }
+          
+            .btn-primary {
+                padding: 8px 12px;
+            }
+          
+            .page-content {
+                padding: 16px 8px;
+            }
+          
+            .ticket-chat-view {
+                border-radius: 0;
+            }
+          
+            .chat-view-header {
+                padding: 8px 12px;
+            }
+          
+            .chat-view-avatar {
+                width: 36px;
+                height: 36px;
+            }
+          
+            .chat-view-details h3 {
+                font-size: 14px;
+            }
+          
+            .chat-view-details p {
+                font-size: 12px;
+            }
+          
+            .status-dropdown-btn,
+            .priority-dropdown-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 100px;
+            }
+          
+            .btn-secondary, .btn-primary {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+          
             .tickets-list-header {
-                padding: 12px;
+                padding: 8px 12px;
             }
-            
+          
+            .tickets-list-title {
+                font-size: 16px;
+            }
+          
             .ticket-chat-card {
                 padding: 8px 12px;
             }
-            
+          
             .chat-user-avatar {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
+                width: 32px;
+                height: 32px;
             }
-            
+          
             .chat-user-name {
-                font-size: 12px;
+                font-size: 13px;
             }
-            
+          
             .chat-time {
+                font-size: 11px;
+            }
+          
+            .chat-status-badge {
+                padding: 4px 8px;
                 font-size: 10px;
             }
-            
+          
             .chat-subject {
                 font-size: 12px;
             }
-            
+          
             .chat-last-message {
                 font-size: 11px;
-                -webkit-line-clamp: 1;
+            }
+          
+            .chat-channel {
+                font-size: 10px;
             }
         }
-        
-        /* Дополнительная оптимизация для очень маленьких экранов в горизонтальной ориентации */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .chat-view-header {
-                padding: 6px 10px;
-            }
-            
+        /* Улучшение адаптивности при открытой клавиатуре (предполагая уменьшение высоты viewport) */
+        @media (max-height: 400px) {
             .chat-messages {
-                padding: 6px 10px;
-                max-height: calc(100vh - 140px) !important;
+                gap: 4px;
             }
-            
+          
             .message {
-                max-width: 90%;
                 padding: 6px 10px;
             }
-            
+          
+            .message-text {
+                font-size: 12px;
+            }
+          
+            .message-time {
+                font-size: 9px;
+            }
+          
+            .agent-name {
+                font-size: 11px;
+            }
+          
+            .date-header {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+          
             .chat-input-container {
-                padding: 6px 10px;
+                padding: 8px;
             }
-            
+          
             .chat-input {
-                min-height: 32px;
-                padding: 6px 10px;
+                min-height: 40px;
+                padding: 8px 12px;
+                font-size: 13px;
             }
-            
+          
+            .send-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+          
+            .attach-btn {
+                padding: 8px;
+            }
+          
+            .chat-view-header {
+                padding: 8px;
+            }
+          
+            .chat-view-actions {
+                gap: 4px;
+            }
+          
+            .mobile-header-actions {
+                gap: 4px;
+            }
+          
+            .action-buttons-row {
+                gap: 4px;
+            }
+          
             .status-dropdown-btn,
             .priority-dropdown-btn {
-                min-width: 80px;
-                font-size: 10px;
-                padding: 4px 8px;
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: 100px;
             }
-            
-            .btn-secondary,
-            .btn-primary {
-                padding: 4px 8px;
-                font-size: 10px;
+          
+            .btn-secondary, .btn-primary {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+          
+            .close-chat-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+          
+            .tickets-container {
+                height: calc(100vh - 100px);
+            }
+          
+            .tickets-header {
+                margin-bottom: 8px;
+            }
+          
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 8px;
             }
         }
     </style>
@@ -4871,7 +4956,7 @@
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проверим вашу оплату', time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 + 30 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проблема решена, попробуйте сейчас', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
                     { sender: 'user', text: 'Спасибо, всё работает!', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000) },
-                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 1000 + 15 * 60 * 1000) }
+                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000) }
                 ]
             }
         ];
@@ -5033,7 +5118,7 @@
         let notifications = JSON.parse(localStorage.getItem('smartSupportNotifications')) || [
             { id: 1, title: 'Новое обращение', message: 'Пользователь Иван Петров создал новое обращение', time: new Date(Date.now() - 2 * 60 * 60 * 1000), read: false },
             { id: 2, title: 'Изменен статус', message: 'Обращение #2 переведено в статус "В работе"', time: new Date(Date.now() - 5 * 60 * 60 * 1000), read: false },
-            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в систему', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
+            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в системе', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
         ];
         let filteredArticles = [...articles];
         let currentArticle = null;
@@ -5375,12 +5460,11 @@
           
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn') && !e.target.matches('.filters-btn')) {
+                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn')) {
                     const dropdowns = document.querySelectorAll('.status-dropdown-content, .priority-dropdown-content');
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('show');
                     });
-                    document.querySelector('.filters-wrapper').classList.remove('show');
                 }
             });
           
@@ -5851,1077 +5935,4 @@
             const fileAttachment = document.createElement('div');
             fileAttachment.className = 'file-attachment uploading';
           
-            // Get file icon based on file type
-            const fileIcon = getFileIcon(file);
-            const fileSize = formatFileSize(file.size);
-          
-            fileAttachment.innerHTML = `
-                <div class="file-icon">
-                    <i class="${fileIcon}"></i>
-                </div>
-                <div class="file-info">
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-size">${fileSize}</div>
-                    <div class="file-progress">
-                        <div class="file-progress-bar"></div>
-                    </div>
-                </div>
-                <div class="file-actions">
-                    <button class="file-action-btn file-cancel-btn" onclick="cancelFileUpload(this)">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `;
-            // Add to chat
-            chatMessages.appendChild(fileAttachment);
-          
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-            // Simulate file upload progress
-            simulateFileUpload(fileAttachment, file);
-        }
-        function getFileIcon(file) {
-            const fileType = file.type.split('/')[0];
-            const extension = file.name.split('.').pop().toLowerCase();
-          
-            if (fileType === 'image') return 'fas fa-image';
-            if (fileType === 'video') return 'fas fa-video';
-            if (fileType === 'audio') return 'fas fa-music';
-            if (fileType === 'application') {
-                if (extension === 'pdf') return 'fas fa-file-pdf';
-                if (['doc', 'docx'].includes(extension)) return 'fas fa-file-word';
-                if (['xls', 'xlsx'].includes(extension)) return 'fas fa-file-excel';
-                if (['ppt', 'pptx'].includes(extension)) return 'fas fa-file-powerpoint';
-                if (['zip', 'rar', '7z'].includes(extension)) return 'fas fa-file-archive';
-            }
-          
-            return 'fas fa-file';
-        }
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-        function simulateFileUpload(fileAttachment, file) {
-            const progressBar = fileAttachment.querySelector('.file-progress-bar');
-            let progress = 0;
-          
-            const interval = setInterval(() => {
-                progress += Math.random() * 10;
-                if (progress >= 100) {
-                    progress = 100;
-                    clearInterval(interval);
-                  
-                    // Upload complete
-                    setTimeout(() => {
-                        fileAttachment.classList.remove('uploading');
-                        progressBar.style.width = '100%';
-                      
-                        // Replace cancel button with remove button
-                        const cancelBtn = fileAttachment.querySelector('.file-cancel-btn');
-                        cancelBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                        cancelBtn.onclick = () => fileAttachment.remove();
-                      
-                        // Add preview for images
-                        if (file.type.startsWith('image/')) {
-                            const reader = new FileReader();
-                            reader.onload = (e) => {
-                                const img = document.createElement('img');
-                                img.src = e.target.result;
-                                img.className = 'file-preview-image';
-                                fileAttachment.querySelector('.file-info').appendChild(img);
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    }, 500);
-                }
-              
-                progressBar.style.width = progress + '%';
-            }, 200);
-        }
-        function cancelFileUpload(button) {
-            const fileAttachment = button.closest('.file-attachment');
-            if (fileAttachment) {
-                fileAttachment.remove();
-            }
-        }
-
-        function toggleStatusDropdown() {
-            const dropdown = document.getElementById('statusDropdown');
-            dropdown.classList.toggle('show');
-        }
-      
-        function changeTicketStatus(newStatus) {
-            if (!currentTicket || currentTicket.status === newStatus) return;
-          
-            const oldStatus = currentTicket.status;
-            currentTicket.status = newStatus;
-            currentTicket.updated = new Date();
-          
-            // Add system message about status change
-            const systemMessage = {
-                sender: 'system',
-                text: `Статус изменён с "${statusLabels[oldStatus]}" на "${statusLabels[newStatus]}"`,
-                time: new Date()
-            };
-          
-            currentTicket.messages.push(systemMessage);
-          
-            // Close dropdown
-            const dropdown = document.getElementById('statusDropdown');
-            dropdown.classList.remove('show');
-          
-            // Update UI
-            renderChatView();
-            renderTicketsList();
-            updateDashboardStats();
-            renderStatusStats();
-            renderRecentTickets();
-            saveData();
-          
-            showToast(`Статус обращения изменен на "${statusLabels[newStatus]}"`);
-        }
-        function togglePriorityDropdown() {
-            const dropdown = document.getElementById('priorityDropdown');
-            dropdown.classList.toggle('show');
-        }
-        function changeTicketPriority(newPriority) {
-            if (!currentTicket || currentTicket.priority === newPriority) return;
-          
-            const oldPriority = currentTicket.priority;
-            currentTicket.priority = newPriority;
-            currentTicket.updated = new Date();
-          
-            // Add system message about priority change
-            const systemMessage = {
-                sender: 'system',
-                text: `Приоритет изменён с "${priorityLabels[oldPriority]}" на "${priorityLabels[newPriority]}"`,
-                time: new Date()
-            };
-          
-            currentTicket.messages.push(systemMessage);
-          
-            // Close dropdown
-            const dropdown = document.getElementById('priorityDropdown');
-            dropdown.classList.remove('show');
-          
-            // Update UI
-            renderChatView();
-            renderTicketsList();
-            saveData();
-          
-            showToast(`Приоритет обращения изменен на "${priorityLabels[newPriority]}"`);
-        }
-        function transferToSecondLine() {
-            if (!currentTicket) return;
-            // Находим оператора 2-й линии
-            const secondLineOperator = users.find(user => user.role === 'operator2');
-          
-            if (secondLineOperator) {
-                currentTicket.assignee = secondLineOperator.name;
-                currentTicket.updated = new Date();
-              
-                const systemMessage = {
-                    sender: 'system',
-                    text: `Обращение передано оператору 2-й линии: ${secondLineOperator.name}`,
-                    time: new Date()
-                };
-              
-                currentTicket.messages.push(systemMessage);
-              
-                renderChatView();
-                renderTicketsList();
-                saveData();
-              
-                showToast(`Обращение передано ${secondLineOperator.name}`);
-            } else {
-                showToast('Оператор 2-й линии не найден', true);
-            }
-        }
-      
-        function closeChatView() {
-            ticketChatView.classList.remove('active');
-        }
-        function sendChatMessage() {
-            const chatInput = document.getElementById('chatInput');
-            if (!chatInput || !chatInput.value.trim() || !currentTicket) return;
-            const newMessage = {
-                sender: 'agent',
-                agentName: 'Анна Волкова (Оператор 1-й линии)',
-                text: chatInput.value,
-                time: new Date()
-            };
-            currentTicket.messages.push(newMessage);
-            currentTicket.updated = new Date();
-            currentTicket.status = currentTicket.status === 'new' ? 'in-progress' : currentTicket.status;
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-          
-            renderChatView();
-            renderTicketsList();
-            updateDashboardStats();
-            renderStatusStats();
-            renderRecentTickets();
-            saveData();
-          
-            showToast('Сообщение отправлено');
-        }
-        function resolveCurrentTicket() {
-            if (!currentTicket) return;
-            currentTicket.status = 'resolved';
-            currentTicket.updated = new Date();
-          
-            const systemMessage = {
-                sender: 'system',
-                text: 'Статус изменён на "Решено"',
-                time: new Date()
-            };
-          
-            currentTicket.messages.push(systemMessage);
-          
-            renderChatView();
-            renderTicketsList();
-            updateDashboardStats();
-            renderStatusStats();
-            renderRecentTickets();
-            saveData();
-          
-            showToast('Обращение решено');
-        }
-        function createNewTicket() {
-            const subject = document.getElementById('ticketSubject').value;
-            const message = document.getElementById('ticketMessage').value;
-            const channel = document.getElementById('ticketChannel').value;
-            const priority = document.getElementById('ticketPriority').value;
-            if (subject && message) {
-                const newTicket = {
-                    id: Math.max(...tickets.map(t => t.id)) + 1,
-                    user: { name: 'Случайный пользователь', email: 'user@example.com', avatar: '👤' },
-                    subject,
-                    message,
-                    status: 'new',
-                    priority,
-                    channel,
-                    category: 'Общие вопросы',
-                    created: new Date(),
-                    updated: new Date(),
-                    assignee: null,
-                    messages: [
-                        { sender: 'user', text: message, time: new Date() }
-                    ]
-                };
-              
-                tickets.push(newTicket);
-                filteredTickets = [...tickets];
-              
-                // Reset form
-                document.getElementById('ticketSubject').value = '';
-                document.getElementById('ticketMessage').value = '';
-                document.getElementById('ticketChannel').value = 'email';
-                document.getElementById('ticketPriority').value = 'low';
-              
-                hideModal(newTicketModal);
-                renderTicketsList();
-                updateDashboardStats();
-                renderStatusStats();
-                renderRecentTickets();
-                saveData();
-              
-                showToast('Новое обращение создано');
-              
-                // Switch to tickets page
-                switchPage('tickets');
-            } else {
-                showToast('Пожалуйста, заполните все поля', true);
-            }
-        }
-        // Kanban Functions
-        function renderKanban() {
-            const columns = [
-                { status: 'new', title: 'Новое' },
-                { status: 'in-progress', title: 'В работе' },
-                { status: 'waiting', title: 'Ожидание' },
-                { status: 'resolved', title: 'Решено' }
-            ];
-            kanbanContainer.innerHTML = columns.map(column => {
-                const columnTickets = tickets.filter(t => t.status === column.status);
-                return `
-                    <div class="kanban-column" ondrop="dropTicket(event, '${column.status}')" ondragover="allowDrop(event)">
-                        <div class="kanban-card">
-                            <div class="kanban-header">
-                                <h3 class="kanban-title">${column.title} (${columnTickets.length})</h3>
-                            </div>
-                            <div class="kanban-content">
-                                ${columnTickets.map(ticket => `
-                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})">
-                                        <div class="kanban-subject">${ticket.subject}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        function allowDrop(event) {
-            event.preventDefault();
-        }
-        function dragTicket(event, ticketId) {
-            draggedTicket = ticketId;
-        }
-        function dropTicket(event, newStatus) {
-            event.preventDefault();
-            if (draggedTicket) {
-                const ticket = tickets.find(t => t.id === draggedTicket);
-                if (ticket && ticket.status !== newStatus) {
-                    ticket.status = newStatus;
-                    ticket.updated = new Date();
-                    renderKanban();
-                    updateDashboardStats();
-                    renderStatusStats();
-                    renderTicketsList();
-                    saveData();
-                  
-                    // Update current ticket if it's the one being dragged
-                    if (currentTicket && currentTicket.id === draggedTicket) {
-                        currentTicket = ticket;
-                        renderChatView();
-                    }
-                  
-                    showToast(`Статус обращения изменен на "${statusLabels[newStatus]}"`);
-                }
-                draggedTicket = null;
-            }
-        }
-        // Knowledge Base Functions
-        function filterArticles() {
-            const search = searchArticles.value.toLowerCase();
-            filteredArticles = articles.filter(article =>
-                article.title.toLowerCase().includes(search) ||
-                article.content.toLowerCase().includes(search)
-            );
-            renderArticles();
-        }
-        function renderArticles() {
-            articlesGrid.innerHTML = filteredArticles.map(article => `
-                <div class="article-card" onclick="openArticle(${article.id})">
-                    <div class="article-title"><span class="article-icon">${article.icon}</span> ${article.title}</div>
-                    <div class="article-excerpt">${stripHtml(article.content).substring(0, 150)}...</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-edit" onclick="editArticle(${article.id}); event.stopPropagation();">
-                            <i class="fas fa-edit"></i> Редактировать
-                        </button>
-                        <button class="btn btn-delete" onclick="showDeleteArticleModal(${article.id}); event.stopPropagation();">
-                            <i class="fas fa-trash"></i> Удалить
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        // Вспомогательная функция для удаления HTML тегов
-        function stripHtml(html) {
-            const tmp = document.createElement('div');
-            tmp.innerHTML = html;
-            return tmp.textContent || tmp.innerText || '';
-        }
-        function showNewArticleModal() {
-            newArticleTitle.value = '';
-            newArticleContent.innerHTML = '';
-            selectedArticleIcon = '📝';
-          
-            // Reset icon selection
-            document.querySelectorAll('.article-icon-option').forEach(icon => {
-                icon.classList.remove('selected');
-            });
-            // Select first icon by default
-            if (articleIconSelection && articleIconSelection.firstElementChild) {
-                articleIconSelection.firstElementChild.classList.add('selected');
-            }
-          
-            showModal(newArticleModal);
-          
-            // Фокусируемся на заголовке
-            setTimeout(() => {
-                newArticleTitle.focus();
-            }, 100);
-        }
-        function createNewArticle() {
-            const title = newArticleTitle.value.trim();
-            const content = newArticleContent.innerHTML.trim();
-            if (title && content) {
-                const newArticle = {
-                    id: Math.max(...articles.map(a => a.id), 0) + 1,
-                    title,
-                    content: newArticleContent.classList.contains('html-mode') ?
-                            newArticleContent.textContent : content,
-                    icon: selectedArticleIcon,
-                    updated: new Date()
-                };
-                articles.push(newArticle);
-                filteredArticles = [...articles];
-                renderArticles();
-                saveData();
-                hideModal(newArticleModal);
-              
-                // Сбрасываем состояние редактора
-                newArticleContent.classList.remove('html-mode');
-                const htmlBtn = newArticleModal.querySelector('[data-command="toggleHTML"]');
-                if (htmlBtn) htmlBtn.classList.remove('active');
-              
-                showToast('Статья создана');
-            } else {
-                showToast('Заполните заголовок и содержание', true);
-            }
-        }
-        function openArticle(articleId) {
-            currentArticle = articles.find(a => a.id === articleId);
-            articleEditMode = false;
-            renderArticleViewer();
-            showModal(articleViewerModal);
-        }
-        function editArticle(articleId) {
-            currentArticle = articles.find(a => a.id === articleId);
-            articleEditMode = true;
-            renderArticleViewer();
-            showModal(articleViewerModal);
-          
-            // Убеждаемся, что редактор в визуальном режиме при открытии
-            setTimeout(() => {
-                const editContent = document.getElementById('editArticleContent');
-                const htmlBtn = articleViewerModal.querySelector('[data-command="toggleHTML"]');
-                if (editContent && htmlBtn) {
-                    editContent.classList.remove('html-mode');
-                    htmlBtn.classList.remove('active');
-                }
-            }, 100);
-        }
-        function renderArticleViewer() {
-            if (!currentArticle) return;
-            if (articleEditMode) {
-                articleViewerTitle.innerHTML = `
-                    <input type="text" class="form-input" id="editArticleTitle" value="${currentArticle.title}">
-                `;
-              
-                articleViewerContent.innerHTML = `
-                    <div class="form-group">
-                        <label class="form-label">Иконка</label>
-                        <div class="article-icon-container" id="editArticleIconSelection">
-                            <!-- ЗАМЕНА: эмодзи вместо иконок Font Awesome -->
-                            <div class="article-icon-option ${currentArticle.icon === '📝' ? 'selected' : ''}" data-icon="📝">📝</div>
-                            <div class="article-icon-option ${currentArticle.icon === '❓' ? 'selected' : ''}" data-icon="❓">❓</div>
-                            <div class="article-icon-option ${currentArticle.icon === '⚙️' ? 'selected' : ''}" data-icon="⚙️">⚙️</div>
-                            <div class="article-icon-option ${currentArticle.icon === '🔧' ? 'selected' : ''}" data-icon="🔧">🔧</div>
-                            <div class="article-icon-option ${currentArticle.icon === '📊' ? 'selected' : ''}" data-icon="📊">📊</div>
-                            <div class="article-icon-option ${currentArticle.icon === '🔒' ? 'selected' : ''}" data-icon="🔒">🔒</div>
-                            <div class="article-icon-option ${currentArticle.icon === '💰' ? 'selected' : ''}" data-icon="💰">💰</div>
-                            <div class="article-icon-option ${currentArticle.icon === '🚀' ? 'selected' : ''}" data-icon="🚀">🚀</div>
-                            <div class="article-icon-option ${currentArticle.icon === '📱' ? 'selected' : ''}" data-icon="📱">📱</div>
-                            <div class="article-icon-option ${currentArticle.icon === '💻' ? 'selected' : ''}" data-icon="💻">💻</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Содержание</label>
-                        <div class="article-edit-container">
-                            <div class="editor-toolbar">
-                                <button type="button" class="editor-btn" data-command="bold" title="Жирный"><i class="fas fa-bold"></i></button>
-                                <button type="button" class="editor-btn" data-command="italic" title="Курсив"><i class="fas fa-italic"></i></button>
-                                <button type="button" class="editor-btn" data-command="underline" title="Подчеркивание"><i class="fas fa-underline"></i></button>
-                                <select class="editor-btn" data-command="foreColor" title="Цвет текста">
-                                    <option value="">Цвет</option>
-                                    <option value="red">Красный</option>
-                                    <option value="green">Зеленый</option>
-                                    <option value="blue">Синий</option>
-                                    <option value="black">Черный</option>
-                                </select>
-                                <select class="editor-btn" data-command="fontSize" title="Размер шрифта">
-                                    <option value="">Размер</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                </select>
-                                <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Маркированный список"><i class="fas fa-list-ul"></i></button>
-                                <button type="button" class="editor-btn" data-command="insertOrderedList" title="Нумерованный список"><i class="fas fa-list-ol"></i></button>
-                                <button type="button" class="editor-btn" data-command="formatBlock" data-value="h1" title="Заголовок 1">H1</button>
-                                <button type="button" class="editor-btn" data-command="formatBlock" data-value="h2" title="Заголовок 2">H2</button>
-                                <button type="button" class="editor-btn" data-command="formatBlock" data-value="h3" title="Заголовок 3">H3</button>
-                                <!-- ЗАМЕНА: кнопка HTML вместо кнопки P -->
-                                <button type="button" class="editor-btn html-toggle" data-command="toggleHTML" title="Режим HTML">&lt;/&gt;</button>
-                            </div>
-                            <div class="editor-content" contenteditable="true" id="editArticleContent">${currentArticle.content}</div>
-                        </div>
-                    </div>
-                `;
-                articleViewerActions.innerHTML = `
-                    <button class="btn-primary" onclick="saveArticleChanges()">Сохранить</button>
-                    <button class="btn-cancel" onclick="toggleArticleEditMode()">Отмена</button>
-                `;
-              
-                // Настройка выбора иконки для редактирования
-                const editIconSelection = document.getElementById('editArticleIconSelection');
-                if (editIconSelection) {
-                    editIconSelection.addEventListener('click', (e) => {
-                        if (e.target.closest('.article-icon-option')) {
-                            const iconOption = e.target.closest('.article-icon-option');
-                            document.querySelectorAll('.article-icon-option').forEach(icon => {
-                                icon.classList.remove('selected');
-                            });
-                            iconOption.classList.add('selected');
-                            currentArticle.icon = iconOption.dataset.icon;
-                        }
-                    });
-                }
-              
-                // Обновляем состояние кнопок редактора
-                setTimeout(() => {
-                    const editor = document.getElementById('editArticleContent');
-                    if (editor) {
-                        updateEditorButtons(editor);
-                    }
-                }, 100);
-            } else {
-                // Режим просмотра - без изменений
-                articleViewerTitle.innerHTML = `
-                    <span class="article-icon">${currentArticle.icon}</span> ${currentArticle.title}
-                `;
-                articleViewerContent.innerHTML = `
-                    <div class="article-content">${currentArticle.content}</div>
-                `;
-                articleViewerActions.innerHTML = `
-                    <button class="btn btn-edit" onclick="toggleArticleEditMode()">
-                        <i class="fas fa-edit"></i> Редактировать
-                    </button>
-                    <button class="btn btn-delete" onclick="showDeleteArticleModal()">
-                        <i class="fas fa-trash"></i> Удалить
-                    </button>
-                `;
-            }
-        }
-        function showDeleteArticleModal(articleId) {
-            if (articleId) {
-                currentArticle = articles.find(a => a.id === articleId);
-            }
-            if (currentArticle) {
-                deleteArticleText.textContent = `Вы уверены, что хотите удалить статью "${currentArticle.title}"?`;
-                showModal(deleteArticleModal);
-            }
-        }
-        function toggleArticleEditMode() {
-            articleEditMode = !articleEditMode;
-            renderArticleViewer();
-        }
-        function saveArticleChanges() {
-            const editTitle = document.getElementById('editArticleTitle');
-            const editContent = document.getElementById('editArticleContent');
-            if (editTitle && editContent && currentArticle) {
-                currentArticle.title = editTitle.value.trim();
-                currentArticle.content = editContent.classList.contains('html-mode') ?
-                                       editContent.textContent : editContent.innerHTML.trim();
-                currentArticle.updated = new Date();
-                articleEditMode = false;
-                renderArticleViewer();
-                renderArticles();
-                saveData();
-                showToast('Статья обновлена');
-            }
-        }
-        function deleteArticle() {
-            if (currentArticle) {
-                const index = articles.findIndex(a => a.id === currentArticle.id);
-                if (index !== -1) {
-                    articles.splice(index, 1);
-                    filteredArticles = [...articles];
-                    renderArticles();
-                    saveData();
-                    hideModal(deleteArticleModal);
-                    hideModal(articleViewerModal);
-                    showToast('Статья удалена');
-                }
-            }
-        }
-        // Templates Functions
-        function filterTemplates() {
-            const search = searchTemplates.value.toLowerCase();
-            filteredTemplates = templates.filter(template =>
-                template.title.toLowerCase().includes(search) ||
-                template.content.toLowerCase().includes(search)
-            );
-            renderTemplates();
-        }
-        function renderTemplates() {
-            templatesGrid.innerHTML = filteredTemplates.map(template => `
-                <div class="template-card" onclick="openTemplate(${template.id})">
-                    <div class="template-title"><i class="fas fa-file-lines"></i> ${template.title}</div>
-                    <div class="template-content">${template.content}</div>
-                    <div class="action-buttons">
-                        <button class="btn btn-edit" onclick="editTemplate(${template.id}); event.stopPropagation();">
-                            <i class="fas fa-edit"></i> Редактировать
-                        </button>
-                        <button class="btn btn-delete" onclick="showDeleteTemplateModal(${template.id}); event.stopPropagation();">
-                            <i class="fas fa-trash"></i> Удалить
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-        function showNewTemplateModal() {
-            newTemplateTitle.value = '';
-            newTemplateContent.value = '';
-            showModal(newTemplateModal);
-        }
-        function createNewTemplate() {
-            const title = newTemplateTitle.value.trim();
-            const content = newTemplateContent.value.trim();
-            if (title && content) {
-                const newTemplate = {
-                    id: Math.max(...templates.map(t => t.id)) + 1,
-                    title,
-                    content
-                };
-                templates.push(newTemplate);
-                filteredTemplates = [...templates];
-                renderTemplates();
-                saveData();
-                hideModal(newTemplateModal);
-                showToast('Шаблон создан');
-            } else {
-                showToast('Заполните заголовок и текст', true);
-            }
-        }
-        function openTemplate(templateId) {
-            currentTemplate = templates.find(t => t.id === templateId);
-            templateEditMode = false;
-            renderTemplateViewer();
-            showModal(editTemplateModal);
-        }
-        function editTemplate(templateId) {
-            currentTemplate = templates.find(t => t.id === templateId);
-            templateEditMode = true;
-            renderTemplateViewer();
-            showModal(editTemplateModal);
-        }
-        function renderTemplateViewer() {
-            if (!currentTemplate) return;
-            editTemplateTitle.value = currentTemplate.title;
-            editTemplateContent.value = currentTemplate.content;
-            if (templateEditMode) {
-                editTemplateModal.querySelector('.modal-title').textContent = 'Редактировать шаблон';
-                saveTemplateBtn.textContent = 'Сохранить';
-            } else {
-                editTemplateModal.querySelector('.modal-title').textContent = 'Просмотр шаблона';
-                saveTemplateBtn.textContent = 'Редактировать';
-            }
-        }
-        function saveTemplateChanges() {
-            if (!templateEditMode) {
-                templateEditMode = true;
-                renderTemplateViewer();
-                return;
-            }
-            const title = editTemplateTitle.value.trim();
-            const content = editTemplateContent.value.trim();
-            if (title && content) {
-                currentTemplate.title = title;
-                currentTemplate.content = content;
-                renderTemplates();
-                saveData();
-                hideModal(editTemplateModal);
-                showToast('Шаблон обновлен');
-            } else {
-                showToast('Заполните заголовок и текст', true);
-            }
-        }
-        function showDeleteTemplateModal(templateId) {
-            if (templateId) {
-                currentTemplate = templates.find(t => t.id === templateId);
-            }
-            deleteTemplateText.textContent = `Вы уверены, что хотите удалить шаблон "${currentTemplate.title}"?`;
-            showModal(deleteTemplateModal);
-        }
-        function deleteTemplate() {
-            const index = templates.findIndex(t => t.id === currentTemplate.id);
-            if (index !== -1) {
-                templates.splice(index, 1);
-                filteredTemplates = [...templates];
-                renderTemplates();
-                saveData();
-                hideModal(deleteTemplateModal);
-                hideModal(editTemplateModal);
-                showToast('Шаблон удален');
-            }
-        }
-        function showTemplatesSelectionModal() {
-            templateList.innerHTML = templates.map(template => `
-                <div class="template-item" onclick="selectTemplate(${template.id})">
-                    <div class="template-item-title">${template.title}</div>
-                    <div class="template-item-content">${template.content}</div>
-                </div>
-            `).join('');
-            showModal(templatesSelectionModal);
-        }
-        function selectTemplate(templateId) {
-            const template = templates.find(t => t.id === templateId);
-            if (template) {
-                const chatInput = document.getElementById('chatInput');
-                if (chatInput) {
-                    chatInput.value = template.content;
-                    chatInput.focus();
-                }
-                hideModal(templatesSelectionModal);
-            }
-        }
-        // Users Management
-        function renderUsers() {
-            const filter = userFilter.value;
-            const filteredUsers = users.filter(user => {
-                if (filter === 'all') return true;
-                if (filter === 'operators') return user.role === 'operator1' || user.role === 'operator2';
-                return user.role === filter;
-            });
-            usersGrid.innerHTML = filteredUsers.map(user => `
-                <div class="user-card fade-in">
-                    <div class="user-header">
-                        <div class="user-info">
-                            <div class="user-avatar">${user.avatar}</div>
-                            <div class="user-details">
-                                <h3>${user.name} ${user.lastName}</h3>
-                                <p>${user.email}</p>
-                            </div>
-                        </div>
-                        <div class="user-actions">
-                            <button class="action-btn edit-btn" onclick="editUser(${user.id})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="action-btn delete-btn" onclick="confirmDelete(${user.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="user-footer">
-                        <span class="role-badge">${roleLabels[user.role]}</span>
-                        <div class="status-indicator">
-                            <div class="status-dot-small ${user.status === 'online' ? 'status-online' : 'status-offline'}"></div>
-                            <span class="status-text">${user.status === 'online' ? 'Онлайн' : 'Оффлайн'}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-        function editUser(userId) {
-            userToEdit = users.find(u => u.id === userId);
-            if (!userToEdit) return;
-          
-            // Заполняем форму данными пользователя
-            editUserName.value = userToEdit.name;
-            editUserLastName.value = userToEdit.lastName;
-            editUserLogin.value = userToEdit.login;
-            editUserEmail.value = userToEdit.email;
-            editUserRole.value = userToEdit.role;
-          
-            // Выбираем текущий аватар
-            document.querySelectorAll('.avatar-option').forEach(avatar => {
-                avatar.classList.remove('selected');
-                if (avatar.dataset.avatar === userToEdit.avatar) {
-                    avatar.classList.add('selected');
-                }
-            });
-          
-            showModal(editUserModal);
-        }
-        function saveUser() {
-            if (!userToEdit) return;
-          
-            const selectedAvatar = document.querySelector('.avatar-option.selected');
-          
-            // Обновляем данные пользователя
-            userToEdit.name = editUserName.value;
-            userToEdit.lastName = editUserLastName.value;
-            userToEdit.login = editUserLogin.value;
-            userToEdit.email = editUserEmail.value;
-            userToEdit.role = editUserRole.value;
-            userToEdit.avatar = selectedAvatar ? selectedAvatar.dataset.avatar : userToEdit.avatar;
-          
-            renderUsers();
-            hideModal(editUserModal);
-            saveData();
-          
-            showToast('Данные пользователя обновлены');
-        }
-        function showPasswordResetModal() {
-            if (!userToEdit) return;
-          
-            // Генерируем ссылку для сброса пароля
-            const token = generateToken();
-            const resetLinkValue = `${window.location.origin}/reset-password?token=${token}&user=${userToEdit.id}`;
-          
-            resetLink.textContent = resetLinkValue;
-            copyResetLink.classList.remove('copied');
-            copyResetLink.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку';
-          
-            showModal(passwordResetModal);
-        }
-        function copyResetLinkToClipboard() {
-            const textToCopy = resetLink.textContent;
-          
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                copyResetLink.classList.add('copied');
-                copyResetLink.innerHTML = '<i class="fas fa-check"></i> Ссылка скопирована';
-              
-                setTimeout(() => {
-                    copyResetLink.classList.remove('copied');
-                    copyResetLink.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку';
-                }, 2000);
-            }).catch(err => {
-                console.error('Ошибка копирования: ', err);
-                showToast('Не удалось скопировать ссылку', true);
-            });
-        }
-        function generateToken() {
-            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        }
-        function confirmDelete(userId) {
-            userToDelete = userId;
-            const user = users.find(u => u.id === userId);
-            deleteUserText.textContent = `Вы уверены, что хотите удалить пользователя ${user.name} ${user.lastName} с должностью ${roleLabels[user.role]}?`;
-            showModal(deleteUserModal);
-        }
-        function deleteUser() {
-            if (userToDelete) {
-                const index = users.findIndex(u => u.id === userToDelete);
-                if (index !== -1) {
-                    users.splice(index, 1);
-                    renderUsers();
-                    saveData();
-                    showToast('Пользователь удален');
-                }
-                userToDelete = null;
-                hideModal(deleteUserModal);
-            }
-        }
-        function addNewUser() {
-            const name = document.getElementById('newUserName').value;
-            const email = document.getElementById('newUserEmail').value;
-            const role = document.getElementById('newUserRole').value;
-            if (name && email) {
-                const newUser = {
-                    id: Math.max(...users.map(u => u.id)) + 1,
-                    name,
-                    lastName: '',
-                    login: email.split('@')[0],
-                    email,
-                    role,
-                    status: 'online',
-                    avatar: '👤',
-                    passwordSet: false
-                };
-                users.push(newUser);
-                renderUsers();
-                hideModal(addUserModal);
-                saveData();
-              
-                // Reset form
-                document.getElementById('newUserName').value = '';
-                document.getElementById('newUserEmail').value = '';
-                document.getElementById('newUserRole').value = 'operator1';
-              
-                showToast('Пользователь добавлен');
-            } else {
-                showToast('Пожалуйста, заполните все поля', true);
-            }
-        }
-      
-        // Notification functions
-        function updateNotificationBadge() {
-            const unreadCount = notifications.filter(n => !n.read).length;
-            if (unreadCount > 0) {
-                notificationBadge.textContent = unreadCount;
-                notificationBadge.classList.remove('hidden');
-            } else {
-                notificationBadge.classList.add('hidden');
-            }
-        }
-      
-        function showNotificationsModal() {
-            const notificationList = document.getElementById('notificationList');
-          
-            if (notifications.length > 0) {
-                notificationList.innerHTML = notifications.map(notification => `
-                    <div class="notification-item ${notification.read ? 'read' : ''}">
-                        <button class="mark-read-btn ${notification.read ? 'checked' : ''}" onclick="toggleNotificationRead(${notification.id})">
-                            <i class="fas fa-${notification.read ? 'check' : 'circle'}"></i>
-                        </button>
-                        <div class="notification-title">${notification.title}</div>
-                        <div class="notification-message">${notification.message}</div>
-                        <div class="notification-time">${getTimeAgo(notification.time)}</div>
-                    </div>
-                `).join('');
-            } else {
-                notificationList.innerHTML = `
-                    <div class="notification-item">
-                        <div class="notification-title">Нет уведомлений</div>
-                        <div class="notification-message">Все уведомления обработаны</div>
-                    </div>
-                `;
-            }
-          
-            showModal(notificationsModal);
-        }
-      
-        function toggleNotificationRead(notificationId) {
-            const notification = notifications.find(n => n.id === notificationId);
-            if (notification) {
-                notification.read = !notification.read;
-                saveData();
-                updateNotificationBadge();
-                showNotificationsModal();
-              
-                const action = notification.read ? 'прочитали' : 'сделали активным';
-                showNotificationToast(`Вы ${action} уведомление`);
-            }
-        }
-      
-        function markAllNotificationsAsRead() {
-            let hasUnread = false;
-            notifications.forEach(notification => {
-                if (!notification.read) {
-                    notification.read = true;
-                    hasUnread = true;
-                }
-            });
-          
-            if (hasUnread) {
-                saveData();
-                updateNotificationBadge();
-                showNotificationsModal();
-                showNotificationToast('Все уведомления отмечены как прочитанные');
-            } else {
-                showToast('Нет непрочитанных уведомлений');
-            }
-        }
-      
-        function showNotificationToast(message) {
-            notificationToastMessage.textContent = message;
-            notificationToast.classList.remove('hidden');
-          
-            setTimeout(() => {
-                notificationToast.classList.add('hidden');
-            }, 2000);
-        }
-      
-        function checkForNewTickets() {
-            // Simulate receiving new tickets
-            if (Math.random() < 0.3) { // 30% chance
-                const newTicket = {
-                    id: Math.max(...tickets.map(t => t.id)) + 1,
-                    user: { name: 'Случайный пользователь', email: 'random@example.com', avatar: '👤' },
-                    subject: 'Новое автоматическое обращение',
-                    message: 'Это тестовое обращение, созданное автоматически',
-                    status: 'new',
-                    priority: 'medium',
-                    channel: 'email',
-                    category: 'Технические проблемы',
-                    created: new Date(),
-                    updated: new Date(),
-                    assignee: null,
-                    messages: [
-                        { sender: 'user', text: 'Это тестовое обращение, созданное автоматически', time: new Date() }
-                    ]
-                };
-              
-                tickets.push(newTicket);
-                filteredTickets = [...tickets];
-              
-                // Add notification
-                const newNotification = {
-                    id: Math.max(...notifications.map(n => n.id)) + 1,
-                    title: 'Новое обращение',
-                    message: `Пользователь ${newTicket.user.name} создал новое обращение: ${newTicket.subject}`,
-                    time: new Date(),
-                    read: false
-                };
-                notifications.push(newNotification);
-              
-                updateDashboardStats();
-                renderStatusStats();
-                renderRecentTickets();
-                updateNotificationBadge();
-                saveData();
-              
-                if (currentPage === 'tickets') {
-                    renderTicketsList();
-                }
-              
-                showToast('Получено новое обращение');
-            }
-        }
-        // Utility Functions
-        function getTimeAgo(date) {
-            const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            if (seconds < 60) return 'только что';
-            const minutes = Math.floor(seconds / 60);
-            if (minutes < 60) return `${minutes} мин назад`;
-            const hours = Math.floor(minutes / 60);
-            if (hours < 24) return `${hours} ч назад`;
-            const days = Math.floor(hours / 24);
-            return `${days} дн назад`;
-        }
-        function formatTime(date) {
-            return new Date(date).toLocaleTimeString('ru-RU', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-        function showModal(modal) {
-            modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Запрещаем прокрутку страницы под модальным окном
-          
-            // Автоматическая прокрутка к верху модального окна
-            setTimeout(() => {
-                modal.scrollTop = 0;
-            }, 10);
-        }
-        function hideModal(modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Разрешаем прокрутку
-        }
-      
-        function showToast(message, isError = false) {
-            toastMessage.textContent = message;
-            toast.classList.remove('error');
-            toast.classList.remove('hidden');
-          
-            if (isError) {
-                toast.classList.add('error');
-                toast.querySelector('i').className = 'fas fa-exclamation-circle';
-            } else {
-                toast.querySelector('i').className = 'fas fa-check-circle';
-            }
-          
-            toast.classList.add('show');
-          
-            setTimeout(() => {
-                toast.classList.remove('show');
-                toast.classList.add('hidden');
-            }, 3000);
-        }
-      
-        function saveData() {
-            localStorage.setItem('smartSupportTickets', JSON.stringify(tickets));
-            localStorage.setItem('smartSupportUsers', JSON.stringify(users));
-            localStorage.setItem('smartSupportNotifications', JSON.stringify(notifications));
-            localStorage.setItem('smartSupportArticles', JSON.stringify(articles));
-            localStorage.setItem('smartSupportTemplates', JSON.stringify(templates));
-        }
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', init);
-      
-        // Simulate receiving new tickets periodically
-        setInterval(checkForNewTickets, 30000); // Check every 30 seconds
-    </script>
-</body>
-</html>
+            // Get file
