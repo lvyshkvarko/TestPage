@@ -3927,236 +3927,151 @@
         .editor-content.html-mode:focus {
             outline: 1px solid var(--primary-color);
         }
-        /* Улучшение адаптивности в разделе обращений */
+        /* НОВЫЕ СТИЛИ ДЛЯ ОПТИМИЗАЦИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
         @media (max-width: 1024px) and (orientation: landscape) {
+            /* Уменьшаем высоту хедера чата */
+            .chat-view-header {
+                padding: 8px 12px;
+                min-height: auto;
+            }
+            
+            /* Уменьшаем размер аватара и текста */
+            .chat-view-avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            
+            .chat-view-details h3 {
+                font-size: 13px;
+                margin-bottom: 2px;
+            }
+            
+            .chat-view-details p {
+                font-size: 11px;
+            }
+            
+            /* Компактные кнопки */
+            .status-dropdown-btn,
+            .priority-dropdown-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+                min-width: 100px;
+            }
+            
+            .btn-secondary,
+            .btn-primary {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+            
+            /* Уменьшаем отступы в области сообщений */
+            .chat-messages {
+                padding: 8px 12px;
+                max-height: calc(100vh - 160px) !important;
+            }
+            
+            /* Компактные сообщения */
+            .message {
+                padding: 8px 12px;
+                margin-bottom: 4px;
+            }
+            
+            .message-text {
+                font-size: 12px;
+                line-height: 1.3;
+            }
+            
+            .message-time {
+                font-size: 9px;
+                margin-top: 2px;
+            }
+            
+            /* Уменьшаем высоту области ввода */
             .chat-input-container {
-                padding: 8px;
+                padding: 8px 12px;
             }
-          
-            .chat-input-row {
-                gap: 4px;
-            }
-          
+            
             .chat-input {
                 min-height: 36px;
                 padding: 8px 12px;
                 font-size: 13px;
-                max-height: 72px;
             }
-          
+            
+            .attach-btn,
             .send-btn {
                 padding: 8px 12px;
-                font-size: 12px;
             }
-          
-            .attach-btn {
-                padding: 8px;
-            }
-          
-            .chat-messages {
-                padding: 8px;
-                gap: 8px;
-            }
-          
-            .message {
-                padding: 8px 12px;
-            }
-          
-            .message-text {
-                font-size: 13px;
-            }
-          
-            .message-time {
-                font-size: 10px;
-            }
-          
-            .tickets-header {
-                padding: 0 8px;
-                margin-bottom: 8px;
-            }
-          
-            .tickets-controls {
-                gap: 8px;
-            }
-          
-            .search-input {
-                min-width: 120px;
-            }
-          
-            .btn-primary {
-                padding: 8px 12px;
-            }
-          
-            .page-content {
-                padding: 16px 8px;
-            }
-          
-            .ticket-chat-view {
-                border-radius: 0;
-            }
-          
-            .chat-view-header {
-                padding: 8px 12px;
-            }
-          
-            .chat-view-avatar {
-                width: 36px;
-                height: 36px;
-            }
-          
-            .chat-view-details h3 {
-                font-size: 14px;
-            }
-          
-            .chat-view-details p {
-                font-size: 12px;
-            }
-          
-            .status-dropdown-btn,
-            .priority-dropdown-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-                min-width: 100px;
-            }
-          
-            .btn-secondary, .btn-primary {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-          
+            
+            /* Уменьшаем высоту списка обращений */
             .tickets-list-header {
-                padding: 8px 12px;
+                padding: 12px;
             }
-          
-            .tickets-list-title {
-                font-size: 16px;
-            }
-          
+            
             .ticket-chat-card {
                 padding: 8px 12px;
             }
-          
+            
             .chat-user-avatar {
-                width: 32px;
-                height: 32px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
             }
-          
+            
             .chat-user-name {
-                font-size: 13px;
+                font-size: 12px;
             }
-          
+            
             .chat-time {
-                font-size: 11px;
-            }
-          
-            .chat-status-badge {
-                padding: 4px 8px;
                 font-size: 10px;
             }
-          
+            
             .chat-subject {
                 font-size: 12px;
             }
-          
+            
             .chat-last-message {
                 font-size: 11px;
-            }
-          
-            .chat-channel {
-                font-size: 10px;
+                -webkit-line-clamp: 1;
             }
         }
-        /* Улучшение адаптивности при открытой клавиатуре (предполагая уменьшение высоты viewport) */
-        @media (max-height: 400px) {
-            .chat-messages {
-                gap: 4px;
-            }
-          
-            .message {
+        
+        /* Дополнительная оптимизация для очень маленьких экранов в горизонтальной ориентации */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .chat-view-header {
                 padding: 6px 10px;
             }
-          
-            .message-text {
-                font-size: 12px;
+            
+            .chat-messages {
+                padding: 6px 10px;
+                max-height: calc(100vh - 140px) !important;
             }
-          
-            .message-time {
-                font-size: 9px;
+            
+            .message {
+                max-width: 90%;
+                padding: 6px 10px;
             }
-          
-            .agent-name {
-                font-size: 11px;
-            }
-          
-            .date-header {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-          
+            
             .chat-input-container {
-                padding: 8px;
+                padding: 6px 10px;
             }
-          
+            
             .chat-input {
-                min-height: 40px;
-                padding: 8px 12px;
-                font-size: 13px;
+                min-height: 32px;
+                padding: 6px 10px;
             }
-          
-            .send-btn {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-          
-            .attach-btn {
-                padding: 8px;
-            }
-          
-            .chat-view-header {
-                padding: 8px;
-            }
-          
-            .chat-view-actions {
-                gap: 4px;
-            }
-          
-            .mobile-header-actions {
-                gap: 4px;
-            }
-          
-            .action-buttons-row {
-                gap: 4px;
-            }
-          
+            
             .status-dropdown-btn,
             .priority-dropdown-btn {
-                padding: 6px 10px;
-                font-size: 12px;
-                min-width: 100px;
+                min-width: 80px;
+                font-size: 10px;
+                padding: 4px 8px;
             }
-          
-            .btn-secondary, .btn-primary {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-          
-            .close-chat-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 14px;
-            }
-          
-            .tickets-container {
-                height: calc(100vh - 100px);
-            }
-          
-            .tickets-header {
-                margin-bottom: 8px;
-            }
-          
-            .page-title {
-                font-size: 24px;
-                margin-bottom: 8px;
+            
+            .btn-secondary,
+            .btn-primary {
+                padding: 4px 8px;
+                font-size: 10px;
             }
         }
     </style>
@@ -4956,7 +4871,7 @@
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проверим вашу оплату', time: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000 + 30 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проблема решена, попробуйте сейчас', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
                     { sender: 'user', text: 'Спасибо, всё работает!', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000) },
-                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000) }
+                    { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 1000 + 15 * 60 * 1000) }
                 ]
             }
         ];
@@ -5460,11 +5375,12 @@
           
             // Close dropdown when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn')) {
+                if (!e.target.matches('.status-dropdown-btn') && !e.target.matches('.priority-dropdown-btn') && !e.target.matches('.filters-btn')) {
                     const dropdowns = document.querySelectorAll('.status-dropdown-content, .priority-dropdown-content');
                     dropdowns.forEach(dropdown => {
                         dropdown.classList.remove('show');
                     });
+                    document.querySelector('.filters-wrapper').classList.remove('show');
                 }
             });
           
