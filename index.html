@@ -3420,7 +3420,7 @@
             resize: vertical;
         }
         .editor-content:focus {
-           outline: none;
+            outline: none;
         }
         .article-actions {
             display: flex;
@@ -3918,6 +3918,64 @@
                 font-size: 24px;
                 margin-bottom: 8px;
             }
+        }
+        /* Новые стили для кнопки полноэкранного режима */
+        .toggle-full-btn {
+            padding: 10px;
+            background: none;
+            border: none;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: var(--radius);
+        }
+        .toggle-full-btn:hover {
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+        .ticket-chat-view.full-messages .chat-view-header {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .ticket-chat-view.full-messages .chat-input-container {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .ticket-chat-view.full-messages .chat-messages {
+            padding: 10px;
+            max-height: 100vh !important;
+            height: 100vh;
+        }
+        .full-messages-exit {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 12px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: none;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        .full-messages-exit:hover {
+            transform: scale(1.1);
+        }
+        .ticket-chat-view.full-messages .full-messages-exit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
@@ -5606,6 +5664,9 @@
                                     `).join('')}
                                 </div>
                             </div>
+                            ${isMobileLandscape ? `<button class="toggle-full-btn" onclick="toggleFullMessages()">
+                                <i class="fas fa-expand"></i>
+                            </button>` : ''}
                         </div>
                         <div class="action-buttons-row">
                             <button class="btn-secondary" onclick="transferToSecondLine()">
@@ -5638,13 +5699,16 @@
                         <input type="file" id="fileInput" class="file-input" multiple>
                     </div>
                 </div>
+                <button class="full-messages-exit" onclick="toggleFullMessages()">
+                    <i class="fas fa-compress"></i>
+                </button>
             `;
             // Scroll to bottom of messages
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-            // Add enterkey support for message input
+            // Add enter key support for message input
             const chatInput = document.getElementById('chatInput');
             if (chatInput) {
                 chatInput.addEventListener('keydown', (e) => {
@@ -5932,6 +5996,9 @@
             saveData();
          
             showToast('Обращение решено');
+        }
+        function toggleFullMessages() {
+            ticketChatView.classList.toggle('full-messages');
         }
         function createNewTicket() {
             const subject = document.getElementById('ticketSubject').value;
@@ -6455,7 +6522,7 @@
                 </div>
             `).join('');
         }
-        function editUser(userId) {
+       function editUser(userId) {
             userToEdit = users.find(u => u.id === userId);
             if (!userToEdit) return;
          
