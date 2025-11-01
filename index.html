@@ -127,9 +127,6 @@
             background: var(--primary-dark);
         }
       
-        .focus-mode .focus-toggle-btn i {
-            transform: rotate(180deg);
-        }
         /* Обеспечиваем правильное позиционирование в обычном режиме */
         .ticket-chat-view {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -156,7 +153,12 @@
             width: 256px;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            overflow-y: auto;
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .sidebar::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
         .sidebar.closed {
             width: 80px;
@@ -1866,7 +1868,6 @@
                 transform: translateX(-100%);
                 width: 280px;
                 box-shadow: var(--shadow-lg);
-                overflow-y: auto;
             }
        
             .sidebar.open {
@@ -1898,6 +1899,7 @@
                 display: block;
                 animation: fadeIn 0.3s ease-out;
             }
+       
             .chat-unread {
                 display: none;
             }
