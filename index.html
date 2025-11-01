@@ -4020,80 +4020,58 @@
                 margin-bottom: 8px;
             }
         }
-    /* Core fixes for focus mode */
-.focus-mode #chatViewContent {
-    height: 100vh; /* Full viewport height */
-    padding-bottom: 0; /* No extra padding needed here */
+        /* Prevent body overscroll in focus mode (fixes shifting/empty space on scroll) */
+.focus-mode {
+    overflow: hidden !important;
 }
 
+/* Make header sticky in focus mode (prevents it from scrolling away) */
+.focus-mode .chat-view-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1002 !important; /* Higher than input's z-index: 1001 */
+    background: var(--bg-white) !important; /* Ensure it doesn't become transparent */
+}
+
+/* Remove fixed calc height for messages in focus mode; use flex instead (fixes gaps and incomplete scrolling) */
 .focus-mode .chat-messages {
-    height: auto !important; /* Remove explicit height; let flex handle it */
-    flex: 1 1 auto; /* Grow to fill available space */
-    min-height: 0;
-    padding-bottom: var(--input-height, 80px); /* Adaptive padding to prevent overlap with fixed input; adjust var if needed */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-    overscroll-behavior: contain; /* Prevent rubber banding/overscroll pulling the page */
+    height: auto !important; /* Override the calc(100vh - 180px) */
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    padding-bottom: 0 !important; /* Remove extra padding that could create gaps */
 }
 
-.focus-mode .chat-input-container {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1001;
-    background: var(--bg-white);
-    border-top: 1px solid var(--border-color);
-    padding: 16px 20px;
-    box-sizing: border-box;
-    /* No height override; let content determine */
+/* Ensure no extra space between components */
+.focus-mode #chatViewContent {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important; /* Prevent internal overscroll */
 }
 
-/* Variable for input height (for easy adjustment) */
-:root {
-    --input-height: 80px; /* Approximate height of input + padding; measure in dev tools and adjust */
-}
-
-/* Fix scrolling and gaps in landscape mode */
+/* Adjust for mobile landscape (smaller vh, wrapped header) to prevent gaps */
 @media (max-width: 1024px) and (orientation: landscape) {
     .focus-mode .chat-messages {
-        max-height: none !important; /* Remove conflicting max-height */
-        padding-bottom: var(--input-height); /* Ensure padding matches input height */
-        overscroll-behavior: contain;
+        max-height: none !important; /* Remove any max-height overrides */
     }
-
-    .focus-mode #chatViewContent {
-        height: 100vh;
-    }
-
     .focus-mode .chat-input-container {
-        padding: 8px 12px; /* Smaller padding in landscape to save space */
-        --input-height: 60px; /* Adjust for smaller screen height */
-    }
-
-    .focus-mode .chat-view-header {
-        padding: 8px 12px; /* Compact header */
-    }
-
-    /* Ensure full scroll visibility */
-    .focus-mode .chat-messages::-webkit-scrollbar {
-        width: 4px;
+        padding: 8px 12px !important; /* Reduce padding to minimize potential gaps */
     }
 }
 
-/* General improvements for scrolling and no gaps */
+/* Fix potential rubber banding on iOS (add to body or focus-mode) */
+body.focus-mode,
+.focus-mode .chat-messages {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
+}
+
+/* Ensure chat expands fully without empty space at bottom */
+.ticket-chat-view {
+    overflow: hidden !important; /* Prevent parent scrolling */
+}
 .chat-messages {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* Auto-scroll to bottom by default */
-    overscroll-behavior-y: contain; /* Prevent pull-to-refresh or bounce affecting layout */
-}
-
-/* Fix for when keyboard opens (reduces viewport height) */
-@media (max-height: 400px) {
-    .focus-mode .chat-messages {
-        padding-bottom: calc(var(--input-height) + 20px); /* Extra padding if keyboard compresses view */
-    }
+    box-sizing: border-box !important; /* Include padding in height */
 }
     </style>
 </head>
@@ -4462,11 +4440,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Toast notification -->
-    <div class="toast hidden" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Операция выполнена успешно</span>
     </div>
     <!-- Toast notification -->
     <div class="toast hidden" id="toast">
@@ -5865,22 +5838,7 @@
             // Setup file attachment functionality
             setupFileAttachment();
 
-// In renderChatView(), after chatViewContent.innerHTML = ...
-const inputContainer = document.querySelector('.chat-input-container');
-if (inputContainer) {
-    const inputHeight = inputContainer.offsetHeight;
-    document.documentElement.style.setProperty('--input-height', `${inputHeight}px`);
-}
-
-// In renderChatView()
-const chatMessages = document.getElementById('chatMessages');
-if (chatMessages) {
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    // Force reflow if needed (for iOS quirks)
-    setTimeout(() => {
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }, 0);
-}
+            setTimeout(adjustChatHeights, 0); // Delay to allow DOM reflow
         }
         // File attachment functionality
         function setupFileAttachment() {
@@ -6993,6 +6951,9 @@ if (chatMessages) {
                    
                     // Добавляем обработчик клавиши Escape
                     document.addEventListener('keydown', handleEscapeKey);
+                   
+                    // Adjust heights immediately
+                    setTimeout(adjustChatHeights, 0);
                 } else {
                     if (text) text.textContent = 'Режим фокуса';
                     if (icon) icon.className = 'fas fa-expand';
@@ -7001,6 +6962,9 @@ if (chatMessages) {
                     document.removeEventListener('keydown', handleEscapeKey);
                 }
             }
+           
+            // Re-render chat to apply changes
+            if (currentTicket) renderChatView();
         }
        
         function handleEscapeKey(event) {
@@ -7008,6 +6972,31 @@ if (chatMessages) {
                 toggleFocusMode();
             }
         }
+
+        // New function to dynamically adjust chat heights in focus mode (fixes gaps due to variable header height)
+function adjustChatHeights() {
+    if (!document.body.classList.contains('focus-mode')) return;
+
+    const header = document.querySelector('.chat-view-header');
+    const input = document.querySelector('.chat-input-container');
+    const messages = document.querySelector('.chat-messages');
+
+    if (header && input && messages) {
+        const headerHeight = header.offsetHeight;
+        const inputHeight = input.offsetHeight;
+        messages.style.height = `calc(100vh - ${headerHeight + inputHeight}px)`;
+        
+        // Re-scroll to bottom after adjustment (fixes history not fully visible)
+        messages.scrollTop = messages.scrollHeight;
+    }
+}
+
+window.addEventListener('resize', () => {
+    if (document.body.classList.contains('focus-mode')) {
+        adjustChatHeights();
+    }
+    handleResize(); // Your existing resize logic
+});
         // Initialize the app
         document.addEventListener('DOMContentLoaded', init);
     
