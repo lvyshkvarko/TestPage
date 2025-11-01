@@ -1793,6 +1793,10 @@
                 display: block;
                 animation: fadeIn 0.3s ease-out;
             }
+            /* Make sidebar-nav scrollable on mobile */
+            .sidebar-nav {
+                overflow-y: auto;
+            }
         }
         /* Scrollbar styling */
         ::-webkit-scrollbar {
@@ -5664,9 +5668,6 @@
                                     `).join('')}
                                 </div>
                             </div>
-                            ${isMobileLandscape ? `<button class="toggle-full-btn" onclick="toggleFullMessages()">
-                                <i class="fas fa-expand"></i>
-                            </button>` : ''}
                         </div>
                         <div class="action-buttons-row">
                             <button class="btn-secondary" onclick="transferToSecondLine()">
@@ -5699,9 +5700,6 @@
                         <input type="file" id="fileInput" class="file-input" multiple>
                     </div>
                 </div>
-                <button class="full-messages-exit" onclick="toggleFullMessages()">
-                    <i class="fas fa-compress"></i>
-                </button>
             `;
             // Scroll to bottom of messages
             const chatMessages = document.getElementById('chatMessages');
