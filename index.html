@@ -72,7 +72,8 @@
         }
         
         .focus-mode .chat-messages {
-            height: calc(100vh - 180px);
+            height: calc(100vh - 140px) !important;
+            max-height: none !important;
         }
         
         .focus-mode .chat-input-container {
@@ -82,7 +83,7 @@
             right: 0;
             background: var(--bg-white);
             border-top: 1px solid var(--border-color);
-            padding: 16px 20px;
+            padding: 12px;
             z-index: 1001;
         }
         
@@ -139,95 +140,6 @@
         
         .focus-mode .focus-toggle-btn i {
             transform: rotate(180deg);
-        }
-
-        /* ИСПРАВЛЕНИЕ ДЛЯ РЕЖИМА ФОКУСА НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .focus-mode .chat-messages {
-                height: calc(100vh - 140px) !important;
-                max-height: calc(100vh - 140px) !important;
-                padding-bottom: 20px;
-            }
-            
-            .focus-mode .chat-input-container {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                background: var(--bg-white);
-                border-top: 1px solid var(--border-color);
-                padding: 12px 16px;
-                z-index: 1001;
-            }
-            
-            .focus-mode .chat-view-header {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 1001;
-                background: var(--bg-white);
-                padding: 12px 16px;
-                border-bottom: 1px solid var(--border-color);
-            }
-            
-            .focus-mode #chatViewContent {
-                padding-top: 70px; /* Высота заголовка */
-                padding-bottom: 80px; /* Высота поля ввода */
-            }
-            
-            .focus-mode .chat-messages {
-                margin-top: 0;
-                padding-top: 0;
-            }
-        }
-
-        /* ДОПОЛНИТЕЛЬНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .focus-mode .chat-messages {
-                height: calc(100vh - 120px) !important;
-                max-height: calc(100vh - 120px) !important;
-            }
-            
-            .focus-mode .chat-input-container {
-                padding: 8px 12px;
-            }
-            
-            .focus-mode .chat-view-header {
-                padding: 8px 12px;
-            }
-            
-            .focus-mode #chatViewContent {
-                padding-top: 60px;
-                padding-bottom: 70px;
-            }
-        }
-
-        /* ИСПРАВЛЕНИЕ ПРОКРУТКИ В РЕЖИМЕ ФОКУСА */
-        .focus-mode .chat-messages {
-            -webkit-overflow-scrolling: touch;
-            overflow-y: auto;
-            overscroll-behavior: contain;
-        }
-
-        /* ОБЕСПЕЧИВАЕМ ПРАВИЛЬНУЮ ВЫСОТУ ДЛЯ ВСЕХ УСТРОЙСТВ */
-        .focus-mode .ticket-chat-view {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        .focus-mode #chatViewContent {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .focus-mode .chat-messages {
-            flex: 1;
-            min-height: 0;
-            overflow-y: auto;
         }
 
         /* Sidebar */
@@ -1062,15 +974,12 @@
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            /* allow the chat view to fill available height and let children flex */
             height: 100%;
             min-height: 0;
             overflow: hidden;
             transition: var(--transition);
             box-shadow: var(--shadow);
         }
-        /* Ensure inner content uses a column flex layout so messages area can flex
-           and the input stays pinned to the bottom. */
         #chatViewContent {
             display: flex;
             flex-direction: column;
@@ -1351,8 +1260,6 @@
         .priority-medium { background: #f59e0b; }
         .priority-high { background: #ef4444; }
         .chat-messages {
-            /* flex so it can grow/shrink inside the chat view; min-height:0
-               allows it to shrink when there are few messages */
             flex: 1 1 auto;
             min-height: 0;
             overflow-y: auto;
@@ -1361,6 +1268,8 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
         }
         @media (max-width: 1024px) {
             .chat-messages {
@@ -1447,11 +1356,12 @@
             background: var(--bg-white);
             padding-top: 16px;
             padding-bottom: 16px;
+            flex-shrink: 0;
         }
         .chat-input-row {
             display: flex;
             gap: 12px;
-            align-items: center; /* Center align items vertically */
+            align-items: center;
         }
         .chat-input {
             flex: 1;
@@ -1475,11 +1385,10 @@
             display: inline-block;
         }
         @media (max-width: 768px) {
-            /* On mobile hide the send button text, show only the icon */
             .send-text {
                 display: none;
             }
-            /* Make all input row buttons larger on mobile */
+         
             .chat-input-row .send-btn,
             .chat-input-row .attach-btn {
                 padding: 12px;
@@ -1487,7 +1396,6 @@
                 height: 48px;
             }
          
-            /* Add margin to send button to move it slightly right */
             .chat-input-row .send-btn {
                 margin-left: 12px;
             }
@@ -1497,7 +1405,6 @@
                 font-size: 18px;
             }
          
-            /* Move paper plane icon slightly right inside the button */
             .chat-input-row .send-btn i.fa-paper-plane {
                 margin-left: 2px;
             }
@@ -2310,7 +2217,8 @@
             }
          
             .chat-messages {
-                max-height: calc(100vh - 300px);
+                height: calc(100vh - 160px) !important;
+                max-height: none !important;
             }
          
             .chat-view-header {
@@ -2570,7 +2478,7 @@
          
             .chat-messages {
                 flex: 1;
-                max-height: calc(100vh - 160px) !important;
+                height: calc(100vh - 160px) !important;
                 padding: 8px 12px;
                 overflow-y: auto;
                 display: flex;
@@ -2641,7 +2549,7 @@
         /* Специфические улучшения для очень маленьких экранов в горизонтальной ориентации */
         @media (max-height: 400px) and (orientation: landscape) {
             .chat-messages {
-                max-height: calc(100vh - 140px) !important;
+                height: calc(100vh - 140px) !important;
                 padding: 4px 8px;
             }
          
@@ -3259,7 +3167,7 @@
             }
          
             .chat-messages {
-                max-height: calc(100vh - 200px) !important;
+                height: calc(100vh - 200px) !important;
             }
          
             .chat-input-container {
@@ -3295,7 +3203,7 @@
             }
          
             .chat-messages {
-                max-height: calc(100vh - 350px);
+                height: calc(100vh - 350px);
             }
          
             .chat-input-container {
@@ -3779,7 +3687,7 @@
             transition: var(--transition);
             border: 2px solid transparent;
             background: var(--bg-light);
-            font-size: 20px; /* Увеличиваем размер эмодзи */
+            font-size: 20px;
         }
         .article-icon-option:hover {
             transform: scale(1.1);
@@ -5505,7 +5413,9 @@
          
             // Перерисовываем чат при изменении ориентации
             if (currentTicket && widthChanged) {
-                renderChatView();
+                setTimeout(() => {
+                    renderChatView();
+                }, 300);
             }
         }
         // Sidebar Toggle
@@ -5698,11 +5608,6 @@
             renderTicketsList();
             renderChatView();
          
-            // Обновляем layout если активен режим фокуса
-            if (document.body.classList.contains('focus-mode')) {
-                setTimeout(updateFocusModeLayout, 100);
-            }
-         
             // On mobile, show the chat view in full screen
             const isMobilePortrait = window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches;
             if (isMobilePortrait) {
@@ -5848,11 +5753,18 @@
                 </div>
             `;
             
-            // Остальной код функции renderChatView остается без изменений
             // Scroll to bottom of messages
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
+                // Небольшая задержка для гарантии отрисовки DOM
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // Дополнительная проверка через следующий фрейм
+                    requestAnimationFrame(() => {
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    });
+                }, 100);
             }
             
             // Add enterkey support for message input
@@ -6121,6 +6033,14 @@
             renderStatusStats();
             renderRecentTickets();
             saveData();
+         
+            // Принудительная прокрутка вниз после отправки
+            setTimeout(() => {
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }, 150);
          
             showToast('Сообщение отправлено');
         }
@@ -6987,14 +6907,6 @@
                     if (text) text.textContent = 'Обычный режим';
                     if (icon) icon.className = 'fas fa-compress';
                     
-                    // Автоматическая прокрутка к низу при активации режима фокуса
-                    setTimeout(() => {
-                        const chatMessages = document.getElementById('chatMessages');
-                        if (chatMessages) {
-                            chatMessages.scrollTop = chatMessages.scrollHeight;
-                        }
-                    }, 100);
-                    
                     // Показываем уведомление
                     showToast('Режим фокуса включен. Нажмите Esc для выхода.');
                     
@@ -7015,29 +6927,6 @@
                 toggleFocusMode();
             }
         }
-
-        // ФУНКЦИЯ ДЛЯ ПЕРЕСЧЕТА ВЫСОТЫ ПРИ ИЗМЕНЕНИИ РАЗМЕРА ОКНА
-        function updateFocusModeLayout() {
-            if (document.body.classList.contains('focus-mode')) {
-                const chatMessages = document.getElementById('chatMessages');
-                if (chatMessages) {
-                    // Принудительный пересчет высоты
-                    setTimeout(() => {
-                        chatMessages.style.height = 'auto';
-                        const headerHeight = document.querySelector('.focus-mode .chat-view-header')?.offsetHeight || 70;
-                        const inputHeight = document.querySelector('.focus-mode .chat-input-container')?.offsetHeight || 80;
-                        const viewportHeight = window.innerHeight;
-                        
-                        chatMessages.style.height = `calc(${viewportHeight}px - ${headerHeight + inputHeight}px)`;
-                        chatMessages.scrollTop = chatMessages.scrollHeight;
-                    }, 50);
-                }
-            }
-        }
-
-        // ОБРАБОТЧИК ИЗМЕНЕНИЯ РАЗМЕРА ОКНА
-        window.addEventListener('resize', updateFocusModeLayout);
-
         // Initialize the app
         document.addEventListener('DOMContentLoaded', init);
      
