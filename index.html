@@ -39,6 +39,108 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
+        
+        /* Стили для режима фокуса */
+        .focus-mode .sidebar,
+        .focus-mode .header,
+        .focus-mode .tickets-list,
+        .focus-mode .tickets-header {
+            opacity: 0;
+            transform: translateX(-20px);
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .focus-mode .ticket-chat-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 0;
+            border: none;
+            z-index: 1000;
+            background: var(--bg-white);
+            animation: expandChat 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .focus-mode .chat-view-header {
+            border-radius: 0;
+            padding: 16px 20px;
+            background: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .focus-mode .chat-messages {
+            height: calc(100vh - 180px);
+        }
+        
+        .focus-mode .chat-input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 20px;
+            z-index: 1001;
+        }
+        
+        @keyframes expandChat {
+            from {
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .focus-toggle-btn {
+            padding: 8px 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-medium);
+        }
+        
+        .focus-toggle-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+            color: var(--primary-dark);
+        }
+        
+        .focus-mode .focus-toggle-btn {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .focus-mode .focus-toggle-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Обеспечиваем правильное позиционирование в обычном режиме */
+        .ticket-chat-view {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Анимация для кнопки */
+        .focus-toggle-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .focus-mode .focus-toggle-btn i {
+            transform: rotate(180deg);
+        }
+
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -871,15 +973,12 @@
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            /* allow the chat view to fill available height and let children flex */
             height: 100%;
             min-height: 0;
             overflow: hidden;
             transition: var(--transition);
             box-shadow: var(--shadow);
         }
-        /* Ensure inner content uses a column flex layout so messages area can flex
-           and the input stays pinned to the bottom. */
         #chatViewContent {
             display: flex;
             flex-direction: column;
@@ -1160,8 +1259,6 @@
         .priority-medium { background: #f59e0b; }
         .priority-high { background: #ef4444; }
         .chat-messages {
-            /* flex so it can grow/shrink inside the chat view; min-height:0
-               allows it to shrink when there are few messages */
             flex: 1 1 auto;
             min-height: 0;
             overflow-y: auto;
@@ -1260,7 +1357,7 @@
         .chat-input-row {
             display: flex;
             gap: 12px;
-            align-items: center; /* Center align items vertically */
+            align-items: center;
         }
         .chat-input {
             flex: 1;
@@ -1284,11 +1381,10 @@
             display: inline-block;
         }
         @media (max-width: 768px) {
-            /* On mobile hide the send button text, show only the icon */
             .send-text {
                 display: none;
             }
-            /* Make all input row buttons larger on mobile */
+         
             .chat-input-row .send-btn,
             .chat-input-row .attach-btn {
                 padding: 12px;
@@ -1296,7 +1392,6 @@
                 height: 48px;
             }
          
-            /* Add margin to send button to move it slightly right */
             .chat-input-row .send-btn {
                 margin-left: 12px;
             }
@@ -1306,7 +1401,6 @@
                 font-size: 18px;
             }
          
-            /* Move paper plane icon slightly right inside the button */
             .chat-input-row .send-btn i.fa-paper-plane {
                 margin-left: 2px;
             }
@@ -1792,10 +1886,6 @@
             .overlay.active {
                 display: block;
                 animation: fadeIn 0.3s ease-out;
-            }
-            /* Make sidebar-nav scrollable on mobile */
-            .sidebar-nav {
-                overflow-y: auto;
             }
         }
         /* Scrollbar styling */
@@ -3424,7 +3514,7 @@
             resize: vertical;
         }
         .editor-content:focus {
-            outline: none;
+           outline: none;
         }
         .article-actions {
             display: flex;
@@ -3592,7 +3682,7 @@
             transition: var(--transition);
             border: 2px solid transparent;
             background: var(--bg-light);
-            font-size: 20px; /* Увеличиваем размер эмодзи */
+            font-size: 20px;
         }
         .article-icon-option:hover {
             transform: scale(1.1);
@@ -3923,63 +4013,123 @@
                 margin-bottom: 8px;
             }
         }
-        /* Новые стили для кнопки полноэкранного режима */
-        .toggle-full-btn {
-            padding: 10px;
-            background: none;
-            border: none;
-            color: var(--text-medium);
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: var(--radius);
+
+        /* ИСПРАВЛЕНИЯ ДЛЯ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .ticket-chat-view {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            #chatViewContent {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+                overflow: hidden;
+            }
+            
+            .chat-messages {
+                flex: 1;
+                min-height: 0;
+                overflow-y: auto;
+                max-height: none !important;
+                padding: 8px 12px;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .chat-input-container {
+                flex-shrink: 0;
+                padding: 8px 12px;
+                border-top: 1px solid var(--border-color);
+                background: var(--bg-white);
+            }
+            
+            /* Убедимся, что контейнер тикетов использует всю доступную высоту */
+            .tickets-container {
+                height: calc(100vh - 120px);
+                min-height: 400px;
+            }
+            
+            /* Исправление для предотвращения излишнего ограничения высоты */
+            .tickets-scroll-container,
+            .tickets-list {
+                height: 100%;
+                min-height: 0;
+            }
         }
-        .toggle-full-btn:hover {
-            background: var(--bg-light);
-            color: var(--text-dark);
+
+        /* ДОПОЛНИТЕЛЬНЫЕ ИСПРАВЛЕНИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .tickets-container {
+                height: calc(100vh - 100px);
+            }
+            
+            .chat-messages {
+                padding: 4px 8px;
+                gap: 4px;
+            }
+            
+            .message {
+                padding: 6px 10px;
+                margin-bottom: 2px;
+            }
+            
+            .chat-input-container {
+                padding: 6px 8px;
+            }
         }
-        .ticket-chat-view.full-messages .chat-view-header {
-            opacity: 0;
-            height: 0;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
+
+        /* УЛУЧШЕНИЕ ДЛЯ РЕЖИМА ФОКУСА НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .focus-mode .ticket-chat-view {
+                height: 100vh;
+                width: 100vw;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 1000;
+            }
+            
+            .focus-mode #chatViewContent {
+                height: 100%;
+            }
+            
+            .focus-mode .chat-messages {
+                height: calc(100vh - 140px);
+                max-height: none;
+            }
+            
+            .focus-mode .chat-input-container {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--bg-white);
+                z-index: 1001;
+            }
         }
-        .ticket-chat-view.full-messages .chat-input-container {
-            opacity: 0;
-            height: 0;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .ticket-chat-view.full-messages .chat-messages {
-            padding: 10px;
-            max-height: 100vh !important;
-            height: 100vh;
-        }
-        .full-messages-exit {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            padding: 12px;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-            display: none;
-            z-index: 100;
-            transition: var(--transition);
-        }
-        .full-messages-exit:hover {
-            transform: scale(1.1);
-        }
-        .ticket-chat-view.full-messages .full-messages-exit {
+
+        /* ГАРАНТИЯ ПРАВИЛЬНОГО РАСПРЕДЕЛЕНИЯ ПРОСТРАНСТВА */
+        .ticket-chat-view {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #chatViewContent {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -5588,20 +5738,23 @@
                 `;
                 return;
             }
+            
             // Определяем, находимся ли мы в портретной ориентации на мобильном устройстве
             const isMobilePortrait = window.innerWidth <= 1024 && window.matchMedia("(orientation: portrait)").matches;
             const isMobileLandscape = window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches;
-         
+            
             let messagesHtml = '';
             let previousDate = null;
             let previousSender = null;
             let previousAgentName = null;
+            
             currentTicket.messages.forEach(message => {
                 const messageDate = new Date(message.time).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
                 if (!previousDate || messageDate !== previousDate) {
                     messagesHtml += `<div class="message date-header">${messageDate}</div>`;
                     previousDate = messageDate;
                 }
+                
                 let nameHeader = '';
                 if (message.sender === 'agent') {
                     if (previousSender !== 'agent' || (previousAgentName !== message.agentName)) {
@@ -5609,6 +5762,7 @@
                     }
                     previousAgentName = message.agentName || 'Анна Волкова (Оператор 1-й линии)';
                 }
+                
                 messagesHtml += `
                     ${nameHeader}
                     <div class="message ${message.sender === 'user' ? 'message-user' : message.sender === 'agent' ? 'message-agent' : 'message-system'}">
@@ -5618,6 +5772,7 @@
                 `;
                 previousSender = message.sender;
             });
+            
             chatViewContent.innerHTML = `
                 <div class="chat-view-header">
                     <div class="chat-view-user">
@@ -5634,6 +5789,13 @@
                                     <i class="fas fa-arrow-left"></i>
                                 </button>
                             ` : ''}
+                            
+                            <!-- НОВАЯ КНОПКА РЕЖИМА ФОКУСА -->
+                            <button class="focus-toggle-btn" onclick="toggleFocusMode()">
+                                <i class="fas fa-expand"></i>
+                                <span class="focus-text">Режим фокуса</span>
+                            </button>
+                            
                             <div class="status-dropdown">
                                 ${isMobilePortrait ? `<div class="status-label">Статус:</div>` : ''}
                                 <button class="status-dropdown-btn" onclick="toggleStatusDropdown()">
@@ -5701,12 +5863,14 @@
                     </div>
                 </div>
             `;
+            
             // Scroll to bottom of messages
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
-            // Add enter key support for message input
+            
+            // Add enterkey support for message input
             const chatInput = document.getElementById('chatInput');
             if (chatInput) {
                 chatInput.addEventListener('keydown', (e) => {
@@ -5715,19 +5879,24 @@
                         sendChatMessage();
                     }
                 });
+                
                 // Auto-resize textarea
                 chatInput.addEventListener('input', function() {
                     this.style.height = 'auto';
                     this.style.height = (this.scrollHeight) + 'px';
                 });
-             
+                
                 // Автоматически фокусируемся на поле ввода при открытии чата
                 setTimeout(() => {
                     chatInput.focus();
                 }, 100);
             }
+            
             // Setup file attachment functionality
             setupFileAttachment();
+            
+            // Обновляем высоту чата после рендеринга
+            setTimeout(updateChatHeight, 100);
         }
         // File attachment functionality
         function setupFileAttachment() {
@@ -5972,6 +6141,9 @@
             saveData();
          
             showToast('Сообщение отправлено');
+            
+            // Обновляем высоту после добавления нового сообщения
+            setTimeout(updateChatHeight, 50);
         }
         function resolveCurrentTicket() {
             if (!currentTicket) return;
@@ -5994,9 +6166,6 @@
             saveData();
          
             showToast('Обращение решено');
-        }
-        function toggleFullMessages() {
-            ticketChatView.classList.toggle('full-messages');
         }
         function createNewTicket() {
             const subject = document.getElementById('ticketSubject').value;
@@ -6520,7 +6689,7 @@
                 </div>
             `).join('');
         }
-       function editUser(userId) {
+        function editUser(userId) {
             userToEdit = users.find(u => u.id === userId);
             if (!userToEdit) return;
          
@@ -6825,6 +6994,62 @@
             localStorage.setItem('smartSupportArticles', JSON.stringify(articles));
             localStorage.setItem('smartSupportTemplates', JSON.stringify(templates));
         }
+
+        // НОВАЯ ФУНКЦИЯ: Переключение режима фокуса
+        function toggleFocusMode() {
+            document.body.classList.toggle('focus-mode');
+            
+            const focusBtn = document.querySelector('.focus-toggle-btn');
+            if (focusBtn) {
+                const icon = focusBtn.querySelector('i');
+                const text = focusBtn.querySelector('.focus-text');
+                
+                if (document.body.classList.contains('focus-mode')) {
+                    if (text) text.textContent = 'Обычный режим';
+                    if (icon) icon.className = 'fas fa-compress';
+                    
+                    // Показываем уведомление
+                    showToast('Режим фокуса включен. Нажмите Esc для выхода.');
+                    
+                    // Добавляем обработчик клавиши Escape
+                    document.addEventListener('keydown', handleEscapeKey);
+                } else {
+                    if (text) text.textContent = 'Режим фокуса';
+                    if (icon) icon.className = 'fas fa-expand';
+                    
+                    // Убираем обработчик клавиши Escape
+                    document.removeEventListener('keydown', handleEscapeKey);
+                }
+            }
+        }
+        
+        function handleEscapeKey(event) {
+            if (event.key === 'Escape' && document.body.classList.contains('focus-mode')) {
+                toggleFocusMode();
+            }
+        }
+
+        // Функция для обновления высоты чата
+        function updateChatHeight() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatViewContent = document.getElementById('chatViewContent');
+            const chatInputContainer = document.querySelector('.chat-input-container');
+            
+            if (chatMessages && chatViewContent && chatInputContainer) {
+                // Рассчитываем доступную высоту для сообщений
+                const headerHeight = document.querySelector('.chat-view-header').offsetHeight;
+                const inputHeight = chatInputContainer.offsetHeight;
+                const availableHeight = chatViewContent.offsetHeight - headerHeight - inputHeight;
+                
+                // Устанавливаем высоту для области сообщений
+                chatMessages.style.height = availableHeight + 'px';
+                chatMessages.style.maxHeight = availableHeight + 'px';
+            }
+        }
+
+        // Вызываем функцию при изменении размера окна
+        window.addEventListener('resize', updateChatHeight);
+
         // Initialize the app
         document.addEventListener('DOMContentLoaded', init);
      
