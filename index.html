@@ -196,6 +196,7 @@
         .sidebar.closed .logo-text {
             opacity: 0;
             width: 0;
+            visibility: hidden;
         }
         .sidebar-nav {
             padding: 16px;
@@ -4105,6 +4106,29 @@ body.focus-mode,
 .chat-messages {
     box-sizing: border-box !important; /* Include padding in height */
 }
+        @media (max-width: 768px) {
+            .modal-overlay {
+                padding: 10px;
+            }
+
+            .edit-user-modal .modal, .edit-template-modal .modal {
+                width: 90%;
+                max-height: 80vh;
+                margin: 0 auto;
+                padding: 16px;
+            }
+        }
+
+        @media (orientation: landscape) and (max-height: 500px) {
+            .edit-user-modal .modal, .edit-template-modal .modal {
+                max-height: 95vh;
+                padding: 12px;
+            }
+
+            .modal-overlay {
+                padding: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4371,7 +4395,7 @@ body.focus-mode,
         </div>
         <div id="usersPage" class="page-content hidden">
             <div class="users-header">
-                <h1 class="page-title">Обращения</h1>
+                <h1 class="page-title">Пользователи</h1>
                 <div class="users-controls">
                     <select class="select-filter" id="userFilter">
                         <option value="all">Все</option>
