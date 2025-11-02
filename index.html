@@ -196,6 +196,7 @@
         .sidebar.closed .logo-text {
             opacity: 0;
             width: 0;
+            visibility: hidden;
         }
         .sidebar-nav {
             padding: 16px;
@@ -2016,7 +2017,8 @@
         }
         /* Мобильная адаптация формы редактирования пользователя */
         @media (max-width: 768px) {
-            .edit-user-modal .modal {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
                 max-width: 100%;
                 margin: 20px;
                 padding: 20px;
@@ -2024,12 +2026,14 @@
                 overflow-y: auto;
             }
       
-            .edit-user-modal .modal-actions {
+            .edit-user-modal .modal-actions,
+            .edit-template-modal .modal-actions {
                 flex-direction: column;
                 gap: 10px;
             }
       
-            .edit-user-modal .modal-actions button {
+            .edit-user-modal .modal-actions button,
+            .edit-template-modal .modal-actions button {
                 width: 100%;
             }
       
@@ -2064,7 +2068,8 @@
         }
         /* Дополнительные улучшения для мобильных устройств */
         @media (max-width: 480px) {
-            .edit-user-modal .modal {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
                 margin: 10px;
                 padding: 16px;
             }
@@ -3189,7 +3194,7 @@
                 padding: 10px 14px !important; /* Reduce padding to minimize potential gaps */
             }
         }
-        /* ИСПРАВЛЕНИЯ ДЛЯ ПРОБЛЕМ С ПРОКРУТКОЙ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
+        /* ИСПРАВЛЕНИЯ С ПРОБЛЕМАМИ С ПРОКРУТКОЙ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
         @media (max-width: 1024px) {
             .tickets-scroll-container {
                 -webkit-overflow-scrolling: touch;
@@ -4073,6 +4078,27 @@ body.focus-mode,
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
 }
+/* Ensure no extra space between components */
+.focus-mode #chatViewContent {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important; /* Prevent internal overscroll */
+}
+/* Adjust for mobile landscape (smaller vh, wrapped header) to prevent gaps */
+@media (max-width: 1024px) and (orientation: landscape) {
+    .focus-mode .chat-messages {
+        max-height: none !important; /* Remove any max-height overrides */
+    }
+    .focus-mode .chat-input-container {
+        padding: 8px 12px !important; /* Reduce padding to minimize potential gaps */
+    }
+}
+/* Fix potential rubber banding on iOS (add to body or focus-mode) */
+body.focus-mode,
+.focus-mode .chat-messages {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
+}
 /* Ensure chat expands fully without empty space at bottom */
 .ticket-chat-view {
     overflow: hidden !important; /* Prevent parent scrolling */
@@ -4080,96 +4106,27 @@ body.focus-mode,
 .chat-messages {
     box-sizing: border-box !important; /* Include padding in height */
 }
-        /* Адаптация модальных окон для мобильных устройств */
         @media (max-width: 768px) {
-            .edit-user-modal .modal,
-            .edit-template-modal .modal {
-                width: 95%;
-                max-height: 90vh;
-                overflow-y: auto;
-                padding: 16px;
+            .modal-overlay {
+                padding: 10px;
+            }
+
+            .edit-user-modal .modal, .edit-template-modal .modal {
+                width: 90%;
+                max-height: 80vh;
                 margin: 0 auto;
-            }
-
-            .edit-user-modal .modal-actions,
-            .edit-template-modal .modal-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .edit-user-modal .modal-actions button,
-            .edit-template-modal .modal-actions button {
-                width: 100%;
+                padding: 16px;
             }
         }
 
-        @media (max-width: 480px) {
-            .edit-user-modal .modal,
-            .edit-template-modal .modal {
-                width: 100%;
-                max-height: 85vh;
+        @media (orientation: landscape) and (max-height: 500px) {
+            .edit-user-modal .modal, .edit-template-modal .modal {
+                max-height: 95vh;
                 padding: 12px;
             }
 
-            .edit-user-modal .modal-title,
-            .edit-template-modal .modal-title {
-                font-size: 20px;
-            }
-
-            .edit-user-modal .form-label,
-            .edit-template-modal .form-label {
-                font-size: 13px;
-            }
-
-            .edit-user-modal .form-input,
-            .edit-template-modal .form-input {
-                font-size: 13px;
-                padding: 10px 12px;
-            }
-        }
-
-        /* Красивая прокрутка для модальных окон */
-        .edit-user-modal .modal,
-        .edit-template-modal .modal {
-            scrollbar-width: thin; /* Firefox */
-            scrollbar-color: var(--primary-color) var(--bg-light);
-        }
-
-        .edit-user-modal .modal::-webkit-scrollbar,
-        .edit-template-modal .modal::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .edit-user-modal .modal::-webkit-scrollbar-track,
-        .edit-template-modal .modal::-webkit-scrollbar-track {
-            background: var(--bg-light);
-            border-radius: 10px;
-        }
-
-        .edit-user-modal .modal::-webkit-scrollbar-thumb,
-        .edit-template-modal .modal::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-
-        .edit-user-modal .modal::-webkit-scrollbar-thumb:hover,
-        .edit-template-modal .modal::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Горизонтальная ориентация */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .edit-user-modal .modal,
-            .edit-template-modal .modal {
-                max-width: 80%;
-                max-height: 80vh;
-                padding: 20px;
-            }
-
-            .edit-user-modal .form-row,
-            .edit-template-modal .form-row {
-                flex-direction: row;
-                gap: 16px;
+            .modal-overlay {
+                padding: 5px;
             }
         }
     </style>
@@ -4545,15 +4502,10 @@ body.focus-mode,
         <i class="fas fa-check-circle"></i>
         <span id="toastMessage">Операция выполнена успешно</span>
     </div>
-    <!-- Toast notification -->
-    <div class="toast hidden" id="toast">
+    <!-- Notification toast -->
+    <div class="notification-toast hidden" id="notificationToast">
         <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Операция выполнена успешно</span>
-    </div>
-    <!-- Toast notification -->
-    <div class="toast hidden" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Операция выполнена успешно</span>
+        <span id="notificationToastMessage">Уведомление</span>
     </div>
     <!-- Add User Modal -->
     <div id="addUserModal" class="modal-overlay hidden">
@@ -5186,7 +5138,7 @@ body.focus-mode,
         const userFilter = document.getElementById('userFilter');
         const addUserBtn = document.getElementById('addUserBtn');
   
-        // Knowledge elements
+        // Knowledge Base elements
         const searchArticles = document.getElementById('searchArticles');
         const newArticleBtn = document.getElementById('newArticleBtn');
         const articlesGrid = document.getElementById('articlesGrid');
@@ -6981,7 +6933,7 @@ body.focus-mode,
         // Utility Functions
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            if(seconds < 60) return 'только что';
+            if (seconds < 60) return 'только что';
             const minutes = Math.floor(seconds / 60);
             if (minutes < 60) return `${minutes} мин назад`;
             const hours = Math.floor(minutes / 60);
