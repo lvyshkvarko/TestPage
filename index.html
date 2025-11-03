@@ -1809,7 +1809,6 @@
             width: auto;
             max-width: 480px;
             animation: modalAppear 0.3s ease-out;
-            position: relative;
         }
         @keyframes modalAppear {
             from { opacity: 0; transform: translateY(20px); }
@@ -2599,7 +2598,7 @@
         /* Исправление для модального окна редактирования пользователя */
         .edit-user-modal .modal {
             max-width: 600px;
-            width: 90%;
+            width: auto;
         }
         @media (max-width: 768px) {
             .edit-user-modal .modal {
