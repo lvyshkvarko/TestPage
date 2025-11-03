@@ -39,7 +39,7 @@
             color: var(--text-dark);
             line-height: 1.5;
         }
-      
+        
         /* Стили для режима фокуса */
         .focus-mode .sidebar,
         .focus-mode .header,
@@ -50,7 +50,7 @@
             pointer-events: none;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-      
+        
         .focus-mode .ticket-chat-view {
             position: fixed;
             top: 0;
@@ -63,18 +63,18 @@
             background: var(--bg-white);
             animation: expandChat 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-      
+        
         .focus-mode .chat-view-header {
             border-radius: 0;
             padding: 16px 20px;
             background: var(--bg-white);
             box-shadow: var(--shadow-sm);
         }
-      
+        
         .focus-mode .chat-messages {
             height: calc(100vh - 180px);
         }
-      
+        
         .focus-mode .chat-input-container {
             position: fixed;
             bottom: 0;
@@ -85,7 +85,7 @@
             padding: 16px 20px;
             z-index: 1001;
         }
-      
+        
         @keyframes expandChat {
             from {
                 opacity: 0.8;
@@ -96,7 +96,7 @@
                 transform: scale(1);
             }
         }
-      
+        
         .focus-toggle-btn {
             padding: 8px 12px;
             background: var(--bg-light);
@@ -110,36 +110,37 @@
             font-size: 13px;
             color: var(--text-medium);
         }
-      
+        
         .focus-toggle-btn:hover {
             background: var(--primary-light);
             border-color: var(--primary-color);
             color: var(--primary-dark);
         }
-      
+        
         .focus-mode .focus-toggle-btn {
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
         }
-      
+        
         .focus-mode .focus-toggle-btn:hover {
             background: var(--primary-dark);
         }
-      
+        
         /* Обеспечиваем правильное позиционирование в обычном режиме */
         .ticket-chat-view {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-      
+        
         /* Анимация для кнопки */
         .focus-toggle-btn i {
             transition: transform 0.3s ease;
         }
-      
+        
         .focus-mode .focus-toggle-btn i {
             transform: rotate(180deg);
         }
+        
         /* Sidebar */
         .sidebar {
             position: fixed;
@@ -2531,8 +2532,8 @@
        
             .chat-input-row {
                 gap: 4px;
-                align-items: center;
-            }
+                align: items;
+            } 
        
             .chat-input {
                 min-height: 36px;
@@ -2599,7 +2600,7 @@
         /* Исправление для модального окна редактирования пользователя */
         .edit-user-modal .modal {
             max-width: 600px;
-            width: auto;
+            width: 90%;
         }
         @media (max-width: 768px) {
             .edit-user-modal .modal {
@@ -2617,7 +2618,6 @@
        
             .edit-user-modal .modal-actions button {
                 width: 100%;
-                margin: 0;
             }
        
             .edit-user-modal .form-row {
@@ -2757,7 +2757,7 @@
             }
         }
         /* ИСПРАВЛЕНИЯ ДЛЯ ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
-        /* Исправление для отображения информации о пользователя в вертикальной ориентации */
+        /* Исправление для отображения информации о пользователе в вертикальной ориентации */
         @media (max-width: 1024px) and (orientation: portrait) {
             .chat-view-header {
                 padding: 12px 16px;
@@ -4049,227 +4049,339 @@
             }
         }
         /* Prevent body overscroll in focus mode (fixes shifting/empty space on scroll) */
-.focus-mode {
-    overflow: hidden !important;
-}
-/* Make header sticky in focus mode (prevents it from scrolling away) */
-.focus-mode .chat-view-header {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 1002 !important; /* Higher than input's z-index: 1001 */
-    background: var(--bg-white) !important; /* Ensure it doesn't become transparent */
-}
-/* Remove fixed calc height for messages in focus mode; use flex instead (fixes gaps and incomplete scrolling) */
-.focus-mode .chat-messages {
-    height: auto !important; /* Override the calc(100vh - 180px) */
-    flex: 1 1 auto !important;
-    min-height: 0 !important;
-    overflow-y: auto !important;
-    padding-bottom: 0 !important; /* Remove extra padding that could create gaps */
-}
-/* Ensure no extra space between components */
-.focus-mode #chatViewContent {
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden !important; /* Prevent internal overscroll */
-}
-/* Adjust for mobile landscape (smaller vh, wrapped header) to prevent gaps */
-@media (max-width: 1024px) and (orientation: landscape) {
-    .focus-mode .chat-messages {
-        max-height: none !important; /* Remove any max-height overrides */
-    }
-    .focus-mode .chat-input-container {
-        padding: 8px 12px !important; /* Reduce padding to minimize potential gaps */
-    }
-}
-/* Fix potential rubber banding on iOS (add to body or focus-mode) */
-body.focus-mode,
-.focus-mode .chat-messages {
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
-}
-/* Ensure chat expands fully without empty space at bottom */
-.ticket-chat-view {
-    overflow: hidden !important; /* Prevent parent scrolling */
-}
-.chat-messages {
-    box-sizing: border-box !important; /* Include padding in height */
-}
+        .focus-mode {
+            overflow: hidden !important;
+        }
+        /* Make header sticky in focus mode (prevents it from scrolling away) */
+        .focus-mode .chat-view-header {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1002 !important; /* Higher than input's z-index: 1001 */
+            background: var(--bg-white) !important; /* Ensure it doesn't become transparent */
+        }
+        /* Remove fixed calc height for messages in focus mode; use flex instead (fixes gaps and incomplete scrolling) */
+        .focus-mode .chat-messages {
+            height: auto !important; /* Override the calc(100vh - 180px) */
+            flex: 1 1 auto !important;
+            min-height: 0 !important;
+            overflow-y: auto !important;
+            padding-bottom: 0 !important; /* Remove extra padding that could create gaps */
+        }
+        /* Ensure no extra space between components */
+        .focus-mode #chatViewContent {
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow: hidden !important; /* Prevent internal overscroll */
+        }
+        /* Adjust for mobile landscape (smaller vh, wrapped header) to prevent gaps */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .focus-mode .chat-messages {
+                max-height: none !important; /* Remove any max-height overrides */
+            }
+            .focus-mode .chat-input-container {
+                padding: 8px 12px !important; /* Reduce padding to minimize potential gaps */
+            }
+        }
+        /* Fix potential rubber banding on iOS (add to body or focus-mode) */
+        body.focus-mode,
+        .focus-mode .chat-messages {
+            -webkit-overflow-scrolling: touch !important;
+            overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
+        }
+        /* Ensure chat expands fully without empty space at bottom */
+        .ticket-chat-view {
+            overflow: hidden !important; /* Prevent parent scrolling */
+        }
+        .chat-messages {
+            box-sizing: border-box !important; /* Include padding in height */
+        }
 
-/* НОВЫЕ СТИЛИ ДЛЯ АДАПТАЦИИ МОДАЛЬНЫХ ОКОН ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
-@media (max-width: 768px) {
-    .edit-user-modal .modal,
-    .edit-template-modal .modal {
-        max-width: 95% !important;
-        margin: 10px !important;
-        padding: 20px !important;
-        max-height: 90vh !important;
-        overflow-y: auto !important;
-        width: auto !important;
-    }
-    
-    .edit-user-modal .modal-actions,
-    .edit-template-modal .modal-actions {
-        flex-direction: column !important;
-        gap: 10px !important;
-    }
-    
-    .edit-user-modal .modal-actions button,
-    .edit-template-modal .modal-actions button {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-    
-    .edit-user-modal .form-row,
-    .edit-template-modal .form-row {
-        flex-direction: column !important;
-        gap: 0 !important;
-    }
-    
-    .edit-user-modal .avatar-selection,
-    .edit-template-modal .avatar-selection {
-        justify-content: center !important;
-    }
-    
-    .edit-user-modal .password-reset-info,
-    .edit-template-modal .password-reset-info {
-        font-size: 12px !important;
-        padding: 12px !important;
-    }
-}
+        /* НОВЫЕ СТИЛИ ДЛЯ АДАПТАЦИИ МОДАЛЬНЫХ ОКОН ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+        @media (max-width: 768px) {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
+                max-width: 95% !important;
+                margin: 10px !important;
+                padding: 20px !important;
+                max-height: 90vh !important;
+                overflow-y: auto !important;
+                width: auto !important;
+            }
+            
+            .edit-user-modal .modal-actions,
+            .edit-template-modal .modal-actions {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .edit-user-modal .modal-actions button,
+            .edit-template-modal .modal-actions button {
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            
+            .edit-user-modal .form-row,
+            .edit-template-modal .form-row {
+                flex-direction: column !important;
+                gap: 0 !important;
+            }
+            
+            .edit-user-modal .avatar-selection,
+            .edit-template-modal .avatar-selection {
+                justify-content: center !important;
+            }
+            
+            .edit-user-modal .password-reset-info,
+            .edit-template-modal .password-reset-info {
+                font-size: 12px !important;
+                padding: 12px !important;
+            }
+        }
 
-@media (max-width: 480px) {
-    .edit-user-modal .modal,
-    .edit-template-modal .modal {
-        margin: 5px !important;
-        padding: 16px !important;
-    }
-    
-    .edit-user-modal .form-row,
-    .edit-template-modal .form-row {
-        flex-direction: column !important;
-        gap: 0 !important;
-    }
-    
-    .edit-user-modal .avatar-selection,
-    .edit-template-modal .avatar-selection {
-        justify-content: center !important;
-    }
-    
-    .edit-user-modal .password-reset-info,
-    .edit-template-modal .password-reset-info {
-        font-size: 12px !important;
-        padding: 12px !important;
-    }
-    
-    .edit-user-modal .status-dropdown-btn,
-    .edit-user-modal .priority-dropdown-btn,
-    .edit-template-modal .status-dropdown-btn,
-    .edit-template-modal .priority-dropdown-btn {
-        padding: 8px 12px !important;
-        font-size: 13px !important;
-    }
-}
+        @media (max-width: 480px) {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
+                margin: 5px !important;
+                padding: 16px !important;
+            }
+            
+            .edit-user-modal .form-row,
+            .edit-template-modal .form-row {
+                flex-direction: column !important;
+                gap: 0 !important;
+            }
+            
+            .edit-user-modal .avatar-selection,
+            .edit-template-modal .avatar-selection {
+                justify-content: center !important;
+            }
+            
+            .edit-user-modal .password-reset-info,
+            .edit-template-modal .password-reset-info {
+                font-size: 12px !important;
+                padding: 12px !important;
+            }
+            
+            .edit-user-modal .status-dropdown-btn,
+            .edit-user-modal .priority-dropdown-btn,
+            .edit-template-modal .status-dropdown-btn,
+            .edit-template-modal .priority-dropdown-btn {
+                padding: 8px 12px !important;
+                font-size: 13px !important;
+            }
+        }
 
-/* Специальные стили для модальных окон редактирования пользователя и шаблонов */
-.edit-user-modal.mobile-optimized .modal,
-.edit-template-modal.mobile-optimized .modal {
-    max-height: 85vh !important;
-    overflow-y: auto !important;
-}
+        /* Специальные стили для модальных окон редактирования пользователя и шаблонов */
+        .edit-user-modal.mobile-optimized .modal,
+        .edit-template-modal.mobile-optimized .modal {
+            max-height: 85vh !important;
+            overflow-y: auto !important;
+        }
 
-.edit-user-modal.mobile-optimized .modal-title,
-.edit-template-modal.mobile-optimized .modal-title {
-    font-size: 20px !important;
-    margin-bottom: 16px !important;
-}
+        .edit-user-modal.mobile-optimized .modal-title,
+        .edit-template-modal.mobile-optimized .modal-title {
+            font-size: 20px !important;
+            margin-bottom: 16px !important;
+        }
 
-.edit-user-modal.mobile-optimized .form-group,
-.edit-template-modal.mobile-optimized .form-group {
-    margin-bottom: 16px !important;
-}
+        .edit-user-modal.mobile-optimized .form-group,
+        .edit-template-modal.mobile-optimized .form-group {
+            margin-bottom: 16px !important;
+        }
 
-.edit-user-modal.mobile-optimized .form-input,
-.edit-template-modal.mobile-optimized .form-input {
-    padding: 10px 14px !important;
-    font-size: 16px !important; /* Увеличиваем для удобства на мобильных */
-}
+        .edit-user-modal.mobile-optimized .form-input,
+        .edit-template-modal.mobile-optimized .form-input {
+            padding: 10px 14px !important;
+            font-size: 16px !important; /* Увеличиваем для удобства на мобильных */
+        }
 
-/* Горизонтальная ориентация на мобильных устройствах */
-@media (max-width: 1024px) and (orientation: landscape) {
-    .edit-user-modal .modal,
-    .edit-template-modal .modal {
-        max-height: 80vh !important;
-        padding: 15px !important;
-    }
-    
-    .edit-user-modal .modal-actions,
-    .edit-template-modal .modal-actions {
-        flex-direction: row !important;
-        gap: 8px !important;
-    }
-    
-    .edit-user-modal .modal-actions button,
-    .edit-template-modal .modal-actions button {
-        flex: 1 !important;
-    }
-}
+        /* Горизонтальная ориентация на мобильных устройствах */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
+                max-height: 80vh !important;
+                padding: 15px !important;
+            }
+            
+            .edit-user-modal .modal-actions,
+            .edit-template-modal .modal-actions {
+                flex-direction: row !important;
+                gap: 8px !important;
+            }
+            
+            .edit-user-modal .modal-actions button,
+            .edit-template-modal .modal-actions button {
+                flex: 1 !important;
+            }
+        }
 
-/* Очень маленькие экраны */
-@media (max-width: 360px) {
-    .edit-user-modal .modal,
-    .edit-template-modal .modal {
-        padding: 12px !important;
-    }
-    
-    .edit-user-modal .avatar-option,
-    .edit-template-modal .avatar-option {
-        width: 40px !important;
-        height: 40px !important;
-        font-size: 18px !important;
-    }
-    
-    .edit-user-modal .form-input,
-    .edit-template-modal .form-input {
-        padding: 8px 12px !important;
-    }
-    
-    .edit-user-modal .modal-actions button,
-    .edit-template-modal .modal-actions button {
-        padding: 10px !important;
-    }
-}
-        /* Новые стили для модальных окон маршрутизации */
-        .route-options {
+        /* Очень маленькие экраны */
+        @media (max-width: 360px) {
+            .edit-user-modal .modal,
+            .edit-template-modal .modal {
+                padding: 12px !important;
+            }
+            
+            .edit-user-modal .avatar-option,
+            .edit-template-modal .avatar-option {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 18px !important;
+            }
+            
+            .edit-user-modal .form-input,
+            .edit-template-modal .form-input {
+                padding: 8px 12px !important;
+            }
+            
+            .edit-user-modal .modal-actions button,
+            .edit-template-modal .modal-actions button {
+                padding: 10px !important;
+            }
+        }
+
+        /* НОВЫЕ СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА ПЕРЕДАЧИ ОБРАЩЕНИЯ */
+        .transfer-modal .modal {
+            max-width: 500px;
+        }
+        
+        .transfer-options {
             display: flex;
             flex-direction: column;
             gap: 16px;
+            margin-bottom: 24px;
         }
-        .route-option-btn {
-            padding: 12px 20px;
-            background: var(--bg-light);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius);
+        
+        .transfer-option {
+            padding: 20px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
             transition: var(--transition);
-            text-align: left;
+            background: var(--bg-white);
+        }
+        
+        .transfer-option:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        
+        .transfer-option.selected {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+        
+        .transfer-option-header {
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 8px;
         }
-        .route-option-btn:hover {
-            background: var(--primary-light);
-            border-color: var(--primary-color);
+        
+        .transfer-option-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
-        .custom-topic-input {
+        
+        .transfer-option-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+        
+        .transfer-option-description {
+            color: var(--text-medium);
+            font-size: 14px;
+            margin-left: 52px;
+        }
+        
+        .transfer-form {
             display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .transfer-form.active {
+            display: block;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .form-actions .btn {
+            flex: 1;
+        }
+        
+        .employee-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             margin-top: 8px;
         }
-        .system-message {
-            background: #e5e7eb;
-            color: #374151;
+        
+        .employee-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .employee-item:hover {
+            background: var(--bg-light);
+        }
+        
+        .employee-item:last-child {
+            border-bottom: none;
+        }
+        
+        .employee-name {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .employee-role {
+            font-size: 12px;
+            color: var(--text-medium);
+        }
+        
+        .random-employee {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .task-themes {
+            margin-bottom: 16px;
+        }
+        
+        .theme-option {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .theme-option:hover {
+            background: var(--bg-light);
+        }
+        
+        .theme-option:last-child {
+            border-bottom: none;
+        }
+        
+        .theme-custom {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
         }
     </style>
 </head>
@@ -4999,96 +5111,128 @@ body.focus-mode,
             </div>
         </div>
     </div>
-    <!-- Route Ticket Modal -->
-    <div id="routeTicketModal" class="modal-overlay hidden">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="hideModal(document.getElementById('routeTicketModal'))">
+    
+    <!-- Новое модальное окно для передачи обращения -->
+    <div id="transferTicketModal" class="modal-overlay hidden">
+        <div class="modal transfer-modal">
+            <button class="modal-close-btn" onclick="hideModal(document.getElementById('transferTicketModal'))">
                 <i class="fas fa-times"></i>
             </button>
-            <h2 class="modal-title">Маршрутизация обращения</h2>
-            <div class="route-options">
-                <button class="route-option-btn" onclick="showTransferModal()">
-                    <i class="fas fa-user"></i>
-                    Передать обращение другому сотруднику
-                </button>
-                <button class="route-option-btn" onclick="showTechTaskModal()">
-                    <i class="fas fa-tools"></i>
-                    Завести техническое задание (2 линии)
-                </button>
+            <h2 class="modal-title">Передать обращение</h2>
+            
+            <div class="transfer-options" id="transferOptions">
+                <div class="transfer-option" data-option="employee" onclick="selectTransferOption('employee')">
+                    <div class="transfer-option-header">
+                        <div class="transfer-option-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="transfer-option-title">Передать обращение другому сотруднику</div>
+                    </div>
+                    <div class="transfer-option-description">
+                        Выберите сотрудника по роли и имени
+                    </div>
+                </div>
+                
+                <div class="transfer-option" data-option="task" onclick="selectTransferOption('task')">
+                    <div class="transfer-option-header">
+                        <div class="transfer-option-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="transfer-option-title">Заведение технического задания (2 линии)</div>
+                    </div>
+                    <div class="transfer-option-description">
+                        Создание ТЗ для передачи во вторую линию
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Форма для передачи сотруднику -->
+            <div id="employeeTransferForm" class="transfer-form">
+                <div class="form-group">
+                    <label class="form-label">Роль сотрудника</label>
+                    <select class="form-input" id="employeeRole">
+                        <option value="operator2">Оператор 2-й линии</option>
+                        <option value="developer">Разработчик</option>
+                        <option value="manager">Руководитель</option>
+                        <option value="admin">Администратор</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Выберите сотрудника</label>
+                    <div class="employee-list" id="employeeList">
+                        <!-- Список сотрудников будет заполнен динамически -->
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="transferToEmployee()">Передать обращение</button>
+                    <button class="btn-cancel" onclick="hideModal(document.getElementById('transferTicketModal'))">Отмена</button>
+                </div>
+            </div>
+            
+            <!-- Форма для создания технического задания -->
+            <div id="taskTransferForm" class="transfer-form">
+                <div class="form-group">
+                    <label class="form-label">Тема ТЗ</label>
+                    <div class="task-themes">
+                        <div class="theme-option" data-theme="Проблема с авторизацией" onclick="selectTheme('Проблема с авторизацией')">
+                            Проблема с авторизацией
+                        </div>
+                        <div class="theme-option" data-theme="Ошибка 500" onclick="selectTheme('Ошибка 500')">
+                            Ошибка 500
+                        </div>
+                        <div class="theme-option" data-theme="Медленная работа системы" onclick="selectTheme('Медленная работа системы')">
+                            Медленная работа системы
+                        </div>
+                        <div class="theme-option" data-theme="Проблема с оплатой" onclick="selectTheme('Проблема с оплатой')">
+                            Проблема с оплатой
+                        </div>
+                        <div class="theme-option" data-theme="Ошибка в отчетах" onclick="selectTheme('Ошибка в отчетах')">
+                            Ошибка в отчетах
+                        </div>
+                        <div class="theme-option" data-theme="Проблема с загрузкой файлов" onclick="selectTheme('Проблема с загрузкой файлов')">
+                            Проблема с загрузкой файлов
+                        </div>
+                        <div class="theme-option" data-theme="Не работает функционал" onclick="selectTheme('Не работает функционал')">
+                            Не работает функционал
+                        </div>
+                        <div class="theme-option" data-theme="Ошибка в интерфейсе" onclick="selectTheme('Ошибка в интерфейсе')">
+                            Ошибка в интерфейсе
+                        </div>
+                        <div class="theme-option" data-theme="Проблема с интеграцией" onclick="selectTheme('Проблема с интеграцией')">
+                            Проблема с интеграцией
+                        </div>
+                        <div class="theme-option" data-theme="Другая техническая проблема" onclick="selectTheme('Другая техническая проблема')">
+                            Другая техническая проблема
+                        </div>
+                        <div class="theme-option theme-custom" onclick="enableCustomTheme()">
+                            Указать свою тему
+                        </div>
+                    </div>
+                    <input type="text" class="form-input hidden" id="customTheme" placeholder="Введите свою тему">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Краткое описание <span style="color: red;">*</span></label>
+                    <textarea class="form-input" id="taskDescription" placeholder="Опишите проблему подробно" rows="4" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Выберите сотрудника (опционально)</label>
+                    <div class="employee-list" id="taskEmployeeList">
+                        <!-- Список сотрудников будет заполнен динамически -->
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="createTechnicalTask()">Отправить сотруднику 2 линии</button>
+                    <button class="btn-cancel" onclick="hideModal(document.getElementById('transferTicketModal'))">Отменить заполнение</button>
+                </div>
             </div>
         </div>
     </div>
-    <!-- Transfer to Employee Modal -->
-    <div id="transferModal" class="modal-overlay hidden">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="hideModal(document.getElementById('transferModal'))">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 class="modal-title">Передать сотруднику</h2>
-            <div class="form-group">
-                <label class="form-label">Роль</label>
-                <select class="form-input" id="transferRole" onchange="updateEmployeeList()">
-                    <option value="">Выберите роль</option>
-                    <option value="operator1">Оператор 1-й линии</option>
-                    <option value="operator2">Оператор 2-й линии</option>
-                    <option value="admin">Администратор</option>
-                    <option value="manager">Руководитель</option>
-                    <option value="developer">Разработчик</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Сотрудник</label>
-                <select class="form-input" id="transferEmployee">
-                    <option value="">Выберите сотрудника</option>
-                    <option value="random">Случайный сотрудник</option>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-primary" onclick="transferToEmployee()">Передать</button>
-                <button class="btn-cancel" onclick="hideModal(document.getElementById('transferModal'))">Отмена</button>
-            </div>
-        </div>
-    </div>
-    <!-- Tech Task Modal -->
-    <div id="techTaskModal" class="modal-overlay hidden">
-        <div class="modal">
-            <button class="modal-close-btn" onclick="hideModal(document.getElementById('techTaskModal'))">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 class="modal-title">Техническое задание</h2>
-            <div class="form-group">
-                <label class="form-label">Тема</label>
-                <select class="form-input" id="techTopic" onchange="toggleCustomTopic()">
-                    <option value="custom">Указать свою</option>
-                    <option value="Ошибка авторизации">Ошибка авторизации</option>
-                    <option value="Проблема с оплатой">Проблема с оплатой</option>
-                    <option value="Техническая ошибка">Техническая ошибка</option>
-                    <option value="Вопрос по тарифам">Вопрос по тарифам</option>
-                    <option value="Проблема с загрузкой">Проблема с загрузкой</option>
-                    <option value="Ошибка 500">Ошибка 500</option>
-                    <option value="Не приходит email">Не приходит email</option>
-                    <option value="Проблема с мобильным приложением">Проблема с мобильным приложением</option>
-                    <option value="Вопрос по API">Вопрос по API</option>
-                    <option value="Другая проблема">Другая проблема</option>
-                </select>
-                <input type="text" class="form-input custom-topic-input" id="customTechTopic" placeholder="Введите свою тему">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Краткое описание</label>
-                <textarea class="form-input" id="techDescription" rows="4" placeholder="Введите описание (обязательно)"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Сотрудник</label>
-                <select class="form-input" id="techEmployee">
-                    <option value="random">Случайный сотрудник</option>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-primary" onclick="submitTechTask()">Отправить</button>
-                <button class="btn-cancel" onclick="hideModal(document.getElementById('techTaskModal'))">Отмена</button>
-            </div>
-        </div>
-    </div>
+
     <script>
         // Sample data
         let tickets = JSON.parse(localStorage.getItem('smartSupportTickets')) || [
@@ -5106,8 +5250,7 @@ body.focus-mode,
                 assignee: null,
                 messages: [
                     { sender: 'user', text: 'Здравствуйте, не могу войти в систему', time: new Date(Date.now() - 2 * 60 * 60 * 1000) }
-                ],
-                hasTechTask: false
+                ]
             },
             {
                 id: 2,
@@ -5124,8 +5267,7 @@ body.focus-mode,
                 messages: [
                     { sender: 'user', text: 'Добрый день! Хочу уточнить тарифы', time: new Date(Date.now() - 5 * 60 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Здравствуйте! Расскажу вам о наших тарифах...', time: new Date(Date.now() - 4 * 60 * 60 * 1000) }
-                ],
-                hasTechTask: false
+                ]
             },
             {
                 id: 3,
@@ -5142,8 +5284,7 @@ body.focus-mode,
                 messages: [
                     { sender: 'user', text: 'При загрузке файлов появляется ошибка', time: new Date(Date.now() - 24 * 60 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Дмитрий Соколов (Оператор 2-й линии)', text: 'Понял проблему, передаю разработчикам', time: new Date(Date.now() - 20 * 60 * 60 * 1000) }
-                ],
-                hasTechTask: false
+                ]
             },
             {
                 id: 4,
@@ -5163,8 +5304,7 @@ body.focus-mode,
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проблема решена, попробуйте сейчас', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
                     { sender: 'user', text: 'Спасибо, всё работает!', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000) },
                     { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000) }
-                ],
-                hasTechTask: false
+                ]
             }
         ];
         const users = JSON.parse(localStorage.getItem('smartSupportUsers')) || [
@@ -5336,20 +5476,14 @@ body.focus-mode,
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
         let prevWidth = window.innerWidth;
-        let selectedRole = '';
-        let selectedEmployee = '';
-        let techTopics = [
-            'Ошибка авторизации',
-            'Проблема с оплатой',
-            'Техническая ошибка',
-            'Вопрос по тарифам',
-            'Проблема с загрузкой',
-            'Ошибка 500',
-            'Не приходит email',
-            'Проблема с мобильным приложением',
-            'Вопрос по API',
-            'Другая проблема'
-        ];
+        
+        // Новые переменные для управления передачей обращений
+        let selectedTransferOption = null;
+        let selectedEmployee = null;
+        let selectedTaskEmployee = null;
+        let selectedTheme = null;
+        let customThemeEnabled = false;
+        
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
         const header = document.getElementById('header');
@@ -5462,10 +5596,7 @@ body.focus-mode,
         // Toast
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
-        // Route modals
-        const routeTicketModal = document.getElementById('routeTicketModal');
-        const transferModal = document.getElementById('transferModal');
-        const techTaskModal = document.getElementById('techTaskModal');
+        
         // Initialize
         function init() {
             updateDashboardStats();
@@ -5814,17 +5945,17 @@ body.focus-mode,
         }
         function updateLayout() {
             if (isMobile) {
-                header.style.left = '0';
+                header.style.marginLeft = '0';
                 mainContent.style.marginLeft = '0';
                 sidebar.classList.remove('closed');
             } else {
                 if (sidebarOpen) {
                     sidebar.classList.remove('closed');
-                    header.style.left = '256px';
+                    header.style.marginLeft = '256px';
                     mainContent.style.marginLeft = '256px';
                 } else {
                     sidebar.classList.add('closed');
-                    header.style.left = '80px';
+                    header.style.marginLeft = '80px';
                     mainContent.style.marginLeft = '80px';
                 }
             }
@@ -6105,7 +6236,7 @@ body.focus-mode,
                             </div>
                         </div>
                         <div class="action-buttons-row">
-                            <button class="btn-secondary" onclick="routeTicket()">
+                            <button class="btn-secondary" onclick="showTransferModal()">
                                 <i class="fas fa-share"></i>
                                 ${isMobileLandscape ? 'Передать' : 'Передать обращение'}
                             </button>
@@ -6169,6 +6300,313 @@ body.focus-mode,
             setupFileAttachment();
             setTimeout(adjustChatHeights, 0); // Delay to allow DOM reflow
         }
+        
+        // Функция для показа модального окна передачи обращения
+        function showTransferModal() {
+            if (!currentTicket) return;
+            
+            // Сброс состояния
+            selectedTransferOption = null;
+            selectedEmployee = null;
+            selectedTaskEmployee = null;
+            selectedTheme = null;
+            customThemeEnabled = false;
+            
+            // Скрыть все формы
+            document.getElementById('employeeTransferForm').classList.remove('active');
+            document.getElementById('taskTransferForm').classList.remove('active');
+            
+            // Показать опции выбора
+            document.getElementById('transferOptions').style.display = 'flex';
+            
+            // Снять выделение с опций
+            document.querySelectorAll('.transfer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Скрыть поле для своей темы
+            document.getElementById('customTheme').classList.add('hidden');
+            
+            // Очистить поля
+            document.getElementById('taskDescription').value = '';
+            
+            // Заполнить списки сотрудников
+            populateEmployeeLists();
+            
+            showModal(document.getElementById('transferTicketModal'));
+        }
+        
+        // Функция выбора опции передачи
+        function selectTransferOption(option) {
+            selectedTransferOption = option;
+            
+            // Выделить выбранную опцию
+            document.querySelectorAll('.transfer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`.transfer-option[data-option="${option}"]`).classList.add('selected');
+            
+            // Скрыть опции выбора
+            document.getElementById('transferOptions').style.display = 'none';
+            
+            // Показать соответствующую форму
+            if (option === 'employee') {
+                document.getElementById('employeeTransferForm').classList.add('active');
+            } else if (option === 'task') {
+                document.getElementById('taskTransferForm').classList.add('active');
+            }
+        }
+        
+        // Функция заполнения списков сотрудников
+        function populateEmployeeLists() {
+            const employeeList = document.getElementById('employeeList');
+            const taskEmployeeList = document.getElementById('taskEmployeeList');
+            
+            // Очистить списки
+            employeeList.innerHTML = '';
+            taskEmployeeList.innerHTML = '';
+            
+            // Добавить опцию "Случайный сотрудник"
+            const randomEmployeeItem = document.createElement('div');
+            randomEmployeeItem.className = 'employee-item random-employee';
+            randomEmployeeItem.innerHTML = `
+                <div class="employee-name">Случайный сотрудник</div>
+                <div class="employee-role">Будет выбран автоматически</div>
+            `;
+            randomEmployeeItem.onclick = () => selectEmployee(null, 'employee');
+            employeeList.appendChild(randomEmployeeItem.cloneNode(true));
+            taskEmployeeList.appendChild(randomEmployeeItem);
+            
+            // Добавить сотрудников по ролям
+            const roles = ['operator2', 'developer', 'manager', 'admin'];
+            roles.forEach(role => {
+                const roleUsers = users.filter(user => user.role === role);
+                if (roleUsers.length > 0) {
+                    roleUsers.forEach(user => {
+                        const employeeItem = document.createElement('div');
+                        employeeItem.className = 'employee-item';
+                        employeeItem.innerHTML = `
+                            <div class="employee-name">${user.name} ${user.lastName}</div>
+                            <div class="employee-role">${roleLabels[user.role]}</div>
+                        `;
+                        employeeItem.onclick = () => selectEmployee(user.id, 'employee');
+                        employeeList.appendChild(employeeItem.cloneNode(true));
+                        
+                        const taskEmployeeItem = employeeItem.cloneNode(true);
+                        taskEmployeeItem.onclick = () => selectEmployee(user.id, 'task');
+                        taskEmployeeList.appendChild(taskEmployeeItem);
+                    });
+                }
+            });
+        }
+        
+        // Функция выбора сотрудника
+        function selectEmployee(employeeId, type) {
+            if (type === 'employee') {
+                selectedEmployee = employeeId;
+                
+                // Снять выделение со всех сотрудников
+                document.querySelectorAll('#employeeList .employee-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                // Выделить выбранного сотрудника
+                if (employeeId === null) {
+                    document.querySelector('#employeeList .random-employee').classList.add('selected');
+                } else {
+                    document.querySelector(`#employeeList .employee-item[onclick*="${employeeId}"]`).classList.add('selected');
+                }
+            } else if (type === 'task') {
+                selectedTaskEmployee = employeeId;
+                
+                // Снять выделение со всех сотрудников
+                document.querySelectorAll('#taskEmployeeList .employee-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                // Выделить выбранного сотрудника
+                if (employeeId === null) {
+                    document.querySelector('#taskEmployeeList .random-employee').classList.add('selected');
+                } else {
+                    document.querySelector(`#taskEmployeeList .employee-item[onclick*="${employeeId}"]`).classList.add('selected');
+                }
+            }
+        }
+        
+        // Функция выбора темы
+        function selectTheme(theme) {
+            selectedTheme = theme;
+            customThemeEnabled = false;
+            
+            // Снять выделение со всех тем
+            document.querySelectorAll('.theme-option').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Выделить выбранную тему
+            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('selected');
+            
+            // Скрыть поле для своей темы
+            document.getElementById('customTheme').classList.add('hidden');
+        }
+        
+        // Функция включения своей темы
+        function enableCustomTheme() {
+            customThemeEnabled = true;
+            
+            // Снять выделение со всех тем
+            document.querySelectorAll('.theme-option').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Выделить опцию своей темы
+            document.querySelector('.theme-custom').classList.add('selected');
+            
+            // Показать поле для своей темы
+            document.getElementById('customTheme').classList.remove('hidden');
+            document.getElementById('customTheme').focus();
+        }
+        
+        // Функция передачи обращения сотруднику
+        function transferToEmployee() {
+            if (!currentTicket) return;
+            
+            let employeeName = "Случайный сотрудник";
+            if (selectedEmployee) {
+                const employee = users.find(u => u.id === selectedEmployee);
+                if (employee) {
+                    employeeName = `${employee.name} ${employee.lastName}`;
+                }
+            }
+            
+            // Обновляем обращение
+            currentTicket.assignee = employeeName;
+            currentTicket.updated = new Date();
+            
+            // Добавляем системное сообщение
+            const systemMessage = {
+                sender: 'system',
+                text: `Обращение передано сотруднику: ${employeeName}`,
+                time: new Date()
+            };
+            
+            currentTicket.messages.push(systemMessage);
+            
+            // Обновляем UI
+            renderChatView();
+            renderTicketsList();
+            saveData();
+            
+            // Закрываем модальное окно
+            hideModal(document.getElementById('transferTicketModal'));
+            
+            // Показываем уведомление
+            showToast(`Обращение передано ${employeeName}`);
+        }
+        
+        // Функция создания технического задания
+        function createTechnicalTask() {
+            if (!currentTicket) return;
+            
+            const description = document.getElementById('taskDescription').value.trim();
+            if (!description) {
+                showToast('Пожалуйста, заполните краткое описание', true);
+                return;
+            }
+            
+            // Определяем тему
+            let theme = selectedTheme;
+            if (customThemeEnabled) {
+                theme = document.getElementById('customTheme').value.trim();
+                if (!theme) {
+                    showToast('Пожалуйста, укажите тему', true);
+                    return;
+                }
+            }
+            
+            if (!theme) {
+                showToast('Пожалуйста, выберите тему', true);
+                return;
+            }
+            
+            // Определяем сотрудника
+            let employeeName = "Случайный сотрудник";
+            if (selectedTaskEmployee) {
+                const employee = users.find(u => u.id === selectedTaskEmployee);
+                if (employee) {
+                    employeeName = `${employee.name} ${employee.lastName}`;
+                }
+            }
+            
+            // Создаем техническое задание
+            const technicalTask = {
+                id: generateTaskId(),
+                ticketId: currentTicket.id,
+                theme: theme,
+                description: description,
+                assignedTo: employeeName,
+                createdAt: new Date(),
+                status: 'new'
+            };
+            
+            // Сохраняем ТЗ (в реальной системе это бы сохранялось в БД)
+            saveTechnicalTask(technicalTask);
+            
+            // Добавляем системное сообщение в чат
+            const systemMessage = {
+                sender: 'system',
+                text: `Создано техническое задание: "${theme}". Назначено: ${employeeName}. Описание: ${description}`,
+                time: new Date()
+            };
+            
+            currentTicket.messages.push(systemMessage);
+            
+            // Обновляем UI
+            renderChatView();
+            renderTicketsList();
+            saveData();
+            
+            // Закрываем модальное окно
+            hideModal(document.getElementById('transferTicketModal'));
+            
+            // Показываем уведомление
+            showToast('Техническое задание создано и отправлено');
+        }
+        
+        // Вспомогательные функции для ТЗ
+        function generateTaskId() {
+            return 'TZ-' + Date.now();
+        }
+        
+        function saveTechnicalTask(task) {
+            // В реальной системе здесь был бы вызов API для сохранения ТЗ
+            // Для демонстрации просто сохраняем в localStorage
+            let tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            tasks.push(task);
+            localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
+            
+            // Также добавляем обращение в канбан, если его там еще нет
+            addTicketToKanban(currentTicket);
+        }
+        
+        function addTicketToKanban(ticket) {
+            // Проверяем, есть ли уже это обращение в канбане
+            let kanbanTickets = JSON.parse(localStorage.getItem('smartSupportKanbanTickets')) || [];
+            const existingTicket = kanbanTickets.find(t => t.id === ticket.id);
+            
+            if (!existingTicket) {
+                kanbanTickets.push({
+                    id: ticket.id,
+                    subject: ticket.subject,
+                    user: ticket.user,
+                    status: ticket.status,
+                    priority: ticket.priority,
+                    updated: ticket.updated
+                });
+                localStorage.setItem('smartSupportKanbanTickets', JSON.stringify(kanbanTickets));
+            }
+        }
+        
         // File attachment functionality
         function setupFileAttachment() {
             const attachBtn = document.getElementById('attachBtn');
@@ -6359,131 +6797,101 @@ body.focus-mode,
        
             showToast(`Приоритет обращения изменен на "${priorityLabels[newPriority]}"`);
         }
-        function routeTicket() {
+   
+        function closeChatView() {
+            ticketChatView.classList.remove('active');
+        }
+        function sendChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            if (!chatInput || !chatInput.value.trim() || !currentTicket) return;
+            const newMessage = {
+                sender: 'agent',
+                agentName: 'Анна Волкова (Оператор 1-й линии)',
+                text: chatInput.value,
+                time: new Date()
+            };
+            currentTicket.messages.push(newMessage);
+            currentTicket.updated = new Date();
+            currentTicket.status = currentTicket.status === 'new' ? 'in-progress' : currentTicket.status;
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+       
+            renderChatView();
+            renderTicketsList();
+            updateDashboardStats();
+            renderStatusStats();
+            renderRecentTickets();
+            saveData();
+       
+            showToast('Сообщение отправлено');
+        }
+        function resolveCurrentTicket() {
             if (!currentTicket) return;
-            showModal(routeTicketModal);
+            currentTicket.status = 'resolved';
+            currentTicket.updated = new Date();
+       
+            const systemMessage = {
+                sender: 'system',
+                text: 'Статус изменён на "Решено"',
+                time: new Date()
+            };
+       
+            currentTicket.messages.push(systemMessage);
+       
+            renderChatView();
+            renderTicketsList();
+            updateDashboardStats();
+            renderStatusStats();
+            renderRecentTickets();
+            saveData();
+       
+            showToast('Обращение решено');
         }
-        function showTransferModal() {
-            hideModal(routeTicketModal);
-            selectedRole = '';
-            selectedEmployee = '';
-            updateEmployeeList();
-            showModal(transferModal);
-        }
-        function showTechTaskModal() {
-            hideModal(routeTicketModal);
-            selectedEmployee = '';
-            toggleCustomTopic();
-            document.getElementById('techDescription').value = '';
-            const techEmployeeSelect = document.getElementById('techEmployee');
-            techEmployeeSelect.innerHTML = '<option value="random">Случайный сотрудник</option>';
-            users.filter(u => u.role === 'operator2').forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.id;
-                option.textContent = `${user.name} ${user.lastName}`;
-                techEmployeeSelect.appendChild(option);
-            });
-            showModal(techTaskModal);
-        }
-        function updateEmployeeList() {
-            selectedRole = document.getElementById('transferRole').value;
-            const employeeSelect = document.getElementById('transferEmployee');
-            employeeSelect.innerHTML = '<option value="">Выберите сотрудника</option><option value="random">Случайный сотрудник</option>';
-            if (selectedRole) {
-                users.filter(u => u.role === selectedRole).forEach(user => {
-                    const option = document.createElement('option');
-                    option.value = user.id;
-                    option.textContent = `${user.name} ${user.lastName}`;
-                    employeeSelect.appendChild(option);
-                });
-            }
-        }
-        function transferToEmployee() {
-            selectedEmployee = document.getElementById('transferEmployee').value;
-            if (!selectedEmployee) {
-                showToast('Выберите сотрудника', true);
-                return;
-            }
-            let assignee;
-            if (selectedEmployee === 'random') {
-                const roleUsers = users.filter(u => u.role === selectedRole);
-                if (roleUsers.length === 0) {
-                    showToast('Нет сотрудников в этой роли', true);
-                    return;
-                }
-                assignee = roleUsers[Math.floor(Math.random() * roleUsers.length)];
-            } else {
-                assignee = users.find(u => u.id === parseInt(selectedEmployee));
-            }
-            if (assignee) {
-                currentTicket.assignee = `${assignee.name} ${assignee.lastName}`;
-                currentTicket.updated = new Date();
-                const systemMessage = {
-                    sender: 'system',
-                    text: `Обращение передано сотруднику: ${currentTicket.assignee}`,
-                    time: new Date()
+        function createNewTicket() {
+            const subject = document.getElementById('ticketSubject').value;
+            const message = document.getElementById('ticketMessage').value;
+            const channel = document.getElementById('ticketChannel').value;
+            const priority = document.getElementById('ticketPriority').value;
+            if (subject && message) {
+                const newTicket = {
+                    id: Math.max(...tickets.map(t => t.id)) + 1,
+                    user: { name: 'Случайный пользователь', email: 'user@example.com', avatar: '👤' },
+                    subject,
+                    message,
+                    status: 'new',
+                    priority,
+                    channel,
+                    category: 'Общие вопросы',
+                    created: new Date(),
+                    updated: new Date(),
+                    assignee: null,
+                    messages: [
+                        { sender: 'user', text: message, time: new Date() }
+                    ]
                 };
-                currentTicket.messages.push(systemMessage);
-                renderChatView();
+           
+                tickets.push(newTicket);
+                filteredTickets = [...tickets];
+           
+                // Reset form
+                document.getElementById('ticketSubject').value = '';
+                document.getElementById('ticketMessage').value = '';
+                document.getElementById('ticketChannel').value = 'email';
+                document.getElementById('ticketPriority').value = 'low';
+           
+                hideModal(newTicketModal);
                 renderTicketsList();
-                hideModal(transferModal);
+                updateDashboardStats();
+                renderStatusStats();
+                renderRecentTickets();
                 saveData();
-                showToast('Обращение передано');
-            }
-        }
-        function toggleCustomTopic() {
-            const topicSelect = document.getElementById('techTopic');
-            const customInput = document.getElementById('customTechTopic');
-            if (topicSelect.value === 'custom') {
-                customInput.style.display = 'block';
+           
+                showToast('Новое обращение создано');
+           
+                // Switch to tickets page
+                switchPage('tickets');
             } else {
-                customInput.style.display = 'none';
-            }
-        }
-        function submitTechTask() {
-            const topicSelect = document.getElementById('techTopic');
-            let topic = topicSelect.value;
-            if (topic === 'custom') {
-                topic = document.getElementById('customTechTopic').value.trim();
-                if (!topic) {
-                    showToast('Укажите тему', true);
-                    return;
-                }
-            }
-            const description = document.getElementById('techDescription').value.trim();
-            if (!description) {
-                showToast('Укажите описание', true);
-                return;
-            }
-            selectedEmployee = document.getElementById('techEmployee').value;
-            let assignee;
-            if (selectedEmployee === 'random') {
-                const secondLine = users.filter(u => u.role === 'operator2');
-                if (secondLine.length === 0) {
-                    showToast('Нет операторов 2-й линии', true);
-                    return;
-                }
-                assignee = secondLine[Math.floor(Math.random() * secondLine.length)];
-            } else {
-                assignee = users.find(u => u.id === parseInt(selectedEmployee));
-            }
-            if (assignee) {
-                currentTicket.assignee = `${assignee.name} ${assignee.lastName}`;
-                currentTicket.status = 'waiting';
-                currentTicket.hasTechTask = true;
-                currentTicket.updated = new Date();
-                const systemMessage = {
-                    sender: 'system',
-                    text: `Техническое задание:\nТема: ${topic}\nОписание: ${description}\nПередано: ${currentTicket.assignee}`,
-                    time: new Date()
-                };
-                currentTicket.messages.push(systemMessage);
-                renderChatView();
-                renderTicketsList();
-                renderKanban();
-                hideModal(techTaskModal);
-                saveData();
-                showToast('Техническое задание отправлено');
+                showToast('Пожалуйста, заполните все поля', true);
             }
         }
         // Kanban Functions
@@ -6495,7 +6903,7 @@ body.focus-mode,
                 { status: 'resolved', title: 'Решено' }
             ];
             kanbanContainer.innerHTML = columns.map(column => {
-                const columnTickets = tickets.filter(t => t.status === column.status && t.hasTechTask);
+                const columnTickets = tickets.filter(t => t.status === column.status);
                 return `
                     <div class="kanban-column" ondrop="dropTicket(event, '${column.status}')" ondragover="allowDrop(event)">
                         <div class="kanban-card">
@@ -6504,7 +6912,7 @@ body.focus-mode,
                             </div>
                             <div class="kanban-content">
                                 ${columnTickets.map(ticket => `
-                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})" onclick="switchPage('tickets'); setTimeout(() => selectTicket(${ticket.id}), 100)">
+                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})">
                                         <div class="kanban-subject">${ticket.subject}</div>
                                     </div>
                                 `).join('')}
@@ -6779,7 +7187,7 @@ body.focus-mode,
                 showToast('Статья обновлена');
             }
         }
-        functiondeleteArticle() {
+        function deleteArticle() {
             if (currentArticle) {
                 const index = articles.findIndex(a => a.id === currentArticle.id);
                 if (index !== -1) {
@@ -7179,8 +7587,7 @@ body.focus-mode,
                     assignee: null,
                     messages: [
                         { sender: 'user', text: 'Это тестовое обращение, созданное автоматически', time: new Date() }
-                    ],
-                    hasTechTask: false
+                    ]
                 };
            
                 tickets.push(newTicket);
@@ -7212,7 +7619,6 @@ body.focus-mode,
         // Utility Functions
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            if (seconds < 60) return 'только что';
             const minutes = Math.floor(seconds / 60);
             if (minutes < 60) return `${minutes} мин назад`;
             const hours = Math.floor(minutes / 60);
@@ -7307,26 +7713,26 @@ body.focus-mode,
             }
         }
         // New function to dynamically adjust chat heights in focus mode (fixes gaps due to variable header height)
-function adjustChatHeights() {
-    if (!document.body.classList.contains('focus-mode')) return;
-    const header = document.querySelector('.chat-view-header');
-    const input = document.querySelector('.chat-input-container');
-    const messages = document.querySelector('.chat-messages');
-    if (header && input && messages) {
-        const headerHeight = header.offsetHeight;
-        const inputHeight = input.offsetHeight;
-        messages.style.height = `calc(100vh - ${headerHeight + inputHeight}px)`;
-       
-        // Re-scroll to bottom after adjustment (fixes history not fully visible)
-        messages.scrollTop = messages.scrollHeight;
-    }
-}
-window.addEventListener('resize', () => {
-    if (document.body.classList.contains('focus-mode')) {
-        adjustChatHeights();
-    }
-    handleResize(); // Your existing resize logic
-});
+        function adjustChatHeights() {
+            if (!document.body.classList.contains('focus-mode')) return;
+            const header = document.querySelector('.chat-view-header');
+            const input = document.querySelector('.chat-input-container');
+            const messages = document.querySelector('.chat-messages');
+            if (header && input && messages) {
+                const headerHeight = header.offsetHeight;
+                const inputHeight = input.offsetHeight;
+                messages.style.height = `calc(100vh - ${headerHeight + inputHeight}px)`;
+               
+                // Re-scroll to bottom after adjustment (fixes history not fully visible)
+                messages.scrollTop = messages.scrollHeight;
+            }
+        }
+        window.addEventListener('resize', () => {
+            if (document.body.classList.contains('focus-mode')) {
+                adjustChatHeights();
+            }
+            handleResize(); // Your existing resize logic
+        });
         // Initialize the app
         document.addEventListener('DOMContentLoaded', init);
    
