@@ -2531,8 +2531,8 @@
        
             .chat-input-row {
                 gap: 4px;
-                align: items;
-            } 
+                align-items: center;
+            }
        
             .chat-input {
                 min-height: 36px;
@@ -2617,6 +2617,7 @@
        
             .edit-user-modal .modal-actions button {
                 width: 100%;
+                margin: 0;
             }
        
             .edit-user-modal .form-row {
@@ -4238,6 +4239,38 @@ body.focus-mode,
         padding: 10px !important;
     }
 }
+        /* Новые стили для модальных окон маршрутизации */
+        .route-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .route-option-btn {
+            padding: 12px 20px;
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .route-option-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+        }
+        .custom-topic-input {
+            display: none;
+            margin-top: 8px;
+        }
+        .system-message {
+            background: #e5e7eb;
+            color: #374151;
+        }
     </style>
 </head>
 <body>
@@ -4966,6 +4999,96 @@ body.focus-mode,
             </div>
         </div>
     </div>
+    <!-- Route Ticket Modal -->
+    <div id="routeTicketModal" class="modal-overlay hidden">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="hideModal(document.getElementById('routeTicketModal'))">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Маршрутизация обращения</h2>
+            <div class="route-options">
+                <button class="route-option-btn" onclick="showTransferModal()">
+                    <i class="fas fa-user"></i>
+                    Передать обращение другому сотруднику
+                </button>
+                <button class="route-option-btn" onclick="showTechTaskModal()">
+                    <i class="fas fa-tools"></i>
+                    Завести техническое задание (2 линии)
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Transfer to Employee Modal -->
+    <div id="transferModal" class="modal-overlay hidden">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="hideModal(document.getElementById('transferModal'))">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Передать сотруднику</h2>
+            <div class="form-group">
+                <label class="form-label">Роль</label>
+                <select class="form-input" id="transferRole" onchange="updateEmployeeList()">
+                    <option value="">Выберите роль</option>
+                    <option value="operator1">Оператор 1-й линии</option>
+                    <option value="operator2">Оператор 2-й линии</option>
+                    <option value="admin">Администратор</option>
+                    <option value="manager">Руководитель</option>
+                    <option value="developer">Разработчик</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сотрудник</label>
+                <select class="form-input" id="transferEmployee">
+                    <option value="">Выберите сотрудника</option>
+                    <option value="random">Случайный сотрудник</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="transferToEmployee()">Передать</button>
+                <button class="btn-cancel" onclick="hideModal(document.getElementById('transferModal'))">Отмена</button>
+            </div>
+        </div>
+    </div>
+    <!-- Tech Task Modal -->
+    <div id="techTaskModal" class="modal-overlay hidden">
+        <div class="modal">
+            <button class="modal-close-btn" onclick="hideModal(document.getElementById('techTaskModal'))">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Техническое задание</h2>
+            <div class="form-group">
+                <label class="form-label">Тема</label>
+                <select class="form-input" id="techTopic" onchange="toggleCustomTopic()">
+                    <option value="custom">Указать свою</option>
+                    <option value="Ошибка авторизации">Ошибка авторизации</option>
+                    <option value="Проблема с оплатой">Проблема с оплатой</option>
+                    <option value="Техническая ошибка">Техническая ошибка</option>
+                    <option value="Вопрос по тарифам">Вопрос по тарифам</option>
+                    <option value="Проблема с загрузкой">Проблема с загрузкой</option>
+                    <option value="Ошибка 500">Ошибка 500</option>
+                    <option value="Не приходит email">Не приходит email</option>
+                    <option value="Проблема с мобильным приложением">Проблема с мобильным приложением</option>
+                    <option value="Вопрос по API">Вопрос по API</option>
+                    <option value="Другая проблема">Другая проблема</option>
+                </select>
+                <input type="text" class="form-input custom-topic-input" id="customTechTopic" placeholder="Введите свою тему">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Краткое описание</label>
+                <textarea class="form-input" id="techDescription" rows="4" placeholder="Введите описание (обязательно)"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Сотрудник</label>
+                <select class="form-input" id="techEmployee">
+                    <option value="random">Случайный сотрудник</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="submitTechTask()">Отправить</button>
+                <button class="btn-cancel" onclick="hideModal(document.getElementById('techTaskModal'))">Отмена</button>
+            </div>
+        </div>
+    </div>
     <script>
         // Sample data
         let tickets = JSON.parse(localStorage.getItem('smartSupportTickets')) || [
@@ -4983,7 +5106,8 @@ body.focus-mode,
                 assignee: null,
                 messages: [
                     { sender: 'user', text: 'Здравствуйте, не могу войти в систему', time: new Date(Date.now() - 2 * 60 * 60 * 1000) }
-                ]
+                ],
+                hasTechTask: false
             },
             {
                 id: 2,
@@ -5000,7 +5124,8 @@ body.focus-mode,
                 messages: [
                     { sender: 'user', text: 'Добрый день! Хочу уточнить тарифы', time: new Date(Date.now() - 5 * 60 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Здравствуйте! Расскажу вам о наших тарифах...', time: new Date(Date.now() - 4 * 60 * 60 * 1000) }
-                ]
+                ],
+                hasTechTask: false
             },
             {
                 id: 3,
@@ -5017,7 +5142,8 @@ body.focus-mode,
                 messages: [
                     { sender: 'user', text: 'При загрузке файлов появляется ошибка', time: new Date(Date.now() - 24 * 60 * 60 * 1000) },
                     { sender: 'agent', agentName: 'Дмитрий Соколов (Оператор 2-й линии)', text: 'Понял проблему, передаю разработчикам', time: new Date(Date.now() - 20 * 60 * 60 * 1000) }
-                ]
+                ],
+                hasTechTask: false
             },
             {
                 id: 4,
@@ -5037,7 +5163,8 @@ body.focus-mode,
                     { sender: 'agent', agentName: 'Анна Волкова (Оператор 1-й линии)', text: 'Проблема решена, попробуйте сейчас', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
                     { sender: 'user', text: 'Спасибо, всё работает!', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 10 * 60 * 1000) },
                     { sender: 'system', text: 'Статус изменён на "Решено"', time: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000 + 15 * 60 * 1000) }
-                ]
+                ],
+                hasTechTask: false
             }
         ];
         const users = JSON.parse(localStorage.getItem('smartSupportUsers')) || [
@@ -5209,6 +5336,20 @@ body.focus-mode,
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
         let prevWidth = window.innerWidth;
+        let selectedRole = '';
+        let selectedEmployee = '';
+        let techTopics = [
+            'Ошибка авторизации',
+            'Проблема с оплатой',
+            'Техническая ошибка',
+            'Вопрос по тарифам',
+            'Проблема с загрузкой',
+            'Ошибка 500',
+            'Не приходит email',
+            'Проблема с мобильным приложением',
+            'Вопрос по API',
+            'Другая проблема'
+        ];
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
         const header = document.getElementById('header');
@@ -5321,6 +5462,10 @@ body.focus-mode,
         // Toast
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
+        // Route modals
+        const routeTicketModal = document.getElementById('routeTicketModal');
+        const transferModal = document.getElementById('transferModal');
+        const techTaskModal = document.getElementById('techTaskModal');
         // Initialize
         function init() {
             updateDashboardStats();
@@ -5960,9 +6105,9 @@ body.focus-mode,
                             </div>
                         </div>
                         <div class="action-buttons-row">
-                            <button class="btn-secondary" onclick="transferToSecondLine()">
+                            <button class="btn-secondary" onclick="routeTicket()">
                                 <i class="fas fa-share"></i>
-                                ${isMobileLandscape ? '2 линия' : 'Передать 2 линии'}
+                                ${isMobileLandscape ? 'Передать' : 'Передать обращение'}
                             </button>
                             <button class="btn-primary" onclick="resolveCurrentTicket()" ${currentTicket.status === 'resolved' ? 'disabled' : ''}>
                                 <i class="fas fa-check-circle"></i>
@@ -6214,127 +6359,131 @@ body.focus-mode,
        
             showToast(`Приоритет обращения изменен на "${priorityLabels[newPriority]}"`);
         }
-        function transferToSecondLine() {
+        function routeTicket() {
             if (!currentTicket) return;
-            // Находим оператора 2-й линии
-            const secondLineOperator = users.find(user => user.role === 'operator2');
-       
-            if (secondLineOperator) {
-                currentTicket.assignee = secondLineOperator.name;
-                currentTicket.updated = new Date();
-           
-                const systemMessage = {
-                    sender: 'system',
-                    text: `Обращение передано оператору 2-й линии: ${secondLineOperator.name}`,
-                    time: new Date()
-                };
-           
-                currentTicket.messages.push(systemMessage);
-           
-                renderChatView();
-                renderTicketsList();
-                saveData();
-           
-                showToast(`Обращение передано ${secondLineOperator.name}`);
-            } else {
-                showToast('Оператор 2-й линии не найден', true);
+            showModal(routeTicketModal);
+        }
+        function showTransferModal() {
+            hideModal(routeTicketModal);
+            selectedRole = '';
+            selectedEmployee = '';
+            updateEmployeeList();
+            showModal(transferModal);
+        }
+        function showTechTaskModal() {
+            hideModal(routeTicketModal);
+            selectedEmployee = '';
+            toggleCustomTopic();
+            document.getElementById('techDescription').value = '';
+            const techEmployeeSelect = document.getElementById('techEmployee');
+            techEmployeeSelect.innerHTML = '<option value="random">Случайный сотрудник</option>';
+            users.filter(u => u.role === 'operator2').forEach(user => {
+                const option = document.createElement('option');
+                option.value = user.id;
+                option.textContent = `${user.name} ${user.lastName}`;
+                techEmployeeSelect.appendChild(option);
+            });
+            showModal(techTaskModal);
+        }
+        function updateEmployeeList() {
+            selectedRole = document.getElementById('transferRole').value;
+            const employeeSelect = document.getElementById('transferEmployee');
+            employeeSelect.innerHTML = '<option value="">Выберите сотрудника</option><option value="random">Случайный сотрудник</option>';
+            if (selectedRole) {
+                users.filter(u => u.role === selectedRole).forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.id;
+                    option.textContent = `${user.name} ${user.lastName}`;
+                    employeeSelect.appendChild(option);
+                });
             }
         }
-   
-        function closeChatView() {
-            ticketChatView.classList.remove('active');
-        }
-        function sendChatMessage() {
-            const chatInput = document.getElementById('chatInput');
-            if (!chatInput || !chatInput.value.trim() || !currentTicket) return;
-            const newMessage = {
-                sender: 'agent',
-                agentName: 'Анна Волкова (Оператор 1-й линии)',
-                text: chatInput.value,
-                time: new Date()
-            };
-            currentTicket.messages.push(newMessage);
-            currentTicket.updated = new Date();
-            currentTicket.status = currentTicket.status === 'new' ? 'in-progress' : currentTicket.status;
-            chatInput.value = '';
-            chatInput.style.height = 'auto';
-       
-            renderChatView();
-            renderTicketsList();
-            updateDashboardStats();
-            renderStatusStats();
-            renderRecentTickets();
-            saveData();
-       
-            showToast('Сообщение отправлено');
-        }
-        function resolveCurrentTicket() {
-            if (!currentTicket) return;
-            currentTicket.status = 'resolved';
-            currentTicket.updated = new Date();
-       
-            const systemMessage = {
-                sender: 'system',
-                text: 'Статус изменён на "Решено"',
-                time: new Date()
-            };
-       
-            currentTicket.messages.push(systemMessage);
-       
-            renderChatView();
-            renderTicketsList();
-            updateDashboardStats();
-            renderStatusStats();
-            renderRecentTickets();
-            saveData();
-       
-            showToast('Обращение решено');
-        }
-        function createNewTicket() {
-            const subject = document.getElementById('ticketSubject').value;
-            const message = document.getElementById('ticketMessage').value;
-            const channel = document.getElementById('ticketChannel').value;
-            const priority = document.getElementById('ticketPriority').value;
-            if (subject && message) {
-                const newTicket = {
-                    id: Math.max(...tickets.map(t => t.id)) + 1,
-                    user: { name: 'Случайный пользователь', email: 'user@example.com', avatar: '👤' },
-                    subject,
-                    message,
-                    status: 'new',
-                    priority,
-                    channel,
-                    category: 'Общие вопросы',
-                    created: new Date(),
-                    updated: new Date(),
-                    assignee: null,
-                    messages: [
-                        { sender: 'user', text: message, time: new Date() }
-                    ]
-                };
-           
-                tickets.push(newTicket);
-                filteredTickets = [...tickets];
-           
-                // Reset form
-                document.getElementById('ticketSubject').value = '';
-                document.getElementById('ticketMessage').value = '';
-                document.getElementById('ticketChannel').value = 'email';
-                document.getElementById('ticketPriority').value = 'low';
-           
-                hideModal(newTicketModal);
-                renderTicketsList();
-                updateDashboardStats();
-                renderStatusStats();
-                renderRecentTickets();
-                saveData();
-           
-                showToast('Новое обращение создано');
-           
-                // Switch to tickets page
-                switchPage('tickets');
+        function transferToEmployee() {
+            selectedEmployee = document.getElementById('transferEmployee').value;
+            if (!selectedEmployee) {
+                showToast('Выберите сотрудника', true);
+                return;
+            }
+            let assignee;
+            if (selectedEmployee === 'random') {
+                const roleUsers = users.filter(u => u.role === selectedRole);
+                if (roleUsers.length === 0) {
+                    showToast('Нет сотрудников в этой роли', true);
+                    return;
+                }
+                assignee = roleUsers[Math.floor(Math.random() * roleUsers.length)];
             } else {
-                showToast('Пожалуйста, заполните все поля', true);
+                assignee = users.find(u => u.id === parseInt(selectedEmployee));
+            }
+            if (assignee) {
+                currentTicket.assignee = `${assignee.name} ${assignee.lastName}`;
+                currentTicket.updated = new Date();
+                const systemMessage = {
+                    sender: 'system',
+                    text: `Обращение передано сотруднику: ${currentTicket.assignee}`,
+                    time: new Date()
+                };
+                currentTicket.messages.push(systemMessage);
+                renderChatView();
+                renderTicketsList();
+                hideModal(transferModal);
+                saveData();
+                showToast('Обращение передано');
+            }
+        }
+        function toggleCustomTopic() {
+            const topicSelect = document.getElementById('techTopic');
+            const customInput = document.getElementById('customTechTopic');
+            if (topicSelect.value === 'custom') {
+                customInput.style.display = 'block';
+            } else {
+                customInput.style.display = 'none';
+            }
+        }
+        function submitTechTask() {
+            const topicSelect = document.getElementById('techTopic');
+            let topic = topicSelect.value;
+            if (topic === 'custom') {
+                topic = document.getElementById('customTechTopic').value.trim();
+                if (!topic) {
+                    showToast('Укажите тему', true);
+                    return;
+                }
+            }
+            const description = document.getElementById('techDescription').value.trim();
+            if (!description) {
+                showToast('Укажите описание', true);
+                return;
+            }
+            selectedEmployee = document.getElementById('techEmployee').value;
+            let assignee;
+            if (selectedEmployee === 'random') {
+                const secondLine = users.filter(u => u.role === 'operator2');
+                if (secondLine.length === 0) {
+                    showToast('Нет операторов 2-й линии', true);
+                    return;
+                }
+                assignee = secondLine[Math.floor(Math.random() * secondLine.length)];
+            } else {
+                assignee = users.find(u => u.id === parseInt(selectedEmployee));
+            }
+            if (assignee) {
+                currentTicket.assignee = `${assignee.name} ${assignee.lastName}`;
+                currentTicket.status = 'waiting';
+                currentTicket.hasTechTask = true;
+                currentTicket.updated = new Date();
+                const systemMessage = {
+                    sender: 'system',
+                    text: `Техническое задание:\nТема: ${topic}\nОписание: ${description}\nПередано: ${currentTicket.assignee}`,
+                    time: new Date()
+                };
+                currentTicket.messages.push(systemMessage);
+                renderChatView();
+                renderTicketsList();
+                renderKanban();
+                hideModal(techTaskModal);
+                saveData();
+                showToast('Техническое задание отправлено');
             }
         }
         // Kanban Functions
@@ -6346,7 +6495,7 @@ body.focus-mode,
                 { status: 'resolved', title: 'Решено' }
             ];
             kanbanContainer.innerHTML = columns.map(column => {
-                const columnTickets = tickets.filter(t => t.status === column.status);
+                const columnTickets = tickets.filter(t => t.status === column.status && t.hasTechTask);
                 return `
                     <div class="kanban-column" ondrop="dropTicket(event, '${column.status}')" ondragover="allowDrop(event)">
                         <div class="kanban-card">
@@ -6355,7 +6504,7 @@ body.focus-mode,
                             </div>
                             <div class="kanban-content">
                                 ${columnTickets.map(ticket => `
-                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})">
+                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})" onclick="switchPage('tickets'); setTimeout(() => selectTicket(${ticket.id}), 100)">
                                         <div class="kanban-subject">${ticket.subject}</div>
                                     </div>
                                 `).join('')}
@@ -7030,7 +7179,8 @@ body.focus-mode,
                     assignee: null,
                     messages: [
                         { sender: 'user', text: 'Это тестовое обращение, созданное автоматически', time: new Date() }
-                    ]
+                    ],
+                    hasTechTask: false
                 };
            
                 tickets.push(newTicket);
@@ -7062,6 +7212,7 @@ body.focus-mode,
         // Utility Functions
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+            if (seconds < 60) return 'только что';
             const minutes = Math.floor(seconds / 60);
             if (minutes < 60) return `${minutes} мин назад`;
             const hours = Math.floor(minutes / 60);
