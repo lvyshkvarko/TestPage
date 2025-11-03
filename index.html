@@ -1793,11 +1793,7 @@
             inset: 0;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             z-index: 200;
-            padding: 20px;
             animation: fadeIn 0.3s ease-out;
         }
         .modal {
@@ -1809,10 +1805,16 @@
             width: auto;
             max-width: 480px;
             animation: modalAppear 0.3s ease-out;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         @keyframes modalAppear {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
         }
         .modal-title {
             font-size: 24px;
@@ -5813,17 +5815,17 @@ body.focus-mode,
         }
         function updateLayout() {
             if (isMobile) {
-                header.style.marginLeft = '0';
+                header.style.left = '0';
                 mainContent.style.marginLeft = '0';
                 sidebar.classList.remove('closed');
             } else {
                 if (sidebarOpen) {
                     sidebar.classList.remove('closed');
-                    header.style.marginLeft = '256px';
+                    header.style.left = '256px';
                     mainContent.style.marginLeft = '256px';
                 } else {
                     sidebar.classList.add('closed');
-                    header.style.marginLeft = '80px';
+                    header.style.left = '80px';
                     mainContent.style.marginLeft = '80px';
                 }
             }
@@ -6908,7 +6910,7 @@ body.focus-mode,
                 <div class="template-item" onclick="selectTemplate(${template.id})">
                     <div class="template-item-title">${template.title}</div>
                     <div class="template-item-content">${template.content}</div>
-                </div>
+               </div>
             `).join('');
             showModal(templatesSelectionModal);
         }
