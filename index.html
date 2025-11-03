@@ -1806,14 +1806,14 @@
             padding: 32px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-lg);
-            width: 100%;
+            width: auto;
             max-width: 480px;
             animation: modalAppear 0.3s ease-out;
             position: relative;
         }
         @keyframes modalAppear {
-            from { opacity: 0; transform: scale(0.9) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .modal-title {
             font-size: 24px;
@@ -1945,6 +1945,7 @@
         /* Notification Modal */
         .notification-modal {
             max-width: 500px;
+            width: auto;
         }
         .notification-list {
             max-height: 400px;
@@ -1977,8 +1978,9 @@
             font-size: 12px;
         }
         /* Edit User Modal */
-        .edit-user-modal {
+        .edit-user-modal .modal {
             max-width: 600px;
+            width: auto;
         }
         .avatar-selection {
             display: flex;
@@ -2084,7 +2086,7 @@
         @media (max-width: 480px) {
             .edit-user-modal .modal {
                 margin: 10px;
-                padding: 16px;
+                padding: 12px;
             }
        
             .form-row {
@@ -2199,28 +2201,6 @@
             .chat-view-actions {
                 width: 100%;
                 justify-content: space-between;
-            }
-       
-            .mobile-header-actions {
-                width: 100%;
-                justify-content: space-between;
-                margin-bottom: 12px;
-            }
-       
-            .action-buttons-row {
-                width: 100%;
-                justify-content: space-between;
-            }
-       
-            .status-dropdown,
-            .priority-dropdown {
-                flex: 1;
-                margin-right: 8px;
-            }
-       
-            .status-dropdown:last-child,
-            .priority-dropdown:last-child {
-                margin-right: 0;
             }
         }
         @media (max-width: 480px) {
@@ -2551,8 +2531,8 @@
        
             .chat-input-row {
                 gap: 4px;
-                align-items: center;
-            }
+                align: items;
+            } 
        
             .chat-input {
                 min-height: 36px;
@@ -2637,7 +2617,20 @@
        
             .edit-user-modal .modal-actions button {
                 width: 100%;
-                margin: 0;
+            }
+       
+            .edit-user-modal .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+       
+            .edit-user-modal .avatar-selection {
+                justify-content: center;
+            }
+       
+            .edit-user-modal .password-reset-info {
+                font-size: 12px;
+                padding: 12px;
             }
         }
         @media (max-width: 480px) {
@@ -2663,6 +2656,7 @@
         /* Стили для нового модального окна сброса пароля */
         .password-reset-modal .modal {
             max-width: 500px;
+            width: auto;
         }
         .reset-link-container {
             background: var(--bg-light);
@@ -3490,6 +3484,7 @@
             position: relative;
             max-height: 90vh;
             overflow-y: auto;
+            width: auto;
         }
         .article-content {
             margin-bottom: 24px;
@@ -3665,6 +3660,7 @@
         /* Template Modal */
         .template-modal .modal {
             max-width: 600px;
+            width: auto;
         }
         .template-list {
             max-height: 300px;
@@ -6003,7 +5999,6 @@ body.focus-mode,
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
           
-            // Add enterkey support for message input
             const chatInput = document.getElementById('chatInput');
             if (chatInput) {
                 chatInput.addEventListener('keydown', (e) => {
@@ -6119,7 +6114,7 @@ body.focus-mode,
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
-               
+                   
                     // Upload complete
                     setTimeout(() => {
                         fileAttachment.classList.remove('uploading');
@@ -7067,7 +7062,6 @@ body.focus-mode,
         // Utility Functions
         function getTimeAgo(date) {
             const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-            if (seconds < 60) return 'только что';
             const minutes = Math.floor(seconds / 60);
             if (minutes < 60) return `${minutes} мин назад`;
             const hours = Math.floor(minutes / 60);
