@@ -2605,7 +2605,7 @@
         @media (max-width: 768px) {
             .edit-user-modal .modal {
                 max-width: 95%;
-                margin: 10px;
+                margin: 20px;
                 padding: 20px;
                 max-height: 90vh;
                 overflow-y: auto;
@@ -3195,9 +3195,8 @@
             }
        
             .chat-messages {
-                max-height: calc(100vh - 200px) !important;
+                max-height: none !important; /* Remove any max-height overrides */
             }
-       
             .chat-input-container {
                 padding: 10px 14px !important; /* Reduce padding to minimize potential gaps */
             }
@@ -3963,6 +3962,7 @@
        
             .message {
                 padding: 6px 10px;
+                margin-bottom: 2px;
             }
        
             .message-text {
@@ -4382,6 +4382,42 @@
         .theme-custom {
             background: var(--primary-light);
             border-left: 4px solid var(--primary-color);
+        }
+
+        /* Новые стили для визуального выделения выбранных элементов */
+        .employee-item.selected {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-dark);
+        }
+
+        .employee-item.selected .employee-name,
+        .employee-item.selected .employee-role {
+            color: var(--primary-dark);
+        }
+
+        .random-employee.selected {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-dark);
+        }
+
+        .theme-option.selected {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-dark);
+        }
+
+        .theme-custom.selected {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-dark);
+        }
+
+        /* Для выделения при фокусе или выборе в select (если нужно) */
+        .select-filter:selected,
+        .form-input:selected {
+            background: var(--primary-light);
         }
     </style>
 </head>
