@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -2619,7 +2620,7 @@
         @media (max-width: 768px) {
             .edit-user-modal .modal {
                 max-width: 95%;
-                margin: 10px;
+                margin: 20px;
                 padding: 20px;
                 max-height: 90vh;
                 overflow-y: auto;
@@ -3072,7 +3073,7 @@
                 flex: 0 0 auto;
             }
         }
-        /* ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
+        /* Горизонтальная ориентация на мобильных устройствах */
         @media (max-width: 1024px) and (orientation: landscape) {
             .chat-view-actions {
                 flex-wrap: nowrap;
@@ -4245,7 +4246,7 @@
                 padding: 10px !important;
             }
         }
-        /* НОВЫЕ СТИЛИ ДЛЯ МОДАЛЬНОГО ОКНА ПЕРЕДАЧИ ОБРАЩЕНИЯ */
+        /* НОВЫЕ СТИЛИ ДЛЯ ПЕРЕДАЧИ ОБРАЩЕНИЯ */
         .transfer-modal .modal {
             max-width: 500px;
         }
@@ -4311,16 +4312,19 @@
         .transfer-form {
             display: none;
             animation: fadeIn 0.3s ease-out;
+            flex-direction: column;
+            gap: 16px;
         }
        
         .transfer-form.active {
-            display: block;
+            display: flex;
         }
        
         .form-actions {
             display: flex;
             gap: 12px;
             margin-top: 24px;
+            justify-content: space-between;
         }
        
         .form-actions .btn {
@@ -4333,6 +4337,9 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             margin-top: 8px;
+            max-width: 100%;
+            position: relative;
+            z-index: 1;
         }
        
         .employee-item {
@@ -4367,6 +4374,9 @@
        
         .task-themes {
             margin-bottom: 16px;
+            max-width: 100%;
+            position: relative;
+            z-index: 1;
         }
        
         .theme-option {
@@ -4533,6 +4543,72 @@
             .form-actions {
                 flex-direction: row;
             }
+        }
+        /* Добавленные фиксы для transfer-modal */
+        .employee-name, .employee-role, .theme-option, .form-label, .transfer-option-title, .transfer-option-description {
+            word-break: break-word;
+            hyphens: auto;
+        }
+        .employee-list, .task-themes {
+            max-width: 100%;
+        }
+        .transfer-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        @media (max-height: 400px) {
+            .transfer-modal .modal {
+                padding: 10px;
+            }
+            .transfer-options {
+                flex-direction: column !important;
+                gap: 8px;
+            }
+            .transfer-option {
+                padding: 10px;
+            }
+            .employee-list, .task-themes {
+                max-height: 80px;
+            }
+            .form-group {
+                margin-bottom: 8px;
+            }
+            .form-actions {
+                gap: 8px;
+                margin-top: 12px;
+            }
+        }
+        /* Дополнительные фиксы для предотвращения перекрытия */
+        .transfer-modal .modal {
+            overflow: hidden; /* Предотвращаем переполнение модального окна */
+        }
+        .employee-list,
+        .task-themes {
+            overflow: hidden; /* Убеждаемся, что список не выходит за границы */
+        }
+        .employee-item,
+        .theme-option {
+            overflow: hidden; /* Предотвращаем переполнение элементов списка */
+            text-overflow: ellipsis;
+        }
+        .transfer-option-description {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* Увеличение z-index для модального окна */
+        .transfer-modal .modal-overlay {
+            z-index: 300; /* Увеличиваем z-index */
+        }
+        .transfer-modal .modal {
+            z-index: 301;
+        }
+        /* Добавляем отступы между элементами для предотвращения наложения */
+        .form-group {
+            padding-bottom: 10px; /* Дополнительный отступ снизу */
+        }
+        .form-actions .btn {
+            min-height: 40px; /* Убеждаемся, что кнопки имеют минимальную высоту */
         }
     </style>
 </head>
@@ -6057,7 +6133,7 @@
             const editModal = document.getElementById('editUserModal');
             const modalContent = editModal.querySelector('.modal');
       
-            // Добавляем кнопку закрытия, если её еще нет
+            // Добавляем кнопку закрытия, если её ещё нет
             if (!modalContent.querySelector('.modal-close-btn')) {
                 const closeButton = document.createElement('button');
                 closeButton.className = 'modal-close-btn';
@@ -7005,8 +7081,8 @@
             showToast('Обращение решено');
         }
         function createNewTicket() {
-            const subject = document.getElementById('ticketSubject').value;
-            const message = document.getElementById('ticketMessage').value;
+            const subject = document.getElementById('ticketSubject').value.trim();
+            const message = document.getElementById('ticketMessage').value.trim();
             const channel = document.getElementById('ticketChannel').value;
             const priority = document.getElementById('ticketPriority').value;
             if (subject && message) {
@@ -7898,3 +7974,4 @@
     </script>
 </body>
 </html>
+```
