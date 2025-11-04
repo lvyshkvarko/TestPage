@@ -6042,6 +6042,7 @@
             searchTickets.addEventListener('input', filterTickets);
             newTicketBtn.addEventListener('click', () => showModal(newTicketModal));
             userFilter.addEventListener('change', renderUsers);
+            addUserBtn.addEventListener('change', renderUsers);
             addUserBtn.addEventListener('click', () => showModal(addUserModal));
             confirmAddUser.addEventListener('click', addNewUser);
             cancelAddUser.addEventListener('click', () => hideModal(addUserModal));
