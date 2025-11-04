@@ -6713,6 +6713,11 @@
            
             currentTicket.messages.push(systemMessage);
            
+            // Если выбран конкретный сотрудник, устанавливаем статус "Ожидание"
+            if (selectedTaskEmployee !== null) {
+                currentTicket.status = 'waiting';
+            }
+           
             // Обновляем UI
             renderChatView();
             renderTicketsList();
@@ -7107,7 +7112,7 @@
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
-            const filteredArticles = articles.filter(article =>
+            filteredArticles = articles.filter(article =>
                 article.title.toLowerCase().includes(search) ||
                 article.content.toLowerCase().includes(search)
             );
