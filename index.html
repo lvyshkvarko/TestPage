@@ -2648,26 +2648,6 @@
                 padding: 12px;
             }
         }
-        @media (max-width: 480px) {
-            .edit-user-modal .modal {
-                margin: 5px;
-                padding: 16px;
-            }
-      
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
-      
-            .avatar-selection {
-                justify-content: center;
-            }
-      
-            .password-reset-info {
-                font-size: 12px;
-                padding: 12px;
-            }
-        }
         /* Стили для нового модального окна сброса пароля */
         .password-reset-modal .modal {
             max-width: 500px;
@@ -4546,6 +4526,44 @@
       
             .form-actions {
                 flex-direction: row;
+            }
+
+            /* Адаптация для формы ТЗ в горизонтальной ориентации */
+            .task-themes {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+            }
+      
+            .theme-option {
+                flex: 1 1 45%; /* Две колонки */
+                margin-bottom: 8px;
+                padding: 10px;
+                font-size: 13px;
+            }
+      
+            .form-group {
+                margin-bottom: 12px;
+            }
+      
+            .form-label {
+                font-size: 13px;
+            }
+      
+            .form-input,
+            .form-select {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+      
+            .employee-list {
+                max-height: 150px; /* Ограничение высоты для скролла */
+            }
+      
+            .employee-item {
+                padding: 8px 12px;
+                font-size: 13px;
             }
         }
         /* Дополнительные фиксы для предотвращения наложения */
