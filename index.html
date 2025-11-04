@@ -4548,6 +4548,48 @@
                 flex-direction: row;
             }
         }
+        /* Дополнительные фиксы для предотвращения наложения */
+        .transfer-modal .modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 0;
+        }
+        .transfer-form .form-group {
+            flex-shrink: 0;
+        }
+        .employee-list, .task-themes {
+            flex: 1 1 auto;
+            min-height: 100px;
+        }
+        .task-description {
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .transfer-option-header {
+                gap: 8px;
+            }
+            .transfer-option-title {
+                font-size: 14px;
+            }
+            .transfer-option-description {
+                font-size: 12px;
+                margin-left: 44px;
+            }
+            .modal-title {
+                font-size: 20px;
+            }
+            .form-label {
+                font-size: 13px;
+            }
+            .form-input {
+                font-size: 13px;
+            }
+        }
+        /* Фикс для iPhone и других мобильных устройств */
+        .transfer-modal .modal {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <body>
@@ -6495,13 +6537,13 @@
             document.getElementById('taskDescription').value = '';
            
             // Заполнить списки сотрудников
-            populateEmployeeLists();
+            populateEmployeeList();
+            populateTaskEmployeeList();
            
             // Установить дефолтные выделения
             selectEmployee(null, 'employee');
             selectEmployee(null, 'task');
             // Не выделяем "Указать свою тему" по умолчанию
-            // enableCustomTheme(); - commented out to not select by default
       
             showModal(document.getElementById('transferTicketModal'));
         }
@@ -6527,14 +6569,12 @@
             }
         }
        
-        // Функция заполнения списков сотрудников
-        function populateEmployeeLists() {
+        // Функция заполнения списка сотрудников для передачи сотруднику
+        function populateEmployeeList() {
             const employeeList = document.getElementById('employeeList');
-            const taskEmployeeList = document.getElementById('taskEmployeeList');
+            const selectedRole = document.getElementById('employeeRole').value;
            
-            // Очистить списки
             employeeList.innerHTML = '';
-            taskEmployeeList.innerHTML = '';
            
             // Добавить опцию "Случайный сотрудник"
             const randomEmployeeItem = document.createElement('div');
@@ -6545,8 +6585,39 @@
             `;
             randomEmployeeItem.dataset.employeeId = 'random';
             randomEmployeeItem.onclick = () => selectEmployee(null, 'employee');
-            employeeList.appendChild(randomEmployeeItem.cloneNode(true));
-            taskEmployeeList.appendChild(randomEmployeeItem.cloneNode(true));
+            employeeList.appendChild(randomEmployeeItem);
+           
+            // Добавить сотрудников выбранной роли
+            const roleUsers = users.filter(user => user.role === selectedRole);
+            roleUsers.forEach(user => {
+                const employeeItem = document.createElement('div');
+                employeeItem.className = 'employee-item';
+                employeeItem.innerHTML = `
+                    <div class="employee-name">${user.name} ${user.lastName}</div>
+                    <div class="employee-role">${roleLabels[user.role]}</div>
+                `;
+                employeeItem.dataset.employeeId = user.id;
+                employeeItem.onclick = () => selectEmployee(user.id, 'employee');
+                employeeList.appendChild(employeeItem);
+            });
+        }
+       
+        // Функция заполнения списка сотрудников для ТЗ
+        function populateTaskEmployeeList() {
+            const taskEmployeeList = document.getElementById('taskEmployeeList');
+           
+            taskEmployeeList.innerHTML = '';
+           
+            // Добавить опцию "Случайный сотрудник"
+            const randomEmployeeItem = document.createElement('div');
+            randomEmployeeItem.className = 'employee-item random-employee';
+            randomEmployeeItem.innerHTML = `
+                <div class="employee-name">Случайный сотрудник</div>
+                <div class="employee-role">Будет выбран автоматически</div>
+            `;
+            randomEmployeeItem.dataset.employeeId = 'random';
+            randomEmployeeItem.onclick = () => selectEmployee(null, 'task');
+            taskEmployeeList.appendChild(randomEmployeeItem);
            
             // Добавить сотрудников по ролям
             const roles = ['operator2', 'developer', 'manager', 'admin'];
@@ -6561,12 +6632,8 @@
                             <div class="employee-role">${roleLabels[user.role]}</div>
                         `;
                         employeeItem.dataset.employeeId = user.id;
-                        employeeItem.onclick = () => selectEmployee(user.id, 'employee');
-                        employeeList.appendChild(employeeItem.cloneNode(true));
-                       
-                        const taskEmployeeItem = employeeItem.cloneNode(true);
-                        taskEmployeeItem.onclick = () => selectEmployee(user.id, 'task');
-                        taskEmployeeList.appendChild(taskEmployeeItem);
+                        employeeItem.onclick = () => selectEmployee(user.id, 'task');
+                        taskEmployeeList.appendChild(employeeItem);
                     });
                 }
             });
