@@ -2648,6 +2648,26 @@
                 padding: 12px;
             }
         }
+        @media (max-width: 480px) {
+            .edit-user-modal .modal {
+                margin: 5px;
+                padding: 16px;
+            }
+      
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+      
+            .avatar-selection {
+                justify-content: center;
+            }
+      
+            .password-reset-info {
+                font-size: 12px;
+                padding: 12px;
+            }
+        }
         /* Стили для нового модального окна сброса пароля */
         .password-reset-modal .modal {
             max-width: 500px;
@@ -4395,8 +4415,7 @@
             background: var(--primary-light);
             border-left: 4px solid var(--primary-color);
         }
-
-        /* АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ - ПЕРЕДАЧА ОБРАЩЕНИЯ */
+        /* Адаптация для мобильных устройств */
         @media (max-width: 768px) {
             .transfer-modal .modal {
                 max-width: 95%;
@@ -4415,19 +4434,8 @@
                 min-height: auto;
             }
       
-            .transfer-option-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-      
-            .transfer-option-title {
-                font-size: 15px;
-            }
-      
             .transfer-option-description {
                 margin-left: 48px;
-                font-size: 13px;
             }
       
             .form-actions {
@@ -4440,36 +4448,44 @@
                 width: 100%;
             }
       
-            .employee-list,
-            .task-themes {
-                max-height: 200px;
+            .form-group {
+                margin-bottom: 16px;
             }
       
-            .employee-item,
-            .theme-option {
+            .form-input,
+            .form-select {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+      
+            .theme-option,
+            .employee-item {
                 padding: 10px 14px;
                 font-size: 14px;
             }
+      
+            .transfer-option-title {
+                font-size: 15px;
+            }
+      
+            .transfer-option-description {
+                font-size: 13px;
+            }
+      
+            .form-label {
+                font-size: 13px;
+            }
         }
-
         @media (max-width: 480px) {
             .transfer-modal .modal {
                 margin: 5px;
                 padding: 16px;
             }
       
-            .transfer-option {
-                padding: 12px;
-            }
-      
             .transfer-option-icon {
-                width: 32px;
-                height: 32px;
-                font-size: 14px;
-            }
-      
-            .transfer-option-title {
-                font-size: 14px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
             }
       
             .transfer-option-description {
@@ -4477,8 +4493,12 @@
                 font-size: 12px;
             }
       
-            .employee-item,
-            .theme-option {
+            .transfer-option-title {
+                font-size: 14px;
+            }
+      
+            .theme-option,
+            .employee-item {
                 padding: 8px 12px;
                 font-size: 13px;
             }
@@ -4497,17 +4517,16 @@
                 font-size: 20px;
             }
         }
-
-        /* ГОРИЗОНТАЛЬНАЯ ОРИЕНТАЦИЯ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
+        /* Адаптация для горизонтальной ориентации */
         @media (max-width: 1024px) and (orientation: landscape) {
             .transfer-modal .modal {
                 max-height: 80vh;
-                padding: 15px;
+                padding: 20px;
             }
       
             .transfer-options {
                 flex-direction: row;
-                gap: 12px;
+                gap: 16px;
             }
       
             .transfer-option {
@@ -4515,109 +4534,99 @@
                 min-width: 0;
             }
       
-            .transfer-option-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-      
-            .transfer-option-icon {
-                align-self: flex-start;
-            }
-      
             .transfer-option-description {
                 margin-left: 0;
                 margin-top: 8px;
             }
       
+            .transfer-option-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+      
             .form-actions {
                 flex-direction: row;
             }
-      
-            .employee-list,
+
+            /* Адаптация для формы ТЗ в горизонтальной ориентации */
             .task-themes {
-                max-height: 150px;
-            }
-      
-            .task-themes {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
+                display: flex;
+                flex-wrap: wrap;
                 gap: 8px;
+                justify-content: space-between;
             }
       
             .theme-option {
-                margin-bottom: 0;
-                border: 1px solid var(--border-color);
-                border-radius: var(--radius);
+                flex: 1 1 45%; /* Две колонки */
+                margin-bottom: 8px;
+                padding: 10px;
+                font-size: 13px;
+            }
+      
+            .form-group {
+                margin-bottom: 12px;
+            }
+      
+            .form-label {
+                font-size: 13px;
+            }
+      
+            .form-input,
+            .form-select {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+      
+            .employee-list {
+                max-height: 150px; /* Ограничение высоты для скролла */
+            }
+      
+            .employee-item {
+                padding: 8px 12px;
+                font-size: 13px;
             }
         }
-
-        /* ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ В ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .transfer-options {
-                flex-direction: column;
+        /* Дополнительные фиксы для предотвращения наложения */
+        .transfer-modal .modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 0;
+        }
+        .transfer-form .form-group {
+            flex-shrink: 0;
+        }
+        .employee-list, .task-themes {
+            flex: 1 1 auto;
+            min-height: 100px;
+        }
+        .task-description {
+            flex: 1;
+        }
+        @media (max-width: 768px) {
+            .transfer-option-header {
+                gap: 8px;
             }
-      
-            .task-themes {
-                grid-template-columns: 1fr;
+            .transfer-option-title {
+                font-size: 14px;
             }
-      
             .transfer-option-description {
-                font-size: 11px;
+                font-size: 12px;
+                margin-left: 44px;
+            }
+            .modal-title {
+                font-size: 20px;
+            }
+            .form-label {
+                font-size: 13px;
+            }
+            .form-input {
+                font-size: 13px;
             }
         }
-
-        /* ВЕРТИКАЛЬНАЯ ОРИЕНТАЦИЯ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .transfer-modal .modal {
-                max-height: 85vh;
-            }
-      
-            .employee-list,
-            .task-themes {
-                max-height: 250px;
-            }
-        }
-
-        /* ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ДЛЯ ФОРМЫ ТЗ */
-        .theme-custom {
-            font-style: italic;
-            color: var(--primary-color);
-        }
-
-        #customTheme {
-            margin-top: 8px;
-        }
-
-        /* УЛУЧШЕНИЯ ДЛЯ ВЫБОРА СОТРУДНИКОВ */
-        .random-employee {
-            border: 2px dashed var(--border-color);
-        }
-
-        .random-employee.selected {
-            border-color: var(--primary-color);
-        }
-
-        /* АДАПТАЦИЯ ТЕКСТОВЫХ ПОЛЕЙ */
-        textarea.form-input {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        @media (max-width: 480px) {
-            textarea.form-input {
-                min-height: 60px;
-            }
-        }
-
-        /* УЛУЧШЕНИЯ ДЛЯ SCROLLBAR В МОДАЛЬНЫХ ОКНАХ */
-        .transfer-modal .modal::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .transfer-modal .modal::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 2px;
+        /* Фикс для iPhone и других мобильных устройств */
+        .transfer-modal .modal {
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -6379,7 +6388,7 @@
                         </div>
                         <h3>Выберите обращение</h3>
                         <p>Выберите диалог из списка слева, чтобы просмотреть переписку</p>
-                        </div>
+                    </div>
                 `;
                 return;
             }
