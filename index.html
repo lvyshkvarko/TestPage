@@ -5836,6 +5836,12 @@
            
             // Добавляем классы для мобильной оптимизации
             optimizeModalsForMobile();
+
+            // Добавляем слушатель на изменение роли сотрудника
+            const employeeRoleSelect = document.getElementById('employeeRole');
+            if (employeeRoleSelect) {
+                employeeRoleSelect.addEventListener('change', populateEmployeeList);
+            }
         }
        
         // Функция для оптимизации модальных окон для мобильных устройств
