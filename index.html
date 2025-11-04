@@ -4388,6 +4388,152 @@
             background: var(--primary-light);
             border-left: 4px solid var(--primary-color);
         }
+        /* Адаптация для мобильных устройств */
+        @media (max-width: 768px) {
+            .transfer-modal .modal {
+                max-width: 95%;
+                margin: 10px;
+                padding: 20px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+      
+            .transfer-options {
+                gap: 12px;
+            }
+      
+            .transfer-option {
+                padding: 16px;
+            }
+      
+            .transfer-option-description {
+                margin-left: 48px;
+            }
+      
+            .employee-list,
+            .task-themes {
+                max-height: 150px;
+            }
+      
+            .form-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+      
+            .form-actions .btn {
+                width: 100%;
+            }
+      
+            .form-group {
+                margin-bottom: 16px;
+            }
+      
+            .form-input,
+            .form-select {
+                font-size: 14px;
+                padding: 10px 14px;
+            }
+      
+            .theme-option,
+            .employee-item {
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+      
+            .transfer-option-title {
+                font-size: 15px;
+            }
+      
+            .transfer-option-description {
+                font-size: 13px;
+            }
+      
+            .form-label {
+                font-size: 13px;
+            }
+        }
+        @media (max-width: 480px) {
+            .transfer-modal .modal {
+                margin: 5px;
+                padding: 16px;
+            }
+      
+            .transfer-option-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+      
+            .transfer-option-description {
+                margin-left: 44px;
+                font-size: 12px;
+            }
+      
+            .transfer-option-title {
+                font-size: 14px;
+            }
+      
+            .employee-list,
+            .task-themes {
+                max-height: 120px;
+            }
+      
+            .theme-option,
+            .employee-item {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+      
+            .form-input,
+            .form-select {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+      
+            .form-label {
+                font-size: 12px;
+            }
+      
+            .modal-title {
+                font-size: 20px;
+            }
+        }
+        /* Адаптация для горизонтальной ориентации */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .transfer-modal .modal {
+                max-height: 80vh;
+                padding: 20px;
+            }
+      
+            .transfer-options {
+                flex-direction: row;
+                gap: 16px;
+            }
+      
+            .transfer-option {
+                flex: 1;
+                min-width: 0;
+            }
+      
+            .transfer-option-description {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+      
+            .transfer-option-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+      
+            .employee-list,
+            .task-themes {
+                max-height: 150px;
+            }
+      
+            .form-actions {
+                flex-direction: row;
+            }
+        }
     </style>
 </head>
 <body>
@@ -5231,7 +5377,7 @@
                 </div>
                
                 <div class="form-actions">
-                    <button class="btn-primary" onclick="createTechnicalTask()">Отправить сотруднику 2 линии</button>
+                    <button class="btn-primary" onclick="createTechnicalTask()">Завести ТЗ</button>
                     <button class="btn-cancel" onclick="hideModal(document.getElementById('transferTicketModal'))">Отменить заполнение</button>
                 </div>
             </div>
@@ -6340,8 +6486,9 @@
             // Установить дефолтные выделения
             selectEmployee(null, 'employee');
             selectEmployee(null, 'task');
-            enableCustomTheme();
-           
+            // Не выделяем "Указать свою тему" по умолчанию
+            // enableCustomTheme(); - commented out to not select by default
+      
             showModal(document.getElementById('transferTicketModal'));
         }
        
@@ -6960,7 +7107,7 @@
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
-            filteredArticles = articles.filter(article =>
+            const filteredArticles = articles.filter(article =>
                 article.title.toLowerCase().includes(search) ||
                 article.content.toLowerCase().includes(search)
             );
