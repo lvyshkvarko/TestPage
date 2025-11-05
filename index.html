@@ -4473,6 +4473,10 @@
             .form-label {
                 font-size: 13px;
             }
+      
+            .employee-list, .task-themes {
+                max-height: 150px;
+            }
         }
         @media (max-width: 480px) {
             .transfer-modal .modal {
@@ -5712,7 +5716,7 @@
         let notifications = JSON.parse(localStorage.getItem('smartSupportNotifications')) || [
             { id: 1, title: 'Новое обращение', message: 'Пользователь Иван Петров создал новое обращение', time: new Date(Date.now() - 2 * 60 * 60 * 1000), read: false },
             { id: 2, title: 'Изменен статус', message: 'Обращение #2 переведено в статус "В работе"', time: new Date(Date.now() - 5 * 60 * 60 * 1000), read: false },
-            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в систему', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
+            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в системе', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
         ];
         let filteredArticles = [...articles];
         let currentArticle = null;
@@ -6217,7 +6221,7 @@
         function switchPage(page) {
             currentPage = page;
       
-            // Update active nav item
+            // Update active active nav item
             navItems.forEach(item => {
                 if (item.dataset.page === page) {
                     item.classList.add('active');
