@@ -4343,8 +4343,7 @@
         }
        
         .employee-list {
-            max-height: none;
-            flex: 1;
+            max-height: 200px;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
@@ -4390,8 +4389,7 @@
             margin-bottom: 16px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            max-height: none;
-            flex: 1;
+            max-height: 200px;
             overflow-y: auto;
         }
        
@@ -4627,6 +4625,11 @@
         /* Фикс для iPhone и других мобильных устройств */
         .transfer-modal .modal {
             -webkit-overflow-scrolling: touch;
+        }
+        @media (orientation: landscape) {
+            .task-themes, .employee-list {
+                max-height: 150px;
+            }
         }
     </style>
 </head>
