@@ -4664,6 +4664,31 @@
                 padding: 16px;
             }
         }
+
+        /* Добавляем стили для прокрутки списков в горизонтальной мобильной ориентации */
+        @media (max-width: 1024px) and (orientation: landscape) {
+            .employee-list, .task-themes {
+                max-height: 300px;
+                overflow-y: auto;
+            }
+
+            .employee-list::-webkit-scrollbar,
+            .task-themes::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .employee-list::-webkit-scrollbar-track,
+            .task-themes::-webkit-scrollbar-track {
+                background: transparent;
+                border-radius: 3px;
+            }
+
+            .employee-list::-webkit-scrollbar-thumb,
+            .task-themes::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 3px;
+            }
+        }
     </style>
 </head>
 <body>
