@@ -155,11 +155,11 @@
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         .sidebar::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
         .sidebar.closed {
             width: 80px;
@@ -1000,15 +1000,12 @@
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            /* allow the chat view to fill available height and let children flex */
             height: 100%;
             min-height: 0;
             overflow: hidden;
             transition: var(--transition);
             box-shadow: var(--shadow);
         }
-        /* Ensure inner content uses a column flex layout so messages area can flex
-           and the input stays pinned to the bottom. */
         #chatViewContent {
             display: flex;
             flex-direction: column;
@@ -1289,8 +1286,6 @@
         .priority-medium { background: #f59e0b; }
         .priority-high { background: #ef4444; }
         .chat-messages {
-            /* flex so it can grow/shrink inside the chat view; min-height:0
-               allows it to shrink when there are few messages */
             flex: 1 1 auto;
             min-height: 0;
             overflow-y: auto;
@@ -1389,7 +1384,7 @@
         .chat-input-row {
             display: flex;
             gap: 12px;
-            align-items: center; /* Center align items vertically */
+            align-items: center;
         }
         .chat-input {
             flex: 1;
@@ -1413,29 +1408,22 @@
             display: inline-block;
         }
         @media (max-width: 768px) {
-            /* On mobile hide the send button text, show only the icon */
             .send-text {
                 display: none;
             }
-            /* Make all input row buttons larger on mobile */
             .chat-input-row .send-btn,
             .chat-input-row .attach-btn {
                 padding: 12px;
                 min-width: 48px;
                 height: 48px;
             }
-      
-            /* Add margin to send button to move it slightly right */
             .chat-input-row .send-btn {
                 margin-left: 12px;
             }
-      
             .chat-input-row .send-btn i,
             .chat-input-row .attach-btn i {
                 font-size: 18px;
             }
-      
-            /* Move paper plane icon slightly right inside the button */
             .chat-input-row .send-btn i.fa-paper-plane {
                 margin-left: 2px;
             }
@@ -3213,7 +3201,7 @@
             }
       
             .chat-input-container {
-                padding: 10px 14px !important; /* Reduce padding to minimize potential gaps */
+                padding: 10px 14px !important;
             }
         }
         /* ИСПРАВЛЕНИЯ ДЛЯ ПРОБЛЕМ С ПРОКРУТКОЙ НА МОБИЛЬНЫХ УСТРОЙСТВАХ */
@@ -3731,7 +3719,7 @@
             transition: var(--transition);
             border: 2px solid transparent;
             background: var(--bg-light);
-            font-size: 20px; /* Увеличиваем размер эмодзи */
+            font-size: 20px;
         }
         .article-icon-option:hover {
             transform: scale(1.1);
@@ -4070,44 +4058,44 @@
         .focus-mode .chat-view-header {
             position: sticky !important;
             top: 0 !important;
-            z-index: 1002 !important; /* Higher than input's z-index: 1001 */
-            background: var(--bg-white) !important; /* Ensure it doesn't become transparent */
+            z-index: 1002 !important;
+            background: var(--bg-white) !important;
         }
         /* Remove fixed calc height for messages in focus mode; use flex instead (fixes gaps and incomplete scrolling) */
         .focus-mode .chat-messages {
-            height: auto !important; /* Override the calc(100vh - 180px) */
+            height: auto !important;
             flex: 1 1 auto !important;
             min-height: 0 !important;
             overflow-y: auto !important;
-            padding-bottom: 0 !important; /* Remove extra padding that could create gaps */
+            padding-bottom: 0 !important;
         }
         /* Ensure no extra space between components */
         .focus-mode #chatViewContent {
             padding: 0 !important;
             margin: 0 !important;
-            overflow: hidden !important; /* Prevent internal overscroll */
+            overflow: hidden !important;
         }
         /* Adjust for mobile landscape (smaller vh, wrapped header) to prevent gaps */
         @media (max-width: 1024px) and (orientation: landscape) {
             .focus-mode .chat-messages {
-                max-height: none !important; /* Remove any max-height overrides */
+                max-height: none !important;
             }
             .focus-mode .chat-input-container {
-                padding: 8px 12px !important; /* Reduce padding to minimize potential gaps */
+                padding: 8px 12px !important;
             }
         }
         /* Fix potential rubber banding on iOS (add to body or focus-mode) */
         body.focus-mode,
         .focus-mode .chat-messages {
             -webkit-overflow-scrolling: touch !important;
-            overscroll-behavior: none !important; /* Prevent pull-to-refresh or bounce */
+            overscroll-behavior: none !important;
         }
         /* Ensure chat expands fully without empty space at bottom */
         .ticket-chat-view {
-            overflow: hidden !important; /* Prevent parent scrolling */
+            overflow: hidden !important;
         }
         .chat-messages {
-            box-sizing: border-box !important; /* Include padding in height */
+            box-sizing: border-box !important;
         }
         /* НОВЫЕ СТИЛИ ДЛЯ АДАПТАЦИИ МОДАЛЬНЫХ ОКОН ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
         @media (max-width: 768px) {
@@ -4200,7 +4188,7 @@
         .edit-user-modal.mobile-optimized .form-input,
         .edit-template-modal.mobile-optimized .form-input {
             padding: 10px 14px !important;
-            font-size: 16px !important; /* Увеличиваем для удобства на мобильных */
+            font-size: 16px !important;
         }
         /* Горизонтальная ориентация на мобильных устройствах */
         @media (max-width: 1024px) and (orientation: landscape) {
@@ -4270,7 +4258,7 @@
             cursor: pointer;
             transition: var(--transition);
             background: var(--bg-white);
-            min-height: 100px; /* To prevent shrinking */
+            min-height: 100px;
         }
        
         .transfer-option:hover {
@@ -4343,7 +4331,8 @@
         }
        
         .employee-list {
-            max-height: 200px;
+            max-height: none;
+            flex: 1;
             overflow-y: auto;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
@@ -4389,7 +4378,8 @@
             margin-bottom: 16px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            max-height: 200px;
+            max-height: none;
+            flex: 1;
             overflow-y: auto;
         }
        
@@ -4413,226 +4403,129 @@
             background: var(--primary-light);
             border-left: 4px solid var(--primary-color);
         }
-        /* Адаптация для мобильных устройств */
+
+        /* Стили для прокрутки модального окна передачи на мобильных устройствах */
         @media (max-width: 768px) {
             .transfer-modal .modal {
-                max-width: 95%;
-                margin: 10px;
-                padding: 20px;
-                max-height: 90vh;
-                overflow-y: auto;
+                max-height: 85vh !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior: contain !important;
             }
-      
-            .transfer-options {
-                gap: 12px;
+            
+            .transfer-modal .modal-content {
+                max-height: 100% !important;
+                overflow-y: visible !important;
             }
-      
-            .transfer-option {
-                padding: 16px;
-                min-height: auto;
+            
+            /* Обеспечиваем прокрутку для форм */
+            .transfer-form.active {
+                overflow-y: auto !important;
+                max-height: calc(85vh - 200px) !important;
             }
-      
-            .transfer-option-description {
-                margin-left: 48px;
+            
+            /* Специфичные стили для горизонтальной ориентации */
+            @media (max-width: 768px) and (orientation: landscape) {
+                .transfer-modal .modal {
+                    max-height: 80vh !important;
+                    max-width: 95vw !important;
+                }
+                
+                .transfer-options {
+                    max-height: 30vh !important;
+                    overflow-y: auto !important;
+                }
+                
+                .transfer-form.active {
+                    max-height: calc(80vh - 150px) !important;
+                }
+                
+                /* Улучшение отображения списков в горизонтальной ориентации */
+                .employee-list,
+                .task-themes {
+                    max-height: 25vh !important;
+                    overflow-y: auto !important;
+                }
             }
-      
-            .form-actions {
-                flex-direction: column;
-                gap: 8px;
-                margin-top: 16px;
-            }
-      
-            .form-actions .btn {
-                width: 100%;
-            }
-      
-            .form-group {
-                margin-bottom: 16px;
-            }
-      
-            .form-input,
-            .form-select {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
-      
-            .theme-option,
-            .employee-item {
-                padding: 10px 14px;
-                font-size: 14px;
-            }
-      
-            .transfer-option-title {
-                font-size: 15px;
-            }
-      
-            .transfer-option-description {
-                font-size: 13px;
-            }
-      
-            .form-label {
-                font-size: 13px;
-            }
-      
-            .employee-list, .task-themes {
-                max-height: 150px;
+            
+            /* Специфичные стили для вертикальной ориентации */
+            @media (max-width: 768px) and (orientation: portrait) {
+                .transfer-modal .modal {
+                    max-height: 90vh !important;
+                }
+                
+                .transfer-form.active {
+                    max-height: calc(90vh - 200px) !important;
+                }
+                
+                .employee-list,
+                .task-themes {
+                    max-height: 30vh !important;
+                    overflow-y: auto !important;
+                }
             }
         }
+
+        /* Дополнительные улучшения для всех мобильных устройств */
+        @media (max-width: 1024px) {
+            .transfer-modal .modal {
+                margin: 20px !important;
+                width: calc(100% - 40px) !important;
+                max-width: none !important;
+            }
+            
+            /* Улучшение отображения длинных списков */
+            .employee-list,
+            .task-themes {
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+            }
+            
+            /* Улучшение скроллбаров для мобильных устройств */
+            .transfer-modal .modal::-webkit-scrollbar {
+                width: 4px;
+            }
+            
+            .transfer-modal .modal::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 2px;
+            }
+            
+            .transfer-modal .modal::-webkit-scrollbar-thumb:hover {
+                background: var(--text-light);
+            }
+        }
+
+        /* Предотвращение скачков контента при появлении скроллбара */
+        .transfer-modal .modal {
+            padding-left: 4px;
+            margin-left: -4px;
+        }
+
+        /* Улучшение для очень маленьких экранов */
         @media (max-width: 480px) {
             .transfer-modal .modal {
-                margin: 5px;
-                padding: 16px;
+                margin: 10px !important;
+                width: calc(100% - 20px) !important;
+                max-height: 95vh !important;
+                padding: 15px !important;
             }
-      
-            .transfer-option-icon {
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-            }
-      
-            .transfer-option-description {
-                margin-left: 44px;
-                font-size: 12px;
-            }
-      
-            .transfer-option-title {
-                font-size: 14px;
-            }
-      
-            .theme-option,
-            .employee-item {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-      
-            .form-input,
-            .form-select {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-      
-            .form-label {
-                font-size: 12px;
-            }
-      
-            .modal-title {
-                font-size: 20px;
+            
+            .transfer-form.active {
+                max-height: calc(95vh - 180px) !important;
             }
         }
-        /* Адаптация для горизонтальной ориентации */
-        @media (max-width: 1024px) and (orientation: landscape) {
-            .transfer-modal .modal {
-                max-height: 80vh;
-                padding: 20px;
-            }
-      
-            .transfer-options {
-                flex-direction: row;
-                gap: 16px;
-            }
-      
-            .transfer-option {
-                flex: 1;
-                min-width: 0;
-            }
-      
-            .transfer-option-description {
-                margin-left: 0;
-                margin-top: 8px;
-            }
-      
-            .transfer-option-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-      
-            .form-actions {
-                flex-direction: row;
-            }
 
-            /* Адаптация для формы ТЗ в горизонтальной ориентации */
-            .task-themes {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-                justify-content: space-between;
+        /* Исправление для iOS Safari */
+        @supports (-webkit-touch-callout: none) {
+            .transfer-modal .modal {
+                max-height: 85vh !important;
             }
-      
-            .theme-option {
-                flex: 1 1 45%; /* Две колонки */
-                margin-bottom: 8px;
-                padding: 10px;
-                font-size: 13px;
-            }
-      
-            .form-group {
-                margin-bottom: 12px;
-            }
-      
-            .form-label {
-                font-size: 13px;
-            }
-      
-            .form-input,
-            .form-select {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-      
-            .employee-list {
-                max-height: 150px; /* Ограничение высоты для скролла */
-            }
-      
-            .employee-item {
-                padding: 8px 12px;
-                font-size: 13px;
-            }
-        }
-        /* Дополнительные фиксы для предотвращения наложения */
-        .transfer-modal .modal-content {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            min-height: 0;
-        }
-        .transfer-form .form-group {
-            flex-shrink: 0;
-        }
-        .employee-list, .task-themes {
-            flex: 1 1 auto;
-            min-height: 100px;
-        }
-        .task-description {
-            flex: 1;
-        }
-        @media (max-width: 768px) {
-            .transfer-option-header {
-                gap: 8px;
-            }
-            .transfer-option-title {
-                font-size: 14px;
-            }
-            .transfer-option-description {
-                font-size: 12px;
-                margin-left: 44px;
-            }
-            .modal-title {
-                font-size: 20px;
-            }
-            .form-label {
-                font-size: 13px;
-            }
-            .form-input {
-                font-size: 13px;
-            }
-        }
-        /* Фикс для iPhone и других мобильных устройств */
-        .transfer-modal .modal {
-            -webkit-overflow-scrolling: touch;
-        }
-        @media (orientation: landscape) {
-            .task-themes, .employee-list {
-                max-height: 150px;
+            
+            @media (max-width: 768px) and (orientation: landscape) {
+                .transfer-modal .modal {
+                    max-height: 75vh !important;
+                }
             }
         }
     </style>
@@ -5716,7 +5609,7 @@
         let notifications = JSON.parse(localStorage.getItem('smartSupportNotifications')) || [
             { id: 1, title: 'Новое обращение', message: 'Пользователь Иван Петров создал новое обращение', time: new Date(Date.now() - 2 * 60 * 60 * 1000), read: false },
             { id: 2, title: 'Изменен статус', message: 'Обращение #2 переведено в статус "В работе"', time: new Date(Date.now() - 5 * 60 * 60 * 1000), read: false },
-            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в системе', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
+            { id: 3, title: 'Новый пользователь', message: 'Добавлен новый пользователь в систему', time: new Date(Date.now() - 24 * 60 * 60 * 1000), read: true }
         ];
         let filteredArticles = [...articles];
         let currentArticle = null;
@@ -5887,6 +5780,9 @@
             if (employeeRoleSelect) {
                 employeeRoleSelect.addEventListener('change', populateEmployeeList);
             }
+
+            // Настройка прокрутки для модального окна передачи
+            setupTransferModalScroll();
         }
        
         // Функция для оптимизации модальных окон для мобильных устройств
@@ -5902,6 +5798,27 @@
                     editTemplateModal.classList.add('mobile-optimized');
                 }
             }
+        }
+
+        // Функция для настройки прокрутки модального окна передачи
+        function setupTransferModalScroll() {
+            const transferModal = document.getElementById('transferTicketModal');
+            if (!transferModal) return;
+            
+            // Предотвращение прокрутки фонового контента при прокрутке модального окна
+            transferModal.addEventListener('touchmove', function(e) {
+                e.stopPropagation();
+            }, { passive: false });
+            
+            // Инициализация прокрутки при открытии модального окна
+            transferModal.addEventListener('click', function(e) {
+                if (e.target === transferModal) {
+                    const modalContent = transferModal.querySelector('.modal');
+                    if (modalContent) {
+                        modalContent.scrollTop = 0;
+                    }
+                }
+            });
         }
        
         // Setup article icon selection
@@ -6221,7 +6138,7 @@
         function switchPage(page) {
             currentPage = page;
       
-            // Update active active nav item
+            // Update active nav item
             navItems.forEach(item => {
                 if (item.dataset.page === page) {
                     item.classList.add('active');
