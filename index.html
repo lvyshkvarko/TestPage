@@ -4552,14 +4552,14 @@
             /* Адаптация для формы ТЗ в горизонтальной ориентации */
             .task-themes {
                 display: flex;
-                flex-wrap: wrap;
+                flex-direction: column;
                 gap: 8px;
-                justify-content: space-between;
+                overflow-y: auto;
+                max-height: 300px;
             }
      
             .theme-option {
-                flex: 1 1 45%; /* Две колонки */
-                margin-bottom: 8px;
+                flex: initial;
                 padding: 10px;
                 font-size: 13px;
             }
@@ -4579,7 +4579,7 @@
             }
      
             .employee-list {
-                max-height: 150px; /* Ограничение высоты для скролла */
+                max-height: 300px; /* Ограничение высоты для скролла */
             }
      
             .employee-item {
@@ -5545,7 +5545,7 @@
                 id: 1,
                 user: { name: 'Иван Петров', email: 'ivan@mail.ru', avatar: '👨' },
                 subject: 'Не работает авторизация',
-                message: 'Здравствуйте, не могу войти в систему',
+                message: 'Здравствуйте! Не могу войти в систему',
                 status: 'new',
                 priority: 'high',
                 channel: 'email',
@@ -5554,7 +5554,7 @@
                 updated: new Date(Date.now() - 2 * 60 * 60 * 1000),
                 assignee: null,
                 messages: [
-                    { sender: 'user', text: 'Здравствуйте, не могу войти в систему', time: new Date(Date.now() - 2 * 60 * 60 * 1000) }
+                    { sender: 'user', text: 'Здравствуйте! Не могу войти в систему', time: new Date(Date.now() - 2 * 60 * 60 * 1000) }
                 ]
             },
             {
