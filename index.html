@@ -4325,6 +4325,8 @@
             gap: 16px;
             flex: 1;
             overflow-y: auto;
+            min-height: 0;
+            -webkit-overflow-scrolling: touch;
         }
      
         .transfer-form.active {
@@ -4661,35 +4663,6 @@
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 padding: 8px;
-            }
-            .transfer-form {
-                gap: 8px;
-            }
-            .form-label {
-                font-size: 12px;
-            }
-            .form-input {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .theme-option, .employee-item {
-                padding: 6px 10px;
-                font-size: 12px;
-            }
-            .task-themes, .employee-list {
-                max-height: 100px;
-            }
-            .form-actions {
-                margin-top: 8px;
-                gap: 8px;
-            }
-            .transfer-options {
-                flex-direction: row;
-                gap: 8px;
-            }
-            .transfer-option {
-                padding: 10px;
-                min-height: auto;
             }
         }
     </style>
@@ -8000,7 +7973,7 @@
            
                 if (document.body.classList.contains('focus-mode')) {
                     if (text) text.textContent = 'Обычный режим';
-                    if (icon) icon.className = 'fas fa-expand';
+                    if (icon) icon.className = 'fas fa-compress';
                
                     // Показываем уведомление
                     showToast('Режим фокуса включен. Нажмите Esc для выхода.');
