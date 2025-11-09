@@ -4663,6 +4663,14 @@
                 -webkit-overflow-scrolling: touch;
                 padding: 16px;
             }
+
+            .transfer-modal .modal {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .transfer-modal .modal::-webkit-scrollbar {
+                display: none;
+            }
         }
 
         /* Добавляем стили для прокрутки списков в горизонтальной мобильной ориентации */
@@ -7293,7 +7301,7 @@
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
-            filteredArticles = articles.filter(article =>
+            filteredArticles = articles.filter(article => 
                 article.title.toLowerCase().includes(search) ||
                 article.content.toLowerCase().includes(search)
             );
