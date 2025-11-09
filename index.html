@@ -7301,7 +7301,7 @@
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
-            filteredArticles = articles.filter(article => 
+            filteredArticles = articles.filter(article =>
                 article.title.toLowerCase().includes(search) ||
                 article.content.toLowerCase().includes(search)
             );
@@ -7823,7 +7823,6 @@
                     passwordSet: false
                 };
                 users.push(newUser);
-                renderUsers();
                 hideModal(addUserModal);
                 saveData();
          
