@@ -1563,6 +1563,24 @@
             font-weight: 600;
             font-size: 14px;
         }
+        .technical-task-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            box-shadow: var(--shadow-sm);
+        }
+        .kanban-item.has-technical-task {
+            position: relative;
+        }
         /* Analytics Page */
         .analytics-grid {
             display: grid;
@@ -4737,6 +4755,12 @@
                         <!-- Status stats will be populated dynamically -->
                     </div>
                 </div>
+                <div class="dashboard-card" id="technicalTasksCard">
+                    <h2 class="card-title"><i class="fas fa-tasks"></i> Технические задания</h2>
+                    <div class="ticket-list" id="technicalTasksList">
+                        <!-- ТЗ будут рендериться динамически -->
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Tickets Page -->
@@ -4811,6 +4835,43 @@
             <h1 class="page-title">Канбан-доска</h1>
             <div class="kanban-container" id="kanbanContainer">
                 <!-- Kanban columns will be populated dynamically -->
+            </div>
+            <!-- Technical Task Modal -->
+            <div id="technicalTaskModal" class="modal-overlay hidden">
+                <div class="modal">
+                    <button class="modal-close-btn" onclick="hideModal(document.getElementById('technicalTaskModal'))">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 class="modal-title">Техническое задание</h2>
+                    <div class="form-group">
+                        <label class="form-label">Тема</label>
+                        <input type="text" class="form-input" id="taskTheme" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Описание</label>
+                        <textarea class="form-input" id="taskDescriptionView" rows="4" readonly></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Назначено</label>
+                        <input type="text" class="form-input" id="taskAssignedTo" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Связанное обращение</label>
+                        <input type="text" class="form-input" id="taskTicketSubject" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Статус</label>
+                        <select class="form-input" id="taskStatus">
+                            <option value="new">Новое</option>
+                            <option value="in-progress">В работе</option>
+                            <option value="completed">Завершено</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-primary" id="saveTaskChanges" onclick="saveTechnicalTaskChanges()">Сохранить</button>
+                        <button class="btn-cancel" onclick="hideModal(document.getElementById('technicalTaskModal'))">Закрыть</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="analyticsPage" class="page-content hidden">
@@ -5668,6 +5729,8 @@
         let filteredTickets = [...tickets];
         let isMobile = window.innerWidth <= 768;
         let userToEdit = null;
+        let currentTask = null;
+        let currentTaskTicketId = null;
         let notifications = JSON.parse(localStorage.getItem('smartSupportNotifications')) || [
             { id: 1, title: 'Новое обращение', message: 'Пользователь Иван Петров создал новое обращение', time: new Date(Date.now() - 2 * 60 * 60 * 1000), read: false },
             { id: 2, title: 'Изменен статус', message: 'Обращение #2 переведено в статус "В работе"', time: new Date(Date.now() - 5 * 60 * 60 * 1000), read: false },
@@ -5800,6 +5863,7 @@
             updateDashboardStats();
             renderRecentTickets();
             renderStatusStats();
+            renderTechnicalTasks();
             renderTicketsList();
             renderKanban();
             renderUsers();
@@ -5810,22 +5874,22 @@
             addCloseButtonToEditModal();
             updateLayout();
             updateNotificationBadge();
-   
+
             // Check for new tickets on load
             checkForNewTickets();
-   
+
             // Save initial data to localStorage
             saveData();
-   
+
             // Setup auto-resize for template textareas
             setupTemplateTextareas();
-   
+
             // Setup editor toolbar
             setupEditorToolbar();
-   
+
             // Setup article icon selection
             setupArticleIconSelection();
-        
+
             // Добавляем классы для мобильной оптимизации
             optimizeModalsForMobile();
             // Добавляем слушатель на изменение роли сотрудника
@@ -6193,6 +6257,7 @@
                 updateDashboardStats();
                 renderRecentTickets();
                 renderStatusStats();
+                renderTechnicalTasks();
             } else if (page === 'tickets') {
                 renderTicketsList();
             } else if (page === 'kanban') {
@@ -6210,6 +6275,7 @@
             totalTickets.textContent = tickets.length;
             resolvedTickets.textContent = tickets.filter(t => t.status === 'resolved').length;
             pendingTickets.textContent = tickets.filter(t => t.status === 'waiting').length;
+            renderTechnicalTasks();
         }
         function renderRecentTickets() {
             const recent = tickets.slice(0, 3);
@@ -6250,6 +6316,40 @@
                     <span class="status-count">${count}</span>
                 </div>
             `).join('');
+        }
+        function renderTechnicalTasks() {
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const tasksList = document.getElementById('technicalTasksList');
+            if (!tasksList) return;
+
+            // Сортируем по дате создания (новые сверху)
+            const sortedTasks = [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            tasksList.innerHTML = sortedTasks.map(task => {
+                const ticket = tickets.find(t => t.id === task.ticketId);
+                const ticketSubject = ticket ? ticket.subject : 'Обращение не найдено';
+                return `
+                    <div class="ticket-item" onclick="switchPage('tickets'); setTimeout(() => selectTicket(${task.ticketId}), 100)">
+                        <div class="ticket-header">
+                            <div class="ticket-subject">${task.theme}</div>
+                            <div class="priority-badge priority-low">ТЗ #${task.id}</div>
+                        </div>
+                        <p class="ticket-message">${task.description}</p>
+                        <div class="ticket-footer">
+                            <span class="ticket-user">Назначено: ${task.assignedTo}</span>
+                            <span class="ticket-time">${getTimeAgo(task.createdAt)}</span>
+                        </div>
+                        <div class="ticket-footer" style="margin-top: 8px;">
+                            <span class="ticket-user">Связанное обращение: ${ticketSubject}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Если нет ТЗ, покажи placeholder
+            if (tasks.length === 0) {
+                tasksList.innerHTML = '<p style="text-align: center; color: var(--text-medium);">Нет активных ТЗ</p>';
+            }
         }
         // Tickets Functions
         function filterTickets() {
@@ -6778,7 +6878,9 @@
         
             // Сохраняем ТЗ (в реальной системе это бы сохранялось в БД)
             saveTechnicalTask(technicalTask);
-        
+            renderTechnicalTasks();
+            renderKanban();
+
             // Добавляем системное сообщение в чат
             const systemMessage = {
                 sender: 'system',
@@ -7127,6 +7229,7 @@
                 { status: 'waiting', title: 'Ожидание' },
                 { status: 'resolved', title: 'Решено' }
             ];
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
             kanbanContainer.innerHTML = columns.map(column => {
                 const columnTickets = tickets.filter(t => t.status === column.status);
                 return `
@@ -7136,11 +7239,15 @@
                                 <h3 class="kanban-title">${column.title} (${columnTickets.length})</h3>
                             </div>
                             <div class="kanban-content">
-                                ${columnTickets.map(ticket => `
-                                    <div class="kanban-item" draggable="true" ondragstart="dragTicket(event, ${ticket.id})">
-                                        <div class="kanban-subject">${ticket.subject}</div>
-                                    </div>
-                                `).join('')}
+                                ${columnTickets.map(ticket => {
+                                    const hasTask = tasks.some(t => t.ticketId === ticket.id);
+                                    return `
+                                        <div class="kanban-item ${hasTask ? 'has-technical-task' : ''}" draggable="true" ondragstart="dragTicket(event, ${ticket.id})" onclick="openTicketDialog(${ticket.id})">
+                                            <div class="kanban-subject">${ticket.subject}</div>
+                                            ${hasTask ? '<div class="technical-task-indicator"><i class="fas fa-tasks"></i></div>' : ''}
+                                        </div>
+                                    `;
+                                }).join('')}
                             </div>
                         </div>
                     </div>
@@ -7165,17 +7272,108 @@
                     renderStatusStats();
                     renderTicketsList();
                     saveData();
-           
+
                     // Update current ticket if it's the one being dragged
                     if (currentTicket && currentTicket.id === draggedTicket) {
                         currentTicket = ticket;
                         renderChatView();
                     }
-           
+
                     showToast(`Статус обращения изменен на "${statusLabels[newStatus]}"`);
                 }
                 draggedTicket = null;
             }
+        }
+        function openTicketDialog(ticketId) {
+            const ticket = tickets.find(t => t.id === ticketId);
+            if (!ticket) return;
+
+            currentTaskTicketId = ticketId;
+            currentTask = null;
+
+            // Показываем диалог выбора: открыть обращение или ТЗ
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <button class="modal-close-btn" onclick="this.closest('.modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 class="modal-title">Выберите действие</h2>
+                    <div class="transfer-options">
+                        <div class="transfer-option" onclick="openTicket(${ticketId}); this.closest('.modal-overlay').remove()">
+                            <div class="transfer-option-header">
+                                <div class="transfer-option-icon">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <div class="transfer-option-title">Открыть обращение</div>
+                            </div>
+                            <div class="transfer-option-description">
+                                Просмотреть диалог с пользователем
+                            </div>
+                        </div>
+                        <div class="transfer-option" onclick="openTechnicalTask(${ticketId}); this.closest('.modal-overlay').remove()">
+                            <div class="transfer-option-header">
+                                <div class="transfer-option-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="transfer-option-title">Открыть техническое задание</div>
+                            </div>
+                            <div class="transfer-option-description">
+                                Просмотреть и редактировать ТЗ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+        function openTicket(ticketId) {
+            switchPage('tickets');
+            setTimeout(() => selectTicket(ticketId), 100);
+        }
+        function openTechnicalTask(ticketId) {
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const task = tasks.find(t => t.id === ticketId);
+            if (!task) {
+                showToast('Техническое задание не найдено', true);
+                return;
+            }
+
+            currentTask = task;
+            currentTaskTicketId = ticketId;
+
+            // Заполняем модал данными ТЗ
+            document.getElementById('taskTheme').value = task.theme;
+            document.getElementById('taskDescriptionView').value = task.description;
+            document.getElementById('taskAssignedTo').value = task.assignedTo;
+            document.getElementById('taskStatus').value = task.status || 'new';
+
+            const ticket = tickets.find(t => t.id === task.ticketId);
+            document.getElementById('taskTicketSubject').value = ticket ? ticket.subject : 'Обращение не найдено';
+
+            showModal(document.getElementById('technicalTaskModal'));
+        }
+        function saveTechnicalTaskChanges() {
+            if (!currentTask) return;
+
+            const newStatus = document.getElementById('taskStatus').value;
+            currentTask.status = newStatus;
+
+            // Сохраняем изменения
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const taskIndex = tasks.findIndex(t => t.id === currentTask.id);
+            if (taskIndex !== -1) {
+                tasks[taskIndex] = currentTask;
+                localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
+            }
+
+            // Обновляем UI
+            renderKanban();
+            renderTechnicalTasks();
+
+            hideModal(document.getElementById('technicalTaskModal'));
+            showToast('Изменения сохранены');
         }
         // Knowledge Base Functions
         function filterArticles() {
