@@ -6757,11 +6757,14 @@
                 const roleUsers = users.filter(user => user.role === role);
                 if (roleUsers.length > 0) {
                     roleUsers.forEach(user => {
+                        // Проверяем, что поля существуют и не пустые
+                        const userFirstName = user.name || '';
+                        const userLastName = user.lastName || '';
                         const employeeItem = document.createElement('div');
                         employeeItem.className = 'employee-item';
                         employeeItem.innerHTML = `
-                            <div class="employee-name">${user.name} ${user.lastName}</div>
-                            <div class="employee-role">${roleLabels[user.role]}</div>
+                            <div class="employee-name">${userFirstName} ${userLastName}</div>
+                            <div class="employee-role">${roleLabels[user.role] || user.role}</div>
                         `;
                         employeeItem.dataset.employeeId = user.id;
                         employeeItem.onclick = () => selectEmployee(user.id, 'task');
@@ -7456,6 +7459,15 @@
                 if (taskIndex !== -1) {
                     tasks[taskIndex] = currentTask;
                 }
+                
+                // Обновляем статус связанного тикета
+                if (currentTask.ticketId) {
+                    const ticket = tickets.find(t => t.id === currentTask.ticketId);
+                    if (ticket) {
+                        ticket.status = status; // Устанавливаем статус тикета равным статусу ТЗ
+                        ticket.updated = new Date();
+                    }
+                }
             } else {
                 // Создаем новое ТЗ
                 const newTask = {
@@ -7468,6 +7480,15 @@
                     status: status
                 };
                 tasks.push(newTask);
+                
+                // Обновляем статус связанного тикета
+                if (currentTaskTicketId) {
+                    const ticket = tickets.find(t => t.id === currentTaskTicketId);
+                    if (ticket) {
+                        ticket.status = status; // Устанавливаем статус тикета равным статусу ТЗ
+                        ticket.updated = new Date();
+                    }
+                }
             }
 
             localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
@@ -7475,18 +7496,13 @@
             // Обновляем UI
             renderKanban();
             renderTechnicalTasks();
-
-            // Обновляем канбан-доску
-            updateKanbanFromTickets();
+            renderTicketsList(); // Обновляем список тикетов
+            updateDashboardStats(); // Обновляем статистику на дашборде
+            renderStatusStats(); // Обновляем статистику по статусам
+            renderRecentTickets(); // Обновляем последние тикеты на дашборде
 
             hideModal(document.getElementById('technicalTaskModal'));
             showToast('Изменения сохранены');
-        }
-
-        // Новая функция для обновления канбана на основе изменений в тикетах
-        function updateKanbanFromTickets() {
-            // Перерисовываем канбан, чтобы отразить изменения статусов
-            renderKanban();
         }
 
         // Technical Task Edit Functions
@@ -7549,12 +7565,16 @@
 
             // Добавляем всех сотрудников
             users.forEach(user => {
-                const employeeName = `${user.name} ${user.lastName}`;
+                // Проверяем, что поля существуют и не пустые
+                const userFirstName = user.name || '';
+                const userLastName = user.lastName || '';
+                const employeeName = `${userFirstName} ${userLastName}`.trim();
+                
                 const employeeItem = document.createElement('div');
                 employeeItem.className = `employee-item ${employeeName === selectedEmployee ? 'selected' : ''}`;
                 employeeItem.innerHTML = `
-                    <div class="employee-name">${user.name} ${user.lastName}</div>
-                    <div class="employee-role">${roleLabels[user.role]}</div>
+                    <div class="employee-name">${userFirstName} ${userLastName}</div>
+                    <div class="employee-role">${roleLabels[user.role] || user.role}</div>
                 `;
                 employeeItem.onclick = () => selectEditEmployee(employeeName);
                 employeeList.appendChild(employeeItem);
