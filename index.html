@@ -4838,22 +4838,59 @@
             </div>
             <!-- Technical Task Modal -->
             <div id="technicalTaskModal" class="modal-overlay hidden">
-                <div class="modal">
+                <div class="modal transfer-modal">  <!-- Добавил класс transfer-modal для похожего оформления -->
                     <button class="modal-close-btn" onclick="hideModal(document.getElementById('technicalTaskModal'))">
                         <i class="fas fa-times"></i>
                     </button>
-                    <h2 class="modal-title">Техническое задание</h2>
+                    <h2 class="modal-title" id="technicalTaskTitle">Техническое задание</h2>
                     <div class="form-group">
-                        <label class="form-label">Тема</label>
-                        <input type="text" class="form-input" id="taskTheme" readonly>
+                        <label class="form-label">Тема ТЗ</label>
+                        <div class="task-themes">
+                            <div class="theme-option" data-theme="Проблема с авторизацией" onclick="selectEditTheme('Проблема с авторизацией')">
+                                Проблема с авторизацией
+                            </div>
+                            <div class="theme-option" data-theme="Ошибка 500" onclick="selectEditTheme('Ошибка 500')">
+                                Ошибка 500
+                            </div>
+                            <div class="theme-option" data-theme="Медленная работа системы" onclick="selectEditTheme('Медленная работа системы')">
+                                Медленная работа системы
+                            </div>
+                            <div class="theme-option" data-theme="Проблема с оплатой" onclick="selectEditTheme('Проблема с оплатой')">
+                                Проблема с оплатой
+                            </div>
+                            <div class="theme-option" data-theme="Ошибка в отчетах" onclick="selectEditTheme('Ошибка в отчетах')">
+                                Ошибка в отчетах
+                            </div>
+                            <div class="theme-option" data-theme="Проблема с загрузкой файлов" onclick="selectEditTheme('Проблема с загрузкой файлов')">
+                                Проблема с загрузкой файлов
+                            </div>
+                            <div class="theme-option" data-theme="Не работает функционал" onclick="selectEditTheme('Не работает функционал')">
+                                Не работает функционал
+                            </div>
+                            <div class="theme-option" data-theme="Ошибка в интерфейсе" onclick="selectEditTheme('Ошибка в интерфейсе')">
+                                Ошибка в интерфейсе
+                            </div>
+                            <div class="theme-option" data-theme="Проблема с интеграцией" onclick="selectEditTheme('Проблема с интеграцией')">
+                                Проблема с интеграцией
+                            </div>
+                            <div class="theme-option" data-theme="Другая техническая проблема" onclick="selectEditTheme('Другая техническая проблема')">
+                                Другая техническая проблема
+                            </div>
+                            <div class="theme-option theme-custom" onclick="enableEditCustomTheme()">
+                                Указать свою тему
+                            </div>
+                        </div>
+                        <input type="text" class="form-input hidden" id="editCustomTheme" placeholder="Введите свою тему">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Описание</label>
-                        <textarea class="form-input" id="taskDescriptionView" rows="4" readonly></textarea>
+                        <label class="form-label">Краткое описание <span style="color: red;">*</span></label>
+                        <textarea class="form-input" id="editTaskDescription" placeholder="Опишите проблему подробно" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Назначено</label>
-                        <input type="text" class="form-input" id="taskAssignedTo" readonly>
+                        <div class="employee-list" id="editTaskEmployeeList">
+                            <!-- Список сотрудников будет заполнен динамически -->
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Связанное обращение</label>
@@ -4861,14 +4898,15 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Статус</label>
-                        <select class="form-input" id="taskStatus">
+                        <select class="form-input" id="editTaskStatus">
                             <option value="new">Новое</option>
                             <option value="in-progress">В работе</option>
-                            <option value="completed">Завершено</option>
+                            <option value="waiting">Ожидание</option>
+                            <option value="resolved">Решено</option>
                         </select>
                     </div>
                     <div class="modal-actions">
-                        <button class="btn-primary" id="saveTaskChanges" onclick="saveTechnicalTaskChanges()">Сохранить</button>
+                        <button class="btn-primary" onclick="saveTechnicalTaskChanges()">Сохранить</button>
                         <button class="btn-cancel" onclick="hideModal(document.getElementById('technicalTaskModal'))">Закрыть</button>
                     </div>
                 </div>
@@ -5752,6 +5790,10 @@
         let selectedTaskEmployee = null;
         let selectedTheme = null;
         let customThemeEnabled = false;
+    
+        // Переменные для редактирования технических заданий
+        let selectedEditEmployee = null;
+        let selectedEditTheme = null;
     
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
@@ -7291,6 +7333,10 @@
             currentTaskTicketId = ticketId;
             currentTask = null;
 
+            // Проверяем, есть ли ТЗ для этого обращения
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const hasTask = tasks.some(t => t.ticketId === ticketId);
+
             // Показываем диалог выбора: открыть обращение или ТЗ
             const modal = document.createElement('div');
             modal.className = 'modal-overlay';
@@ -7312,6 +7358,7 @@
                                 Просмотреть диалог с пользователем
                             </div>
                         </div>
+                        ${hasTask ? `
                         <div class="transfer-option" onclick="openTechnicalTask(${ticketId}); this.closest('.modal-overlay').remove()">
                             <div class="transfer-option-header">
                                 <div class="transfer-option-icon">
@@ -7323,6 +7370,7 @@
                                 Просмотреть и редактировать ТЗ
                             </div>
                         </div>
+                        ` : ''}
                     </div>
                 </div>
             `;
@@ -7334,9 +7382,33 @@
         }
         function openTechnicalTask(ticketId) {
             const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
-            const task = tasks.find(t => t.id === ticketId);
+            const task = tasks.find(t => t.ticketId === ticketId);
+            const ticket = tickets.find(t => t.id === ticketId);
+            
             if (!task) {
-                showToast('Техническое задание не найдено', true);
+                // Если ТЗ нет, показываем модал в режиме создания
+                currentTask = null;
+                currentTaskTicketId = ticketId;
+                
+                // Очищаем и заполняем модал для создания
+                document.getElementById('technicalTaskTitle').textContent = 'Новое техническое задание';
+                document.getElementById('taskTicketSubject').value = ticket ? ticket.subject : 'Обращение не найдено';
+                
+                // Сбрасываем темы
+                clearSelectedEditTheme();
+                
+                // Показываем плейсхолдер в описании
+                const descTextarea = document.getElementById('editTaskDescription');
+                descTextarea.value = '';
+                descTextarea.placeholder = 'Опишите проблему подробно (обязательно)';
+                
+                // Загружаем список сотрудников
+                loadEditTaskEmployees(null);
+                
+                // Устанавливаем статус по умолчанию
+                document.getElementById('editTaskStatus').value = 'new';
+                
+                showModal(document.getElementById('technicalTaskModal'));
                 return;
             }
 
@@ -7344,29 +7416,72 @@
             currentTaskTicketId = ticketId;
 
             // Заполняем модал данными ТЗ
-            document.getElementById('taskTheme').value = task.theme;
-            document.getElementById('taskDescriptionView').value = task.description;
-            document.getElementById('taskAssignedTo').value = task.assignedTo;
-            document.getElementById('taskStatus').value = task.status || 'new';
-
-            const ticket = tickets.find(t => t.id === task.ticketId);
+            document.getElementById('technicalTaskTitle').textContent = 'Редактирование технического задания';
             document.getElementById('taskTicketSubject').value = ticket ? ticket.subject : 'Обращение не найдено';
+            
+            // Устанавливаем тему
+            selectEditTheme(task.theme);
+            
+            // Заполняем описание
+            document.getElementById('editTaskDescription').value = task.description;
+            
+            // Загружаем сотрудников с выбранным
+            loadEditTaskEmployees(task.assignedTo);
+            
+            // Устанавливаем статус
+            document.getElementById('editTaskStatus').value = task.status || 'new';
 
             showModal(document.getElementById('technicalTaskModal'));
         }
         function saveTechnicalTaskChanges() {
-            if (!currentTask) return;
+            const theme = getSelectedEditTheme();
+            const description = document.getElementById('editTaskDescription').value.trim();
+            const status = document.getElementById('editTaskStatus').value;
+            const assignedTo = getSelectedEditEmployee();
 
-            const newStatus = document.getElementById('taskStatus').value;
-            currentTask.status = newStatus;
-
-            // Сохраняем изменения
-            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
-            const taskIndex = tasks.findIndex(t => t.id === currentTask.id);
-            if (taskIndex !== -1) {
-                tasks[taskIndex] = currentTask;
-                localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
+            // Проверяем обязательные поля
+            if (!theme) {
+                showToast('Выберите тему ТЗ', true);
+                return;
             }
+
+            if (!description) {
+                showToast('Введите описание проблемы', true);
+                return;
+            }
+
+            if (!selectedEditEmployee) {
+                selectedEditEmployee = null;  // Случайный по умолчанию
+            }
+
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+
+            if (currentTask) {
+                // Обновляем существующее ТЗ
+                currentTask.theme = theme;
+                currentTask.description = description;
+                currentTask.status = status;
+                currentTask.assignedTo = assignedTo;
+
+                const taskIndex = tasks.findIndex(t => t.id === currentTask.id);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex] = currentTask;
+                }
+            } else {
+                // Создаем новое ТЗ
+                const newTask = {
+                    id: 'TZ-' + Date.now(),
+                    ticketId: currentTaskTicketId,
+                    theme: theme,
+                    description: description,
+                    assignedTo: assignedTo,
+                    createdAt: new Date(),
+                    status: status
+                };
+                tasks.push(newTask);
+            }
+
+            localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
 
             // Обновляем UI
             renderKanban();
@@ -7375,6 +7490,82 @@
             hideModal(document.getElementById('technicalTaskModal'));
             showToast('Изменения сохранены');
         }
+
+        // Technical Task Edit Functions
+        function selectEditTheme(theme) {
+            // Сбрасываем все опции
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Выбираем нужную опцию
+            const selectedOption = document.querySelector(`[data-theme="${theme}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+            
+            selectedEditTheme = theme;
+            
+            // Скрываем поле кастомной темы
+            document.getElementById('editCustomTheme').classList.add('hidden');
+        }
+
+        function clearSelectedEditTheme() {
+            selectedEditTheme = null;
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('editCustomTheme').classList.add('hidden');
+        }
+
+        function getSelectedEditTheme() {
+            const customTheme = document.getElementById('editCustomTheme').value.trim();
+            if (customTheme) return customTheme;
+            return selectedEditTheme;
+        }
+
+        function enableEditCustomTheme() {
+            // Сбрасываем все опции
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            selectedEditTheme = null;
+            document.getElementById('editCustomTheme').classList.remove('hidden');
+            document.getElementById('editCustomTheme').focus();
+        }
+
+        function loadEditTaskEmployees(selectedEmployee) {
+            const employeeList = document.getElementById('editTaskEmployeeList');
+            employeeList.innerHTML = users.map(user => {
+                const employeeName = `${user.name} ${user.lastName}`;
+                return `
+                    <div class="employee-item ${employeeName === selectedEmployee ? 'selected' : ''}" 
+                         data-employee-id="${user.id}"
+                         onclick="selectEditEmployee('${employeeName}', ${user.id})">
+                        ${employeeName}
+                    </div>
+                `;
+            }).join('');
+            selectedEditEmployee = selectedEmployee;
+        }
+
+        function selectEditEmployee(employeeName, employeeId) {
+            selectedEditEmployee = employeeName;
+            document.querySelectorAll('#editTaskEmployeeList .employee-item').forEach(option => {
+                option.classList.remove('selected');
+            });
+            const selectedOption = Array.from(document.querySelectorAll('#editTaskEmployeeList .employee-item'))
+                .find(option => option.textContent === employeeName);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+            }
+        }
+
+        function getSelectedEditEmployee() {
+            return selectedEditEmployee;
+        }
+
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
