@@ -4893,10 +4893,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Связанное обращение</label>
-                        <input type="text" class="form-input" id="taskTicketSubject" readonly>
-                    </div>
-                    <div class="form-group">
                         <label class="form-label">Статус</label>
                         <select class="form-input" id="editTaskStatus">
                             <option value="new">Новое</option>
@@ -7383,31 +7379,29 @@
         function openTechnicalTask(ticketId) {
             const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
             const task = tasks.find(t => t.ticketId === ticketId);
-            const ticket = tickets.find(t => t.id === ticketId);
-            
+
             if (!task) {
                 // Если ТЗ нет, показываем модал в режиме создания
                 currentTask = null;
                 currentTaskTicketId = ticketId;
-                
+
                 // Очищаем и заполняем модал для создания
                 document.getElementById('technicalTaskTitle').textContent = 'Новое техническое задание';
-                document.getElementById('taskTicketSubject').value = ticket ? ticket.subject : 'Обращение не найдено';
-                
+
                 // Сбрасываем темы
                 clearSelectedEditTheme();
-                
+
                 // Показываем плейсхолдер в описании
                 const descTextarea = document.getElementById('editTaskDescription');
                 descTextarea.value = '';
                 descTextarea.placeholder = 'Опишите проблему подробно (обязательно)';
-                
+
                 // Загружаем список сотрудников
                 loadEditTaskEmployees(null);
-                
+
                 // Устанавливаем статус по умолчанию
                 document.getElementById('editTaskStatus').value = 'new';
-                
+
                 showModal(document.getElementById('technicalTaskModal'));
                 return;
             }
@@ -7417,17 +7411,16 @@
 
             // Заполняем модал данными ТЗ
             document.getElementById('technicalTaskTitle').textContent = 'Редактирование технического задания';
-            document.getElementById('taskTicketSubject').value = ticket ? ticket.subject : 'Обращение не найдено';
-            
+
             // Устанавливаем тему
             selectEditTheme(task.theme);
-            
+
             // Заполняем описание
             document.getElementById('editTaskDescription').value = task.description;
-            
+
             // Загружаем сотрудников с выбранным
             loadEditTaskEmployees(task.assignedTo);
-            
+
             // Устанавливаем статус
             document.getElementById('editTaskStatus').value = task.status || 'new';
 
@@ -7437,7 +7430,7 @@
             const theme = getSelectedEditTheme();
             const description = document.getElementById('editTaskDescription').value.trim();
             const status = document.getElementById('editTaskStatus').value;
-            const assignedTo = getSelectedEditEmployee();
+            const assignedTo = selectedEditEmployee || "Случайный сотрудник";
 
             // Проверяем обязательные поля
             if (!theme) {
@@ -7448,10 +7441,6 @@
             if (!description) {
                 showToast('Введите описание проблемы', true);
                 return;
-            }
-
-            if (!selectedEditEmployee) {
-                selectedEditEmployee = null;  // Случайный по умолчанию
             }
 
             const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
@@ -7487,8 +7476,17 @@
             renderKanban();
             renderTechnicalTasks();
 
+            // Обновляем канбан-доску
+            updateKanbanFromTickets();
+
             hideModal(document.getElementById('technicalTaskModal'));
             showToast('Изменения сохранены');
+        }
+
+        // Новая функция для обновления канбана на основе изменений в тикетах
+        function updateKanbanFromTickets() {
+            // Перерисовываем канбан, чтобы отразить изменения статусов
+            renderKanban();
         }
 
         // Technical Task Edit Functions
@@ -7537,28 +7535,56 @@
 
         function loadEditTaskEmployees(selectedEmployee) {
             const employeeList = document.getElementById('editTaskEmployeeList');
-            employeeList.innerHTML = users.map(user => {
+            employeeList.innerHTML = '';
+
+            // Добавляем опцию "Случайный сотрудник"
+            const randomEmployeeItem = document.createElement('div');
+            randomEmployeeItem.className = `employee-item ${!selectedEmployee ? 'selected' : ''}`;
+            randomEmployeeItem.innerHTML = `
+                <div class="employee-name">Случайный сотрудник</div>
+                <div class="employee-role">Будет выбран автоматически</div>
+            `;
+            randomEmployeeItem.onclick = () => selectEditEmployee(null);
+            employeeList.appendChild(randomEmployeeItem);
+
+            // Добавляем всех сотрудников
+            users.forEach(user => {
                 const employeeName = `${user.name} ${user.lastName}`;
-                return `
-                    <div class="employee-item ${employeeName === selectedEmployee ? 'selected' : ''}" 
-                         data-employee-id="${user.id}"
-                         onclick="selectEditEmployee('${employeeName}', ${user.id})">
-                        ${employeeName}
-                    </div>
+                const employeeItem = document.createElement('div');
+                employeeItem.className = `employee-item ${employeeName === selectedEmployee ? 'selected' : ''}`;
+                employeeItem.innerHTML = `
+                    <div class="employee-name">${user.name} ${user.lastName}</div>
+                    <div class="employee-role">${roleLabels[user.role]}</div>
                 `;
-            }).join('');
+                employeeItem.onclick = () => selectEditEmployee(employeeName);
+                employeeList.appendChild(employeeItem);
+            });
+
             selectedEditEmployee = selectedEmployee;
         }
 
-        function selectEditEmployee(employeeName, employeeId) {
+        function selectEditEmployee(employeeName) {
             selectedEditEmployee = employeeName;
-            document.querySelectorAll('#editTaskEmployeeList .employee-item').forEach(option => {
-                option.classList.remove('selected');
+
+            // Снять выделение со всех сотрудников
+            document.querySelectorAll('#editTaskEmployeeList .employee-item').forEach(item => {
+                item.classList.remove('selected');
             });
-            const selectedOption = Array.from(document.querySelectorAll('#editTaskEmployeeList .employee-item'))
-                .find(option => option.textContent === employeeName);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
+
+            // Выделить выбранного сотрудника
+            const employeeItems = document.querySelectorAll('#editTaskEmployeeList .employee-item');
+            if (employeeName === null) {
+                // Выбираем "Случайный сотрудник" (первый элемент)
+                employeeItems[0].classList.add('selected');
+            } else {
+                // Ищем сотрудника по имени
+                for (let item of employeeItems) {
+                    const nameElement = item.querySelector('.employee-name');
+                    if (nameElement && nameElement.textContent === employeeName) {
+                        item.classList.add('selected');
+                        break;
+                    }
+                }
             }
         }
 
