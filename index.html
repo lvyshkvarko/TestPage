@@ -4356,9 +4356,21 @@
             border-bottom: none;
         }
     
+        .theme-option {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .theme-option:hover {
+            background: var(--bg-light) !important;
+        }
+
         .theme-option.selected {
-            background: var(--primary-light);
-            border-left: 4px solid var(--primary-color);
+            background: var(--primary-light) !important;
+            border-left: 4px solid var(--primary-color) !important;
+            color: #065f46 !important;
+            font-weight: 600;
         }
         /* Адаптация для мобильных устройств */
         @media (max-width: 768px) {
@@ -6698,6 +6710,8 @@
                 document.getElementById('employeeTransferForm').classList.add('active');
             } else if (option === 'task') {
                 document.getElementById('taskTransferForm').classList.add('active');
+                // Загрузить список сотрудников для ТЗ
+                populateTaskEmployeeList();
             }
         }
     
@@ -6710,7 +6724,9 @@
         
             // Добавить опцию "Случайный сотрудник"
             const randomEmployeeItem = document.createElement('div');
-            randomEmployeeItem.className = 'employee-item random-employee';
+            // Проверяем, является ли "Случайный сотрудник" текущим выбранным
+            const isRandomSelected = selectedEmployee === null || selectedEmployee === undefined;
+            randomEmployeeItem.className = `employee-item random-employee ${isRandomSelected ? 'selected' : ''}`;
             randomEmployeeItem.innerHTML = `
                 <div class="employee-name">Случайный сотрудник</div>
                 <div class="employee-role">Будет выбран автоматически</div>
@@ -6722,16 +6738,26 @@
             // Добавить сотрудников выбранной роли
             const roleUsers = users.filter(user => user.role === selectedRole);
             roleUsers.forEach(user => {
+                // Проверяем, что поля существуют и не пустые
+                const userFirstName = user.name || '';
+                const userLastName = user.lastName || '';
+                // Проверяем, является ли этот сотрудник текущим выбранным
+                const isSelected = !isRandomSelected && selectedEmployee === user.id;
                 const employeeItem = document.createElement('div');
-                employeeItem.className = 'employee-item';
+                employeeItem.className = `employee-item ${isSelected ? 'selected' : ''}`;
                 employeeItem.innerHTML = `
-                    <div class="employee-name">${user.name} ${user.lastName}</div>
+                    <div class="employee-name">${userFirstName} ${userLastName}</div>
                     <div class="employee-role">${roleLabels[user.role]}</div>
                 `;
                 employeeItem.dataset.employeeId = user.id;
                 employeeItem.onclick = () => selectEmployee(user.id, 'employee');
                 employeeList.appendChild(employeeItem);
             });
+            
+            // Убедимся, что при первом отображении "Случайный сотрудник" выделен, если никто не выбран
+            if (isRandomSelected) {
+                selectEmployee(null, 'employee');
+            }
         }
     
         // Функция заполнения списка сотрудников для ТЗ
@@ -6742,7 +6768,9 @@
         
             // Добавить опцию "Случайный сотрудник"
             const randomEmployeeItem = document.createElement('div');
-            randomEmployeeItem.className = 'employee-item random-employee';
+            // Если ранее не был выбран сотрудник, по умолчанию выбираем "Случайный"
+            const isRandomSelected = selectedTaskEmployee === null || selectedTaskEmployee === undefined;
+            randomEmployeeItem.className = `employee-item ${isRandomSelected ? 'selected' : ''}`;
             randomEmployeeItem.innerHTML = `
                 <div class="employee-name">Случайный сотрудник</div>
                 <div class="employee-role">Будет выбран автоматически</div>
@@ -6760,8 +6788,10 @@
                         // Проверяем, что поля существуют и не пустые
                         const userFirstName = user.name || '';
                         const userLastName = user.lastName || '';
+                        // Проверяем, является ли этот сотрудник выбранным
+                        const isSelected = !isRandomSelected && selectedTaskEmployee === user.id;
                         const employeeItem = document.createElement('div');
-                        employeeItem.className = 'employee-item';
+                        employeeItem.className = `employee-item ${isSelected ? 'selected' : ''}`;
                         employeeItem.innerHTML = `
                             <div class="employee-name">${userFirstName} ${userLastName}</div>
                             <div class="employee-role">${roleLabels[user.role] || user.role}</div>
@@ -6772,67 +6802,345 @@
                     });
                 }
             });
-        }
-    
-        // Функция выбора сотрудника
-        function selectEmployee(employeeId, type) {
-            if (type === 'employee') {
-                selectedEmployee = employeeId;
             
-                // Снять выделение со всех сотрудников
-                document.querySelectorAll('#employeeList .employee-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-            
-                // Выделить выбранного сотрудника
-                const selector = employeeId === null ? '.random-employee' : `.employee-item[data-employee-id="${employeeId}"]`;
-                document.querySelector(`#employeeList ${selector}`).classList.add('selected');
-            } else if (type === 'task') {
-                selectedTaskEmployee = employeeId;
-            
-                // Снять выделение со всех сотрудников
-                document.querySelectorAll('#taskEmployeeList .employee-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-            
-                // Выделить выбранного сотрудника
-                const selector = employeeId === null ? '.random-employee' : `.employee-item[data-employee-id="${employeeId}"]`;
-                document.querySelector(`#taskEmployeeList ${selector}`).classList.add('selected');
+            // Убедимся, что при первом отображении "Случайный сотрудник" выделен, если никто не выбран
+            if (isRandomSelected) {
+                selectEmployee(null, 'task');
             }
         }
     
-        // Функция выбора темы
+        // Функция выбора сотрудника
+       function selectEmployee(employeeId, type) {
+           if (type === 'employee') {
+               selectedEmployee = employeeId;
+           
+               // Снять выделение со всех сотрудников
+               document.querySelectorAll('#employeeList .employee-item').forEach(item => {
+                   item.classList.remove('selected');
+               });
+           
+               // Выделить выбранного сотрудника
+               if (employeeId === null) {
+                   const randomEmployee = document.querySelector('#employeeList .random-employee');
+                   if (randomEmployee) {
+                       randomEmployee.classList.add('selected');
+                       // Также снимаем выделение с других элементов в списке
+                       document.querySelectorAll('#employeeList .employee-item:not(.random-employee)').forEach(item => {
+                           item.classList.remove('selected');
+                       });
+                   }
+               } else {
+                   const selector = `.employee-item[data-employee-id="${employeeId}"]`;
+                   const element = document.querySelector(`#employeeList ${selector}`);
+                   if (element) {
+                       element.classList.add('selected');
+                       // Снимаем выделение с элемента "Случайный сотрудник"
+                       const randomEmployee = document.querySelector('#employeeList .random-employee');
+                       if (randomEmployee) randomEmployee.classList.remove('selected');
+                   }
+               }
+           } else if (type === 'task') {
+               selectedTaskEmployee = employeeId;
+           
+               // Снять выделение со всех сотрудников
+               const allTaskEmployeeItems = document.querySelectorAll('#taskEmployeeList .employee-item, #editTaskEmployeeList .employee-item');
+               allTaskEmployeeItems.forEach(item => {
+                   item.classList.remove('selected');
+               });
+           
+               // Выделить выбранного сотрудника
+               if (employeeId === null) {
+                   // Проверяем оба контейнера для сотрудников задачи
+                   const randomEmployee1 = document.querySelector('#taskEmployeeList .random-employee');
+                   const randomEmployee2 = document.querySelector('#editTaskEmployeeList .random-employee');
+                   if (randomEmployee1) {
+                       randomEmployee1.classList.add('selected');
+                       // Снимаем выделение с других элементов
+                       document.querySelectorAll('#taskEmployeeList .employee-item:not(.random-employee)').forEach(item => {
+                           item.classList.remove('selected');
+                       });
+                   }
+                   if (randomEmployee2) {
+                       randomEmployee2.classList.add('selected');
+                       // Снимаем выделение с других элементов
+                       document.querySelectorAll('#editTaskEmployeeList .employee-item:not(.random-employee)').forEach(item => {
+                           item.classList.remove('selected');
+                       });
+                   }
+               } else {
+                   // Проверяем оба контейнера для сотрудников задачи
+                   const selector = `.employee-item[data-employee-id="${employeeId}"]`;
+                   const element1 = document.querySelector(`#taskEmployeeList ${selector}`);
+                   const element2 = document.querySelector(`#editTaskEmployeeList ${selector}`);
+                   if (element1) {
+                       element1.classList.add('selected');
+                       // Снимаем выделение с элемента "Случайный сотрудник"
+                       const randomEmployee1 = document.querySelector('#taskEmployeeList .random-employee');
+                       if (randomEmployee1) randomEmployee1.classList.remove('selected');
+                   }
+                   if (element2) {
+                       element2.classList.add('selected');
+                       // Снимаем выделение с элемента "Случайный сотрудник"
+                       const randomEmployee2 = document.querySelector('#editTaskEmployeeList .random-employee');
+                       if (randomEmployee2) randomEmployee2.classList.remove('selected');
+                   }
+               }
+           }
+       }
+    
+        // Функция выбора темы в форме передачи обращения
         function selectTheme(theme) {
             selectedTheme = theme;
             customThemeEnabled = false;
-        
-            // Снять выделение со всех тем
-            document.querySelectorAll('.theme-option').forEach(item => {
+
+            // Находим контейнер тем в активной форме передачи
+            const taskForm = document.getElementById('taskTransferForm');
+            if (!taskForm) return;
+
+            // Снять выделение со всех тем только в активной форме
+            const allThemes = taskForm.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
                 item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
             });
-        
+
             // Выделить выбранную тему
-            document.querySelector(`.theme-option[data-theme="${theme}"]`).classList.add('selected');
-        
+            const selectedThemeElement = taskForm.querySelector(`.theme-option[data-theme="${theme}"]`);
+            if (selectedThemeElement) {
+                selectedThemeElement.classList.add('selected');
+                selectedThemeElement.style.backgroundColor = 'var(--primary-light)';
+                selectedThemeElement.style.borderLeft = '4px solid var(--primary-color)';
+                selectedThemeElement.style.color = '#065f46';
+            }
+
             // Скрыть поле для своей темы
-            document.getElementById('customTheme').classList.add('hidden');
+            const customThemeInput = taskForm.querySelector('#customTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.add('hidden');
+                customThemeInput.value = '';
+            }
         }
-    
-        // Функция включения своей темы
+
+        // Функция включения своей темы в форме передачи обращения
         function enableCustomTheme() {
             customThemeEnabled = true;
-        
-            // Снять выделение со всех тем
-            document.querySelectorAll('.theme-option').forEach(item => {
+            selectedTheme = null;
+
+            // Находим контейнер тем в активной форме передачи
+            const taskForm = document.getElementById('taskTransferForm');
+            if (!taskForm) return;
+
+            // Снять выделение со всех тем только в активной форме
+            const allThemes = taskForm.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
                 item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
             });
-        
+
             // Выделить опцию своей темы
-            document.querySelector('.theme-custom').classList.add('selected');
-        
+            const customThemeOption = taskForm.querySelector('.theme-custom');
+            if (customThemeOption) {
+                customThemeOption.classList.add('selected');
+                customThemeOption.style.backgroundColor = 'var(--primary-light)';
+                customThemeOption.style.borderLeft = '4px solid var(--primary-color)';
+                customThemeOption.style.color = '#065f46';
+            }
+
             // Показать поле для своей темы
-            document.getElementById('customTheme').classList.remove('hidden');
-            document.getElementById('customTheme').focus();
+            const customThemeInput = taskForm.querySelector('#customTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.remove('hidden');
+                customThemeInput.focus();
+            }
+        }
+
+        // Функция выбора темы в форме редактирования ТЗ
+        function selectEditTheme(theme) {
+            selectedEditTheme = theme;
+
+            // Находим контейнер тем в модальном окне редактирования ТЗ
+            const editModal = document.getElementById('technicalTaskModal');
+            if (!editModal) return;
+
+            // Снять выделение со всех тем только в этом модальном окне
+            const allThemes = editModal.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
+            });
+
+            // Выделить выбранную тему
+            const selectedThemeElement = editModal.querySelector(`.theme-option[data-theme="${theme}"]`);
+            if (selectedThemeElement) {
+                selectedThemeElement.classList.add('selected');
+                selectedThemeElement.style.backgroundColor = 'var(--primary-light)';
+                selectedThemeElement.style.borderLeft = '4px solid var(--primary-color)';
+                selectedThemeElement.style.color = '#065f46';
+            }
+
+            // Скрыть поле для своей темы
+            const customThemeInput = editModal.querySelector('#editCustomTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.add('hidden');
+                customThemeInput.value = '';
+            }
+        }
+
+        // Функция включения своей темы в форме редактирования ТЗ
+        function enableEditCustomTheme() {
+            selectedEditTheme = null;
+
+            // Находим контекст редактирования ТЗ
+            const editModal = document.getElementById('technicalTaskModal');
+            if (!editModal) return;
+
+            // Снять выделение со всех тем только в этом модальном окне
+            const allThemes = editModal.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
+            });
+
+            // Выделить опцию своей темы
+            const customThemeOption = editModal.querySelector('.theme-custom');
+            if (customThemeOption) {
+                customThemeOption.classList.add('selected');
+                customThemeOption.style.backgroundColor = 'var(--primary-light)';
+                customThemeOption.style.borderLeft = '4px solid var(--primary-color)';
+                customThemeOption.style.color = '#065f46';
+            }
+
+            // Показать поле для своей темы
+            const customThemeInput = editModal.querySelector('#editCustomTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.remove('hidden');
+                customThemeInput.focus();
+            }
+        }
+
+        // Функция для сброса выделения тем в форме редактирования
+        function clearEditThemeSelection() {
+            const editModal = document.getElementById('technicalTaskModal');
+            if (!editModal) return;
+
+            const allThemes = editModal.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
+            });
+
+            document.getElementById('editCustomTheme').classList.add('hidden');
+            document.getElementById('editCustomTheme').value = '';
+        }
+
+        // Обновляем функцию showTransferModal для правильного сброса состояния
+        function showTransferModal() {
+            if (!currentTicket) return;
+            
+            // Сброс состояния
+            selectedTransferOption = null;
+            selectedEmployee = null;
+            selectedTaskEmployee = null;
+            selectedTheme = null;
+            customThemeEnabled = false;
+
+            // Сброс выделения тем в форме передачи
+            const taskForm = document.getElementById('taskTransferForm');
+            if (taskForm) {
+                const allThemes = taskForm.querySelectorAll('.theme-option');
+                allThemes.forEach(item => {
+                    item.classList.remove('selected');
+                    item.style.backgroundColor = '';
+                    item.style.borderLeft = '';
+                    item.style.color = '';
+                });
+            }
+
+            // Скрыть все формы
+            document.getElementById('employeeTransferForm').classList.remove('active');
+            document.getElementById('taskTransferForm').classList.remove('active');
+
+            // Показать опции выбора
+            document.getElementById('transferOptions').style.display = 'flex';
+
+            // Снять выделение с опций передачи
+            document.querySelectorAll('.transfer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Скрыть поля для своей темы
+            document.getElementById('customTheme').classList.add('hidden');
+            document.getElementById('customTheme').value = '';
+
+            // Очистить поля
+            document.getElementById('taskDescription').value = '';
+
+            // Заполнить списки сотрудников
+            populateEmployeeList();
+            populateTaskEmployeeList();
+
+            // Установить дефолтные выделения
+            selectEmployee(null, 'employee');
+            selectEmployee(null, 'task');
+
+            showModal(document.getElementById('transferTicketModal'));
+        }
+
+        // Обновляем функцию selectTransferOption для сброса состояния тем при переключении
+        function selectTransferOption(option) {
+            selectedTransferOption = option;
+
+            // Выделить выбранную опцию
+            document.querySelectorAll('.transfer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            document.querySelector(`.transfer-option[data-option="${option}"]`).classList.add('selected');
+
+            // Скрыть опции выбора
+            document.getElementById('transferOptions').style.display = 'none';
+
+            // Сбросить состояние тем при переключении на опцию ТЗ
+            if (option === 'task') {
+                selectedTheme = null;
+                customThemeEnabled = false;
+                
+                const taskForm = document.getElementById('taskTransferForm');
+                if (taskForm) {
+                    const allThemes = taskForm.querySelectorAll('.theme-option');
+                    allThemes.forEach(item => {
+                        item.classList.remove('selected');
+                        item.style.backgroundColor = '';
+                        item.style.borderLeft = '';
+                        item.style.color = '';
+                    });
+                    
+                    // Скрыть поле для своей темы
+                    const customThemeInput = taskForm.querySelector('#customTheme');
+                    if (customThemeInput) {
+                        customThemeInput.classList.add('hidden');
+                        customThemeInput.value = '';
+                    }
+                }
+            }
+
+            // Показать соответствующую форму
+            if (option === 'employee') {
+                document.getElementById('employeeTransferForm').classList.add('active');
+            } else if (option === 'task') {
+                document.getElementById('taskTransferForm').classList.add('active');
+                // Загрузить список сотрудников для ТЗ
+                populateTaskEmployeeList();
+            }
         }
     
         // Функция передачи обращения сотруднику
@@ -7388,49 +7696,114 @@
                 currentTask = null;
                 currentTaskTicketId = ticketId;
 
-                // Очищаем и заполняем модал для создания
                 document.getElementById('technicalTaskTitle').textContent = 'Новое техническое задание';
 
-                // Сбрасываем темы
-                clearSelectedEditTheme();
+                // Сбрасываем все выделения тем
+                clearEditThemeSelection();
 
-                // Показываем плейсхолдер в описании
-                const descTextarea = document.getElementById('editTaskDescription');
-                descTextarea.value = '';
-                descTextarea.placeholder = 'Опишите проблему подробно (обязательно)';
+                // Сбрасываем описание
+                document.getElementById('editTaskDescription').value = '';
+                document.getElementById('editTaskDescription').placeholder = 'Опишите проблему подробно (обязательно)';
 
-                // Загружаем список сотрудников
+                // Загружаем список сотрудников с выделением "Случайный сотрудник" по умолчанию
                 loadEditTaskEmployees(null);
 
                 // Устанавливаем статус по умолчанию
                 document.getElementById('editTaskStatus').value = 'new';
 
                 showModal(document.getElementById('technicalTaskModal'));
+                
+                // Принудительно обновляем выделение после показа модального окна
+                setTimeout(() => {
+                    const employeeList = document.getElementById('editTaskEmployeeList');
+                    if (employeeList) {
+                        const randomEmployee = employeeList.querySelector('.employee-item:first-child');
+                        if (randomEmployee) {
+                            randomEmployee.classList.add('selected');
+                            randomEmployee.style.backgroundColor = 'var(--primary-light)';
+                            randomEmployee.style.borderLeft = '4px solid var(--primary-color)';
+                            randomEmployee.style.color = '#065f46';
+                        }
+                    }
+                }, 100);
+                
                 return;
             }
 
             currentTask = task;
             currentTaskTicketId = ticketId;
 
-            // Заполняем модал данными ТЗ
             document.getElementById('technicalTaskTitle').textContent = 'Редактирование технического задания';
 
-            // Устанавливаем тему
-            selectEditTheme(task.theme);
+            // Сбрасываем все выделения тем
+            clearEditThemeSelection();
+
+            // Устанавливаем тему из задачи
+            if (task.theme) {
+                const standardThemes = [
+                    'Проблема с авторизацией', 'Ошибка 500', 'Медленная работа системы',
+                    'Проблема с оплатой', 'Ошибка в отчетах', 'Проблема с загрузкой файлов',
+                    'Не работает функционал', 'Ошибка в интерфейсе', 'Проблема с интеграцией',
+                    'Другая техническая проблема'
+                ];
+
+                if (standardThemes.includes(task.theme)) {
+                    selectEditTheme(task.theme);
+                } else {
+                    document.getElementById('editCustomTheme').value = task.theme;
+                    enableEditCustomTheme();
+                }
+            }
 
             // Заполняем описание
             document.getElementById('editTaskDescription').value = task.description;
 
-            // Загружаем сотрудников с выбранным
+            // Загружаем сотрудников с правильным выделением
             loadEditTaskEmployees(task.assignedTo);
 
             // Устанавливаем статус
-            document.getElementById('editTaskStatus').value = task.status || 'new';
+            const ticket = tickets.find(t => t.id === ticketId);
+            const actualStatus = ticket ? ticket.status : task.status;
+            document.getElementById('editTaskStatus').value = actualStatus || task.status || 'new';
 
             showModal(document.getElementById('technicalTaskModal'));
+            
+            // Принудительно обновляем выделение после показа модального окна
+            setTimeout(() => {
+                const employeeList = document.getElementById('editTaskEmployeeList');
+                if (employeeList) {
+                    // Снимаем выделение со всех
+                    const allEmployees = employeeList.querySelectorAll('.employee-item');
+                    allEmployees.forEach(item => {
+                        item.classList.remove('selected');
+                        item.style.backgroundColor = '';
+                        item.style.borderLeft = '';
+                        item.style.color = '';
+                    });
+                    
+                    // Выделяем выбранного сотрудника
+                    const selectedEmployeeName = selectedEditEmployee || 'Случайный сотрудник';
+                    const employeeItems = employeeList.querySelectorAll('.employee-item');
+                    for (let item of employeeItems) {
+                        const nameElement = item.querySelector('.employee-name');
+                        if (nameElement && nameElement.textContent.trim() === selectedEmployeeName.trim()) {
+                            item.classList.add('selected');
+                            item.style.backgroundColor = 'var(--primary-light)';
+                            item.style.borderLeft = '4px solid var(--primary-color)';
+                            item.style.color = '#065f46';
+                            break;
+                        }
+                    }
+                }
+            }, 100);
         }
         function saveTechnicalTaskChanges() {
-            const theme = getSelectedEditTheme();
+            // Получаем тему - сначала проверяем кастомную, потом выбранную
+            let theme = document.getElementById('editCustomTheme').value.trim();
+            if (!theme) {
+                theme = selectedEditTheme;
+            }
+
             const description = document.getElementById('editTaskDescription').value.trim();
             const status = document.getElementById('editTaskStatus').value;
             const assignedTo = selectedEditEmployee || "Случайный сотрудник";
@@ -7464,7 +7837,7 @@
                 if (currentTask.ticketId) {
                     const ticket = tickets.find(t => t.id === currentTask.ticketId);
                     if (ticket) {
-                        ticket.status = status; // Устанавливаем статус тикета равным статусу ТЗ
+                        ticket.status = status;
                         ticket.updated = new Date();
                     }
                 }
@@ -7485,7 +7858,7 @@
                 if (currentTaskTicketId) {
                     const ticket = tickets.find(t => t.id === currentTaskTicketId);
                     if (ticket) {
-                        ticket.status = status; // Устанавливаем статус тикета равным статусу ТЗ
+                        ticket.status = status;
                         ticket.updated = new Date();
                     }
                 }
@@ -7496,10 +7869,15 @@
             // Обновляем UI
             renderKanban();
             renderTechnicalTasks();
-            renderTicketsList(); // Обновляем список тикетов
-            updateDashboardStats(); // Обновляем статистику на дашборде
-            renderStatusStats(); // Обновляем статистику по статусам
-            renderRecentTickets(); // Обновляем последние тикеты на дашборде
+            renderTicketsList();
+            updateDashboardStats();
+            renderStatusStats();
+            renderRecentTickets();
+            
+            // Если текущий тикет открыт в чате, обновляем его
+            if (currentTicket && currentTask && currentTicket.id === currentTask.ticketId) {
+                renderChatView();
+            }
 
             hideModal(document.getElementById('technicalTaskModal'));
             showToast('Изменения сохранены');
@@ -7507,21 +7885,36 @@
 
         // Technical Task Edit Functions
         function selectEditTheme(theme) {
-            // Сбрасываем все опции
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // Выбираем нужную опцию
-            const selectedOption = document.querySelector(`[data-theme="${theme}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-            }
-            
             selectedEditTheme = theme;
-            
-            // Скрываем поле кастомной темы
-            document.getElementById('editCustomTheme').classList.add('hidden');
+
+            // Находим контейнер тем в модальном окне редактирования ТЗ
+            const editModal = document.getElementById('technicalTaskModal');
+            if (!editModal) return;
+
+            // Снять выделение со всех тем только в этом модальном окне
+            const allThemes = editModal.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
+            });
+
+            // Выделить выбранную тему
+            const selectedThemeElement = editModal.querySelector(`.theme-option[data-theme="${theme}"]`);
+            if (selectedThemeElement) {
+                selectedThemeElement.classList.add('selected');
+                selectedThemeElement.style.backgroundColor = 'var(--primary-light)';
+                selectedThemeElement.style.borderLeft = '4px solid var(--primary-color)';
+                selectedThemeElement.style.color = '#065f46';
+            }
+
+            // Скрыть поле для своей темы
+            const customThemeInput = editModal.querySelector('#editCustomTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.add('hidden');
+                customThemeInput.value = '';
+            }
         }
 
         function clearSelectedEditTheme() {
@@ -7539,78 +7932,181 @@
         }
 
         function enableEditCustomTheme() {
-            // Сбрасываем все опции
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
             selectedEditTheme = null;
-            document.getElementById('editCustomTheme').classList.remove('hidden');
-            document.getElementById('editCustomTheme').focus();
+
+            // Находим контекст редактирования ТЗ
+            const editModal = document.getElementById('technicalTaskModal');
+            if (!editModal) return;
+
+            // Снять выделение со всех тем только в этом модальном окне
+            const allThemes = editModal.querySelectorAll('.theme-option');
+            allThemes.forEach(item => {
+                item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
+            });
+
+            // Выделить опцию своей темы
+            const customThemeOption = editModal.querySelector('.theme-custom');
+            if (customThemeOption) {
+                customThemeOption.classList.add('selected');
+                customThemeOption.style.backgroundColor = 'var(--primary-light)';
+                customThemeOption.style.borderLeft = '4px solid var(--primary-color)';
+                customThemeOption.style.color = '#065f46';
+            }
+
+            // Показать поле для своей темы
+            const customThemeInput = editModal.querySelector('#editCustomTheme');
+            if (customThemeInput) {
+                customThemeInput.classList.remove('hidden');
+                customThemeInput.focus();
+            }
         }
 
+        // Обновленная функция загрузки сотрудников для редактирования ТЗ
         function loadEditTaskEmployees(selectedEmployee) {
             const employeeList = document.getElementById('editTaskEmployeeList');
+            if (!employeeList) return;
+
             employeeList.innerHTML = '';
 
-            // Добавляем опцию "Случайный сотрудник"
+            // Добавляем опцию "Случайный сотрудник" всегда первой
             const randomEmployeeItem = document.createElement('div');
-            randomEmployeeItem.className = `employee-item ${!selectedEmployee ? 'selected' : ''}`;
+            // Проверяем, является ли текущий выбранный сотрудник "Случайным"
+            const isRandomSelected = selectedEmployee === null || selectedEmployee === undefined ||
+                                   selectedEmployee === '' || selectedEmployee === 'Случайный сотрудник';
+            
+            randomEmployeeItem.className = `employee-item ${isRandomSelected ? 'selected' : ''}`;
             randomEmployeeItem.innerHTML = `
                 <div class="employee-name">Случайный сотрудник</div>
                 <div class="employee-role">Будет выбран автоматически</div>
             `;
+            
+            // Применяем стили выделения если выбран
+            if (isRandomSelected) {
+                randomEmployeeItem.style.backgroundColor = 'var(--primary-light)';
+                randomEmployeeItem.style.borderLeft = '4px solid var(--primary-color)';
+                randomEmployeeItem.style.color = '#065f46';
+            }
+            
             randomEmployeeItem.onclick = () => selectEditEmployee(null);
             employeeList.appendChild(randomEmployeeItem);
 
             // Добавляем всех сотрудников
             users.forEach(user => {
-                // Проверяем, что поля существуют и не пустые
                 const userFirstName = user.name || '';
                 const userLastName = user.lastName || '';
                 const employeeName = `${userFirstName} ${userLastName}`.trim();
                 
+                // Проверяем, соответствует ли этот сотрудник выбранному
+                const isSelected = !isRandomSelected && employeeName === selectedEmployee;
                 const employeeItem = document.createElement('div');
-                employeeItem.className = `employee-item ${employeeName === selectedEmployee ? 'selected' : ''}`;
+                employeeItem.className = `employee-item ${isSelected ? 'selected' : ''}`;
                 employeeItem.innerHTML = `
                     <div class="employee-name">${userFirstName} ${userLastName}</div>
                     <div class="employee-role">${roleLabels[user.role] || user.role}</div>
                 `;
+                
+                // Применяем стили выделения если выбран
+                if (isSelected) {
+                    employeeItem.style.backgroundColor = 'var(--primary-light)';
+                    employeeItem.style.borderLeft = '4px solid var(--primary-color)';
+                    employeeItem.style.color = '#065f46';
+                }
+                
                 employeeItem.onclick = () => selectEditEmployee(employeeName);
                 employeeList.appendChild(employeeItem);
             });
 
-            selectedEditEmployee = selectedEmployee;
+            // Обновляем глобальную переменную
+            selectedEditEmployee = isRandomSelected ? null : selectedEmployee;
         }
 
+        // Исправленная функция выбора сотрудника в форме редактирования ТЗ
         function selectEditEmployee(employeeName) {
             selectedEditEmployee = employeeName;
 
-            // Снять выделение со всех сотрудников
-            document.querySelectorAll('#editTaskEmployeeList .employee-item').forEach(item => {
+            // Находим контейнер сотрудников в модальном окне редактирования
+            const employeeList = document.getElementById('editTaskEmployeeList');
+            if (!employeeList) return;
+
+            // Снять выделение со всех сотрудников только в этом контейнере
+            const allEmployees = employeeList.querySelectorAll('.employee-item');
+            allEmployees.forEach(item => {
                 item.classList.remove('selected');
+                item.style.backgroundColor = '';
+                item.style.borderLeft = '';
+                item.style.color = '';
             });
 
             // Выделить выбранного сотрудника
-            const employeeItems = document.querySelectorAll('#editTaskEmployeeList .employee-item');
             if (employeeName === null) {
-                // Выбираем "Случайный сотрудник" (первый элемент)
-                employeeItems[0].classList.add('selected');
+                // Ищем элемент "Случайный сотрудник" в текущем контейнере
+                const randomEmployee = employeeList.querySelector('.employee-item:first-child');
+                if (randomEmployee) {
+                    randomEmployee.classList.add('selected');
+                    randomEmployee.style.backgroundColor = 'var(--primary-light)';
+                    randomEmployee.style.borderLeft = '4px solid var(--primary-color)';
+                    randomEmployee.style.color = '#065f46';
+                }
             } else {
-                // Ищем сотрудника по имени
+                // Ищем сотрудника по имени в текущем контейнере
+                const employeeItems = employeeList.querySelectorAll('.employee-item');
                 for (let item of employeeItems) {
                     const nameElement = item.querySelector('.employee-name');
-                    if (nameElement && nameElement.textContent === employeeName) {
+                    if (nameElement && nameElement.textContent.trim() === employeeName.trim()) {
                         item.classList.add('selected');
+                        item.style.backgroundColor = 'var(--primary-light)';
+                        item.style.borderLeft = '4px solid var(--primary-color)';
+                        item.style.color = '#065f46';
                         break;
                     }
                 }
             }
         }
 
+        // Обновленная функция загрузки сотрудников для редактирования ТЗ
         function getSelectedEditEmployee() {
             return selectedEditEmployee;
         }
+
+        // Добавляем обработчик событий для модального окна редактирования ТЗ
+        document.addEventListener('DOMContentLoaded', function() {
+            const technicalTaskModal = document.getElementById('technicalTaskModal');
+            if (technicalTaskModal) {
+                // Обработчик события при открытии модального окна
+                technicalTaskModal.addEventListener('click', function(e) {
+                    // Если клик по элементу сотрудника, обновляем выделение
+                    if (e.target.closest('.employee-item')) {
+                        const employeeItem = e.target.closest('.employee-item');
+                        const employeeName = employeeItem.querySelector('.employee-name').textContent;
+                        
+                        // Снимаем выделение со всех
+                        const allEmployees = technicalTaskModal.querySelectorAll('.employee-item');
+                        allEmployees.forEach(item => {
+                            item.classList.remove('selected');
+                            item.style.backgroundColor = '';
+                            item.style.borderLeft = '';
+                            item.style.color = '';
+                        });
+                        
+                        // Выделяем текущий
+                        employeeItem.classList.add('selected');
+                        employeeItem.style.backgroundColor = 'var(--primary-light)';
+                        employeeItem.style.borderLeft = '4px solid var(--primary-color)';
+                        employeeItem.style.color = '#065f46';
+                        
+                        // Обновляем выбранного сотрудника
+                        if (employeeName === 'Случайный сотрудник') {
+                            selectedEditEmployee = null;
+                        } else {
+                            selectedEditEmployee = employeeName;
+                        }
+                    }
+                });
+            }
+        });
 
         // Knowledge Base Functions
         function filterArticles() {
