@@ -5108,6 +5108,65 @@
             </div>
         </div>
     </div>
+    <!-- НОВОЕ МОДАЛЬНОЕ ОКНО ДЛЯ СОЗДАНИЯ ПОЛЬЗОВАТЕЛЯ -->
+    <div id="createUserModal" class="modal-overlay hidden">
+        <div class="modal edit-user-modal mobile-optimized">
+            <button class="modal-close-btn" onclick="hideModal(document.getElementById('createUserModal'))">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 class="modal-title">Создание пользователя</h2>
+            <div class="form-group">
+                <label class="form-label">Аватар</label>
+                <div class="avatar-selection" id="createAvatarSelection">
+                    <div class="avatar-option" data-avatar="👨">👨</div>
+                    <div class="avatar-option" data-avatar="👩">👩</div>
+                    <div class="avatar-option" data-avatar="🧑">🧑</div>
+                    <div class="avatar-option" data-avatar="👨‍💻">👨‍💻</div>
+                    <div class="avatar-option" data-avatar="👩‍💻">👩‍💻</div>
+                    <div class="avatar-option" data-avatar="👨‍🔧">👨‍🔧</div>
+                    <div class="avatar-option" data-avatar="👩‍🔧">👩‍🔧</div>
+                    <div class="avatar-option" data-avatar="👨‍💼">👨‍💼</div>
+                    <div class="avatar-option" data-avatar="👩‍💼">👩‍💼</div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Имя</label>
+                    <input type="text" class="form-input" id="createUserName" placeholder="Введите имя">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Фамилия</label>
+                    <input type="text" class="form-input" id="createUserLastName" placeholder="Введите фамилию">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Логин</label>
+                <input type="text" class="form-input" id="createUserLogin" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="createUserEmail" placeholder="Введите email">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Должность</label>
+                <select class="form-input" id="createUserRole">
+                    <option value="operator1">Оператор 1-й линии</option>
+                    <option value="operator2">Оператор 2-й линии</option>
+                    <option value="admin">Администратор</option>
+                    <option value="manager">Руководитель</option>
+                    <option value="developer">Разработчик</option>
+                </select>
+            </div>
+            <div class="password-reset-info">
+                <i class="fas fa-info-circle"></i>
+                После создания пользователя будет сгенерирована ссылка для установки пароля. Отправьте её пользователю.
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" id="createUserBtn">Создать пользователя</button>
+                <button class="btn-cancel" onclick="hideModal(document.getElementById('createUserModal'))">Отмена</button>
+            </div>
+        </div>
+    </div>
     <!-- Delete Confirmation Modal -->
     <div id="deleteUserModal" class="modal-overlay hidden">
         <div class="modal">
@@ -5837,6 +5896,9 @@
         const usersGrid = document.getElementById('usersGrid');
         const userFilter = document.getElementById('userFilter');
         const addUserBtn = document.getElementById('addUserBtn');
+        // Create User Modal elements
+        const createUserModal = document.getElementById('createUserModal');
+        const createUserBtn = document.getElementById('createUserBtn');
         // Knowledge Base elements
         const searchArticles = document.getElementById('searchArticles');
         const newArticleBtn = document.getElementById('newArticleBtn');
@@ -5942,10 +6004,115 @@
 
             // Добавляем классы для мобильной оптимизации
             optimizeModalsForMobile();
+            // Setup create user modal
+            setupCreateUserModal();
             // Добавляем слушатель на изменение роли сотрудника
             const employeeRoleSelect = document.getElementById('employeeRole');
             if (employeeRoleSelect) {
                 employeeRoleSelect.addEventListener('change', populateEmployeeList);
+            }
+            
+            // Setup create user modal
+            setupCreateUserModal();
+        }
+    
+        // Setup create user modal
+        function setupCreateUserModal() {
+            // Avatar selection
+            const createAvatarSelection = document.getElementById('createAvatarSelection');
+            if (createAvatarSelection) {
+                createAvatarSelection.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('avatar-option')) {
+                        document.querySelectorAll('#createAvatarSelection .avatar-option').forEach(avatar => {
+                            avatar.classList.remove('selected');
+                        });
+                        e.target.classList.add('selected');
+                    }
+                });
+                if (createAvatarSelection.firstElementChild) {
+                    createAvatarSelection.firstElementChild.classList.add('selected');
+                }
+            }
+            if (createUserBtn) {
+                createUserBtn.addEventListener('click', createNewUser);
+            }
+            if (createUserModal) {
+                createUserModal.addEventListener('click', (e) => {
+                    if (e.target === createUserModal) hideModal(createUserModal);
+                });
+            }
+        }
+
+        function createNewUser() {
+            const selectedAvatar = document.querySelector('#createAvatarSelection .avatar-option.selected');
+            const avatar = selectedAvatar ? selectedAvatar.dataset.avatar : '👤';
+            const name = document.getElementById('createUserName').value.trim();
+            const lastName = document.getElementById('createUserLastName').value.trim();
+            const login = document.getElementById('createUserLogin').value.trim();
+            const email = document.getElementById('createUserEmail').value.trim();
+            const role = document.getElementById('createUserRole').value;
+
+            if (name && lastName && login && email) {
+                const newUser = {
+                    id: Math.max(...users.map(u => u.id), 0) + 1,
+                    name,
+                    lastName,
+                    login,
+                    email,
+                    role,
+                    status: 'online',
+                    avatar: avatar,
+                    passwordSet: false
+                };
+                users.push(newUser);
+                renderUsers();
+                hideModal(createUserModal);
+                saveData();
+
+                const token = generateToken();
+                const resetLinkValue = `${window.location.origin}/reset-password?token=${token}&user=${newUser.id}&new=true`;
+                showPasswordResetForNewUser(resetLinkValue, newUser);
+                resetCreateUserForm();
+                showToast('Пользователь создан');
+            } else {
+                showToast('Пожалуйста, заполните все поля', true);
+            }
+        }
+
+        function showPasswordResetForNewUser(resetLinkValue, user) {
+            resetLink.textContent = resetLinkValue;
+            copyResetLink.classList.remove('copied');
+            copyResetLink.innerHTML = '<i class="fas fa-copy"></i> Скопировать ссылку';
+            const modalTitle = passwordResetModal.querySelector('.modal-title');
+            const modalText = passwordResetModal.querySelector('.modal p');
+            if (modalTitle) {
+                modalTitle.textContent = 'Ссылка для установки пароля';
+            }
+            if (modalText) {
+                modalText.textContent = `Ссылка для установки пароля сгенерирована. Отправьте её пользователю ${user.name} ${user.lastName}:`;
+            }
+            showModal(passwordResetModal);
+        }
+
+        function resetCreateUserForm() {
+            const nameEl = document.getElementById('createUserName');
+            const lastNameEl = document.getElementById('createUserLastName');
+            const loginEl = document.getElementById('createUserLogin');
+            const emailEl = document.getElementById('createUserEmail');
+            const roleEl = document.getElementById('createUserRole');
+            if (nameEl) nameEl.value = '';
+            if (lastNameEl) lastNameEl.value = '';
+            if (loginEl) loginEl.value = '';
+            if (emailEl) emailEl.value = '';
+            if (roleEl) roleEl.value = 'operator1';
+            const createAvatarSelection = document.getElementById('createAvatarSelection');
+            if (createAvatarSelection) {
+                document.querySelectorAll('#createAvatarSelection .avatar-option').forEach(avatar => {
+                    avatar.classList.remove('selected');
+                });
+                if (createAvatarSelection.firstElementChild) {
+                    createAvatarSelection.firstElementChild.classList.add('selected');
+                }
             }
         }
     
@@ -6110,7 +6277,11 @@
             searchTickets.addEventListener('input', filterTickets);
             newTicketBtn.addEventListener('click', () => showModal(newTicketModal));
             userFilter.addEventListener('change', renderUsers);
-            addUserBtn.addEventListener('click', () => showModal(addUserModal));
+            // Find and update the add user button handler to open new create user modal
+            addUserBtn.addEventListener('click', () => {
+                resetCreateUserForm();
+                showModal(createUserModal);
+            });
             confirmAddUser.addEventListener('click', addNewUser);
             cancelAddUser.addEventListener('click', () => hideModal(addUserModal));
             confirmDeleteUser.addEventListener('click', deleteUser);
