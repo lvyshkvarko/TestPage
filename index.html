@@ -1553,6 +1553,17 @@
             transition: var(--transition);
             box-shadow: var(--shadow-sm);
         }
+        .kanban-item.resolution-animate {
+            animation: resolvePulse 1.2s ease-out;
+            border-color: var(--success-color, #10b981);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+        }
+        @keyframes resolvePulse {
+            0% { transform: scale(1); background: var(--bg-white); }
+            40% { transform: scale(1.02); background: rgba(16, 185, 129, 0.08); }
+            80% { transform: scale(1); background: rgba(16, 185, 129, 0.05); }
+            100% { background: var(--bg-white); }
+        }
         .kanban-item:hover {
             border-color: var(--primary-color);
             box-shadow: var(--shadow);
@@ -1580,6 +1591,31 @@
         }
         .kanban-item.has-technical-task {
             position: relative;
+        }
+        .task-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .task-preview-block {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+        }
+        .task-preview-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--text-muted, #6b7280);
+            margin-bottom: 6px;
+        }
+        .task-preview-value {
+            color: var(--text-dark);
+            line-height: 1.5;
+            font-weight: 500;
+            white-space: pre-wrap;
         }
         /* Analytics Page */
         .analytics-grid {
@@ -8098,7 +8134,7 @@
                                 ${columnTickets.map(ticket => {
                                     const hasTask = tasks.some(t => t.ticketId === ticket.id);
                                     return `
-                                        <div class="kanban-item ${hasTask ? 'has-technical-task' : ''}" draggable="true" ondragstart="dragTicket(event, ${ticket.id})" onclick="openTicketDialog(${ticket.id})">
+                                        <div class="kanban-item ${hasTask ? 'has-technical-task' : ''}" data-ticket-id="${ticket.id}" draggable="true" ondragstart="dragTicket(event, ${ticket.id})" onclick="openTicketDialog(${ticket.id})">
                                             <div class="kanban-subject">${ticket.subject}</div>
                                             ${hasTask ? '<div class="technical-task-indicator"><i class="fas fa-tasks"></i></div>' : ''}
                                         </div>
@@ -8182,6 +8218,17 @@
                             </div>
                             <div class="transfer-option-description">
                                 Просмотреть и редактировать ТЗ
+                            </div>
+                        </div>
+                        <div class="transfer-option" onclick="sendToBugTracker(${ticketId}); this.closest('.modal-overlay').remove()">
+                            <div class="transfer-option-header">
+                                <div class="transfer-option-icon">
+                                    <i class="fas fa-bug"></i>
+                                </div>
+                                <div class="transfer-option-title">Отправить в баг-трекер и отметить решенным</div>
+                            </div>
+                            <div class="transfer-option-description">
+                                Показать детали ТЗ, последнее сообщение пользователя, затем завершить задачу
                             </div>
                         </div>
                         ` : ''}
@@ -8303,6 +8350,84 @@
                     }
                 }
             }, 100);
+        }
+        function sendToBugTracker(ticketId) {
+            const ticket = tickets.find(t => t.id === ticketId);
+            const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const task = tasks.find(t => t.ticketId === ticketId);
+
+            if (!ticket || !task) {
+                showToast('Сначала создайте техническое задание', true);
+                return;
+            }
+
+            const lastUserMessage = [...(ticket.messages || [])].reverse().find(m => m.sender === 'user');
+            const lastMessageText = lastUserMessage ? lastUserMessage.text : 'Нет сообщений от пользователя';
+            const lastMessageTime = lastUserMessage ? formatTime(lastUserMessage.time) : '';
+
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <button class="modal-close-btn" onclick="this.closest('.modal-overlay').remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <h2 class="modal-title">Отправка в баг-трекер</h2>
+                    <div class="task-preview">
+                        <div class="task-preview-block">
+                            <div class="task-preview-label">Тема ТЗ</div>
+                            <div class="task-preview-value">${task.theme || 'Без темы'}</div>
+                        </div>
+                        <div class="task-preview-block">
+                            <div class="task-preview-label">Описание</div>
+                            <div class="task-preview-value">${task.description || 'Описание отсутствует'}</div>
+                        </div>
+                        <div class="task-preview-block">
+                            <div class="task-preview-label">Последнее сообщение пользователя ${lastMessageTime ? '(' + lastMessageTime + ')' : ''}</div>
+                            <div class="task-preview-value">${lastMessageText}</div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">Отмена</button>
+                        <button class="btn-primary" id="confirmBugTracker">Отправить и отметить решенным</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            const confirmBtn = modal.querySelector('#confirmBugTracker');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', () => {
+                    modal.remove();
+
+                    ticket.status = 'resolved';
+                    ticket.updated = new Date();
+
+                    const taskIndex = tasks.findIndex(t => t.ticketId === ticketId);
+                    if (taskIndex !== -1) {
+                        tasks[taskIndex].status = 'resolved';
+                        localStorage.setItem('smartSupportTechnicalTasks', JSON.stringify(tasks));
+                    }
+
+                    saveData();
+                    renderKanban();
+                    updateDashboardStats();
+                    renderStatusStats();
+                    renderTicketsList();
+                    animateTicketResolution(ticket.id);
+                    showToast('Отправлено в баг-трекер и помечено решенным');
+                });
+            }
+        }
+        function animateTicketResolution(ticketId) {
+            setTimeout(() => {
+                const resolvedCard = document.querySelector(`.kanban-item[data-ticket-id="${ticketId}"]`);
+                if (resolvedCard) {
+                    resolvedCard.classList.add('resolution-animate');
+                    resolvedCard.style.cursor = 'default';
+                    setTimeout(() => resolvedCard.classList.remove('resolution-animate'), 1400);
+                }
+            }, 50);
         }
         function saveTechnicalTaskChanges() {
             // Получаем тему - сначала проверяем кастомную, потом выбранную
@@ -9246,6 +9371,12 @@
             const enabled = !!newTicketsNotificationsToggle?.checked;
             localStorage.setItem('newTicketsNotificationsEnabled', enabled);
             updateNotificationBadge();
+            showToast(
+                enabled
+                    ? 'Уведомления о новых обращениях включены'
+                    : 'Уведомления о новых обращениях отключены',
+                !enabled
+            );
         }
         // Random data for autogenerated tickets
         const randomUsers = [
@@ -9323,15 +9454,17 @@
                 tickets.push(newTicket);
                 filteredTickets = [...tickets];
        
-                // Add notification
-                const newNotification = {
-                    id: Math.max(...notifications.map(n => n.id)) + 1,
-                    title: 'Новое обращение',
-                    message: `Пользователь ${newTicket.user.name} создал новое обращение: ${newTicket.subject}`,
-                    time: new Date(),
-                    read: false
-                };
-                notifications.push(newNotification);
+                // Add notification only if enabled
+                if (notificationsEnabled()) {
+                    const newNotification = {
+                        id: Math.max(...notifications.map(n => n.id)) + 1,
+                        title: 'Новое обращение',
+                        message: `Пользователь ${newTicket.user.name} создал новое обращение: ${newTicket.subject}`,
+                        time: new Date(),
+                        read: false
+                    };
+                    notifications.push(newNotification);
+                }
        
                 updateDashboardStats();
                 renderStatusStats();
@@ -9343,7 +9476,9 @@
                     renderTicketsList();
                 }
        
-                showToast('Получено новое обращение');
+                if (notificationsEnabled()) {
+                    showToast('Получено новое обращение');
+                }
             }
         }
         // Utility Functions
@@ -9468,4 +9603,3 @@
     </script>
 </body>
 </html>
-
