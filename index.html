@@ -4957,8 +4957,8 @@
                             <i class="fas fa-award"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>94%</h3>
-                            <p>Удовлетворенность</p>
+                            <h3 id="technicalTasksCount">0</h3>
+                            <p>Технические задания</p>
                         </div>
                     </div>
                 </div>
@@ -5229,46 +5229,10 @@
             <h1 class="page-title">Настройки</h1>
             <div class="settings-grid">
                 <div class="settings-card">
-                    <h2 class="card-title">Основные настройки</h2>
-                    <div class="settings-group">
-                        <label class="form-label">Название системы</label>
-                        <input type="text" class="form-input" value="SmartSupport">
-                    </div>
-                    <div class="settings-group">
-                        <label class="form-label">Время автоматического ответа</label>
-                        <input type="text" class="form-input" value="15 минут">
-                    </div>
-                    <div class="settings-group">
-                        <label class="form-label">Язык интерфейса</label>
-                        <select class="form-input">
-                            <option>Русский</option>
-                            <option>English</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="settings-card">
                     <h2 class="card-title">Уведомления</h2>
                     <div class="settings-group">
                         <label class="checkbox-label">
-                            <input type="checkbox" class="checkbox-input" checked>
-                            <span>Email уведомления</span>
-                        </label>
-                    </div>
-                    <div class="settings-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" class="checkbox-input" checked>
-                            <span>Push уведомления</span>
-                        </label>
-                    </div>
-                    <div class="settings-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" class="checkbox-input">
-                            <span>SMS уведомления</span>
-                        </label>
-                    </div>
-                    <div class="settings-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" class="checkbox-input" checked>
+                            <input type="checkbox" class="checkbox-input" id="newTicketsNotificationsToggle" checked>
                             <span>Уведомления о новых обращениях</span>
                         </label>
                     </div>
@@ -6226,6 +6190,7 @@
         const pageContents = document.querySelectorAll('.page-content');
         const notificationBtn = document.getElementById('notificationBtn');
         const notificationBadge = document.getElementById('notificationBadge');
+        const newTicketsNotificationsToggle = document.getElementById('newTicketsNotificationsToggle');
         const ticketChatView = document.getElementById('ticketChatView');
         const overlay = document.getElementById('overlay');
         const notificationToast = document.getElementById('notificationToast');
@@ -6234,6 +6199,7 @@
         const totalTickets = document.getElementById('totalTickets');
         const resolvedTickets = document.getElementById('resolvedTickets');
         const pendingTickets = document.getElementById('pendingTickets');
+        const technicalTasksCount = document.getElementById('technicalTasksCount');
         const recentTickets = document.getElementById('recentTickets');
         const statusStats = document.getElementById('statusStats');
         // Tickets elements
@@ -6340,6 +6306,7 @@
             setupModalCloseHandlers();
             addCloseButtonToEditModal();
             updateLayout();
+            loadNotificationPreference();
             updateNotificationBadge();
 
             // Check for new tickets on load
@@ -6722,6 +6689,11 @@
    
             // Filters button toggle
             filtersBtn.addEventListener('click', toggleFilters);
+
+            // Notifications toggle
+            if (newTicketsNotificationsToggle) {
+                newTicketsNotificationsToggle.addEventListener('change', handleNotificationToggle);
+            }
         }
         function toggleFilters() {
             document.querySelector('.filters-wrapper').classList.toggle('show');
@@ -6851,10 +6823,16 @@
             totalTickets.textContent = tickets.length;
             resolvedTickets.textContent = tickets.filter(t => t.status === 'resolved').length;
             pendingTickets.textContent = tickets.filter(t => t.status === 'waiting').length;
+            if (technicalTasksCount) {
+                const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+                technicalTasksCount.textContent = tasks.length;
+            }
             renderTechnicalTasks();
         }
         function renderRecentTickets() {
-            const recent = tickets.slice(0, 3);
+            const recent = [...tickets]
+                .sort((a, b) => new Date(b.updated) - new Date(a.updated))
+                .slice(0, 5);
             recentTickets.innerHTML = recent.map(ticket => `
                 <div class="ticket-item" onclick="switchPage('tickets'); setTimeout(() => selectTicket(${ticket.id}), 100)">
                     <div class="ticket-header">
@@ -6901,14 +6879,17 @@
             // Сортируем по дате создания (новые сверху)
             const sortedTasks = [...tasks].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-            tasksList.innerHTML = sortedTasks.map(task => {
+            const topTasks = sortedTasks.slice(0, 5);
+
+            tasksList.innerHTML = topTasks.map((task, index) => {
+                const displayNumber = sortedTasks.length - index;
                 const ticket = tickets.find(t => t.id === task.ticketId);
                 const ticketSubject = ticket ? ticket.subject : 'Обращение не найдено';
                 return `
                     <div class="ticket-item" onclick="switchPage('tickets'); setTimeout(() => selectTicket(${task.ticketId}), 100)">
                         <div class="ticket-header">
                             <div class="ticket-subject">${task.theme}</div>
-                            <div class="priority-badge priority-low">ТЗ #${task.id}</div>
+                            <div class="priority-badge priority-low">ТЗ №${displayNumber}</div>
                         </div>
                         <p class="ticket-message">${task.description}</p>
                         <div class="ticket-footer">
@@ -9175,6 +9156,10 @@
         }
         // Notification functions
         function updateNotificationBadge() {
+            if (!notificationsEnabled()) {
+                notificationBadge.classList.add('hidden');
+                return;
+            }
             const unreadCount = notifications.filter(n => !n.read).length;
             if (unreadCount > 0) {
                 notificationBadge.textContent = unreadCount;
@@ -9246,23 +9231,92 @@
                 notificationToast.classList.add('hidden');
             }, 2000);
         }
+        // Notification preference handling
+        function loadNotificationPreference() {
+            const stored = localStorage.getItem('newTicketsNotificationsEnabled');
+            const enabled = stored === null ? true : stored === 'true';
+            if (newTicketsNotificationsToggle) {
+                newTicketsNotificationsToggle.checked = enabled;
+            }
+        }
+        function notificationsEnabled() {
+            return newTicketsNotificationsToggle ? newTicketsNotificationsToggle.checked : true;
+        }
+        function handleNotificationToggle() {
+            const enabled = !!newTicketsNotificationsToggle?.checked;
+            localStorage.setItem('newTicketsNotificationsEnabled', enabled);
+            updateNotificationBadge();
+        }
+        // Random data for autogenerated tickets
+        const randomUsers = [
+            { name: 'Илья Сафронов', email: 'ilya@example.com', avatar: '🧑‍💻' },
+            { name: 'Мария Кузнецова', email: 'maria@example.com', avatar: '👩‍💼' },
+            { name: 'Алексей Смирнов', email: 'alexey@example.com', avatar: '👨‍🔧' },
+            { name: 'Екатерина Орлова', email: 'kate@example.com', avatar: '👩‍💻' },
+            { name: 'Дмитрий Фёдоров', email: 'dmitry@example.com', avatar: '🧑‍🚀' }
+        ];
+        const randomSubjects = [
+            'Не приходит код подтверждения',
+            'Ошибки при загрузке отчёта',
+            'Система работает медленно',
+            'Не открывается карточка клиента',
+            'Проблемы с оплатой через карту',
+            'Не отправляются письма',
+            'Некорректные данные в аналитике',
+            'Не обновляется статус заявки'
+        ];
+        const randomMessages = [
+            'После авторизации вижу пустой экран, помогите разобраться.',
+            'При попытке оплатить подписку получаю ошибку 502.',
+            'Загрузка отчёта завершается сбоем, нужен анализ.',
+            'Вчера всё работало, сегодня не приходит уведомление.',
+            'Кнопка сохранить не активна, хотя поля заполнены.',
+            'В чате не отображаются новые сообщения от клиентов.',
+            'Графики на дашборде перестали обновляться.',
+            'Не получается сменить пароль, пишет неизвестную ошибку.'
+        ];
+        const randomStatuses = ['new', 'in-progress', 'waiting', 'resolved'];
+        const randomPriorities = ['low', 'medium', 'high'];
+        const randomChannels = ['email', 'telegram', 'vk'];
+        const randomCategories = [
+            'Технические проблемы',
+            'Интерфейс',
+            'Оплата',
+            'Интеграции',
+            'Уведомления'
+        ];
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+        function getRandomRecentDate() {
+            const minutesAgo = Math.floor(Math.random() * 180) + 1; // 1–180 мин назад
+            return new Date(Date.now() - minutesAgo * 60 * 1000);
+        }
         function checkForNewTickets() {
             // Simulate receiving new tickets
             if (Math.random() < 0.3) { // 30% chance
+                const user = getRandomItem(randomUsers);
+                const subject = getRandomItem(randomSubjects);
+                const message = getRandomItem(randomMessages);
+                const status = getRandomItem(randomStatuses);
+                const priority = getRandomItem(randomPriorities);
+                const channel = getRandomItem(randomChannels);
+                const category = getRandomItem(randomCategories);
+                const timestamp = getRandomRecentDate();
                 const newTicket = {
-                    id: Math.max(...tickets.map(t => t.id)) + 1,
-                    user: { name: 'Случайный пользователь', email: 'random@example.com', avatar: '👤' },
-                    subject: 'Новое автоматическое обращение',
-                    message: 'Это тестовое обращение, созданное автоматически',
-                    status: 'new',
-                    priority: 'medium',
-                    channel: 'email',
-                    category: 'Технические проблемы',
-                    created: new Date(),
-                    updated: new Date(),
+                    id: (tickets.length ? Math.max(...tickets.map(t => t.id)) : 0) + 1,
+                    user,
+                    subject,
+                    message,
+                    status,
+                    priority,
+                    channel,
+                    category,
+                    created: timestamp,
+                    updated: timestamp,
                     assignee: null,
                     messages: [
-                        { sender: 'user', text: 'Это тестовое обращение, созданное автоматически', time: new Date() }
+                        { sender: 'user', text: message, time: timestamp }
                     ]
                 };
        
