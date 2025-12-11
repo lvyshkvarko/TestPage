@@ -1504,6 +1504,39 @@
             overflow-x: auto;
             padding-bottom: 16px;
         }
+        .kanban-filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .kanban-filter-btn {
+            border: 1px solid var(--border-color);
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border-radius: var(--radius-lg);
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+        }
+        .kanban-filter-btn i {
+            color: var(--primary-color);
+        }
+        .kanban-filter-btn:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+            transform: translateY(-1px);
+        }
+        .kanban-filter-btn.active {
+            background: var(--primary-light);
+            border-color: var(--primary-color);
+            color: var(--primary-dark);
+        }
         @media (max-width: 768px) {
             .kanban-container {
                 flex-direction: column;
@@ -5090,6 +5123,16 @@
         <!-- Kanban Page -->
         <div id="kanbanPage" class="page-content hidden">
             <h1 class="page-title">Канбан-доска</h1>
+            <div class="kanban-filters">
+                <button class="kanban-filter-btn active" id="kanbanShowAll">
+                    <i class="fas fa-layer-group"></i>
+                    Показывать все обращения
+                </button>
+                <button class="kanban-filter-btn" id="kanbanShowTechnical">
+                    <i class="fas fa-tasks"></i>
+                    Показывать только технические задания
+                </button>
+            </div>
             <div class="kanban-container" id="kanbanContainer">
                 <!-- Kanban columns will be populated dynamically -->
             </div>
@@ -5170,23 +5213,10 @@
             <div class="analytics-grid">
                 <div class="analytics-card">
                     <h2 class="card-title">Статистика обращений</h2>
-                    <div class="stats-list">
-                        <div class="stat-row">
-                            <span class="stat-label">Всего обращений за месяц</span>
-                            <span class="stat-value">156</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Среднее время ответа</span>
-                            <span class="stat-value">15 минут</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Уровень удовлетворенности</span>
-                            <span class="stat-value">94%</span>
-                        </div>
-                        <div class="stat-row">
-                            <span class="stat-label">Первый ответ за</span>
-                            <span class="stat-value">8 минут</span>
-                        </div>
+                    <div class="stats-list" id="analyticsStatusStats"></div>
+                    <div class="stat-row">
+                        <span class="stat-label">Технические задания</span>
+                        <span class="stat-value" id="analyticsTechnicalTasks">0</span>
                     </div>
                 </div>
                 <div class="analytics-card">
@@ -6180,6 +6210,20 @@
             telegram: 'Telegram',
             vk: 'VK'
         };
+        // Selection helpers for editors
+        function saveEditorSelection() {
+            const selection = window.getSelection();
+            if (selection && selection.rangeCount > 0) {
+                editorSelection = selection.getRangeAt(0);
+            }
+        }
+        function restoreEditorSelection() {
+            if (editorSelection) {
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(editorSelection);
+            }
+        }
         // State
         let currentPage = 'dashboard';
         let sidebarOpen = true;
@@ -6204,6 +6248,8 @@
         let templateToDelete = null;
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
+        let showTechnicalTasksOnly = true;
+        let editorSelection = null;
         let prevWidth = window.innerWidth;
     
         // Новые переменные для управления передачей обращений
@@ -6238,6 +6284,8 @@
         const technicalTasksCount = document.getElementById('technicalTasksCount');
         const recentTickets = document.getElementById('recentTickets');
         const statusStats = document.getElementById('statusStats');
+        const analyticsStatusStats = document.getElementById('analyticsStatusStats');
+        const analyticsTechnicalTasks = document.getElementById('analyticsTechnicalTasks');
         // Tickets elements
         const ticketsList = document.getElementById('ticketsList');
         const chatViewContent = document.getElementById('chatViewContent');
@@ -6249,6 +6297,8 @@
         const filtersBtn = document.getElementById('filtersBtn');
         // Kanban elements
         const kanbanContainer = document.getElementById('kanbanContainer');
+        const kanbanShowAll = document.getElementById('kanbanShowAll');
+        const kanbanShowTechnical = document.getElementById('kanbanShowTechnical');
         // Users elements
         const usersGrid = document.getElementById('usersGrid');
         const userFilter = document.getElementById('userFilter');
@@ -6511,6 +6561,7 @@
             document.addEventListener('click', function(e) {
                 if (e.target.closest('.editor-btn')) {
                     const btn = e.target.closest('.editor-btn');
+                    if (btn.tagName === 'SELECT') return; // selects handled in change
                     const command = btn.dataset.command;
                     const value = btn.dataset.value || null;
            
@@ -6550,6 +6601,59 @@
                     }
                 }
             });
+
+            document.addEventListener('change', function(e) {
+                if (e.target.matches('select.editor-btn[data-command]')) {
+                    const select = e.target;
+                    const command = select.dataset.command;
+                    const value = select.value;
+
+                    let activeEditor = null;
+                    if (!newArticleModal.classList.contains('hidden')) {
+                        activeEditor = document.getElementById('newArticleContent');
+                    } else if (!articleViewerModal.classList.contains('hidden') && articleEditMode) {
+                        activeEditor = document.getElementById('editArticleContent');
+                    }
+
+                    if (activeEditor && command && value) {
+                        restoreEditorSelection();
+                        if (activeEditor.classList.contains('html-mode')) {
+                            showToast('Переключитесь в визуальный режим для форматирования', true);
+                            select.value = '';
+                            return;
+                        }
+
+                        activeEditor.focus();
+                        document.execCommand(command, false, value);
+                        updateEditorButtons(activeEditor);
+                        select.value = '';
+                    }
+                }
+            });
+
+            // Сохраняем выделение в редакторах, чтобы применять форматирование после выбора
+            const editorInputs = ['newArticleContent'];
+            editorInputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    ['keyup', 'mouseup', 'input', 'focus'].forEach(evt => {
+                        el.addEventListener(evt, saveEditorSelection);
+                    });
+                }
+            });
+
+            document.addEventListener('keyup', (e) => {
+                if (e.target.id === 'editArticleContent') saveEditorSelection();
+            });
+            document.addEventListener('mouseup', (e) => {
+                if (e.target.id === 'editArticleContent') saveEditorSelection();
+            });
+            document.addEventListener('input', (e) => {
+                if (e.target.id === 'editArticleContent') saveEditorSelection();
+            });
+            document.addEventListener('focus', (e) => {
+                if (e.target && e.target.id === 'editArticleContent') saveEditorSelection();
+            }, true);
         }
         // Функция для переключения HTML режима
         function toggleHTMLMode(editor, container, button) {
@@ -6640,6 +6744,16 @@
                 resetCreateUserForm();
                 showModal(createUserModal);
             });
+            if (kanbanShowAll && kanbanShowTechnical) {
+                kanbanShowAll.addEventListener('click', () => {
+                    showTechnicalTasksOnly = false;
+                    renderKanban();
+                });
+                kanbanShowTechnical.addEventListener('click', () => {
+                    showTechnicalTasksOnly = true;
+                    renderKanban();
+                });
+            }
             confirmAddUser.addEventListener('click', addNewUser);
             cancelAddUser.addEventListener('click', () => hideModal(addUserModal));
             confirmDeleteUser.addEventListener('click', deleteUser);
@@ -6906,6 +7020,32 @@
                     <span class="status-count">${count}</span>
                 </div>
             `).join('');
+    
+            renderAnalyticsStats(statusCounts);
+        }
+        function renderAnalyticsStats(statusCountsFromDashboard = null) {
+            if (!analyticsStatusStats && !analyticsTechnicalTasks) return;
+    
+            const statusCounts = statusCountsFromDashboard || {
+                new: tickets.filter(t => t.status === 'new').length,
+                'in-progress': tickets.filter(t => t.status === 'in-progress').length,
+                waiting: tickets.filter(t => t.status === 'waiting').length,
+                resolved: tickets.filter(t => t.status === 'resolved').length
+            };
+    
+            if (analyticsStatusStats) {
+                analyticsStatusStats.innerHTML = Object.entries(statusCounts).map(([status, count]) => `
+                    <div class="stat-row">
+                        <span class="stat-label">${statusLabels[status]}</span>
+                        <span class="stat-value">${count}</span>
+                    </div>
+                `).join('');
+            }
+    
+            if (analyticsTechnicalTasks) {
+                const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+                analyticsTechnicalTasks.textContent = tasks.length;
+            }
         }
         function renderTechnicalTasks() {
             const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
@@ -6943,6 +7083,8 @@
             if (tasks.length === 0) {
                 tasksList.innerHTML = '<p style="text-align: center; color: var(--text-medium);">Нет активных ТЗ</p>';
             }
+
+            renderAnalyticsStats();
         }
         // Tickets Functions
         function filterTickets() {
@@ -8122,8 +8264,17 @@
                 { status: 'resolved', title: 'Решено' }
             ];
             const tasks = JSON.parse(localStorage.getItem('smartSupportTechnicalTasks')) || [];
+            const ticketsToDisplay = showTechnicalTasksOnly
+                ? tickets.filter(t => tasks.some(task => task.ticketId === t.id))
+                : tickets;
+    
+            if (kanbanShowAll && kanbanShowTechnical) {
+                kanbanShowAll.classList.toggle('active', !showTechnicalTasksOnly);
+                kanbanShowTechnical.classList.toggle('active', showTechnicalTasksOnly);
+            }
+
             kanbanContainer.innerHTML = columns.map(column => {
-                const columnTickets = tickets.filter(t => t.status === column.status);
+                const columnTickets = ticketsToDisplay.filter(t => t.status === column.status);
                 return `
                     <div class="kanban-column" ondrop="dropTicket(event, '${column.status}')" ondragover="allowDrop(event)">
                         <div class="kanban-card">
@@ -9603,3 +9754,4 @@
     </script>
 </body>
 </html>
+
