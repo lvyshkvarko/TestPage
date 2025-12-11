@@ -1781,6 +1781,215 @@
             accent-color: var(--primary-color);
             transition: var(--transition);
         }
+        /* API Integrations */
+        .api-integrations {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .api-integration-item {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .api-integration-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow);
+        }
+        .api-integration-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .api-integration-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .api-integration-icon.telegram-icon {
+            background: linear-gradient(135deg, #0088cc 0%, #229ED9 100%);
+            box-shadow: 0 4px 12px rgba(0, 136, 204, 0.3);
+        }
+        .api-integration-icon.vk-icon {
+            background: linear-gradient(135deg, #0077FF 0%, #4680C2 100%);
+            box-shadow: 0 4px 12px rgba(0, 119, 255, 0.3);
+        }
+        .api-integration-icon.email-icon {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        .api-integration-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .api-integration-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .api-integration-desc {
+            font-size: 13px;
+            color: var(--text-medium);
+            margin: 0;
+        }
+        .api-status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        .api-status-badge.connected {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+        .api-status-badge.disconnected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .api-status-badge.connected .status-dot {
+            background: var(--primary-color);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+        .api-status-badge.disconnected .status-dot {
+            background: #dc2626;
+            box-shadow: 0 0 0 2px #fee2e2;
+        }
+        .api-integration-body {
+            margin-top: 16px;
+        }
+        .api-field-group {
+            margin-bottom: 20px;
+        }
+        .api-field-group:last-child {
+            margin-bottom: 0;
+        }
+        .api-field-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        .api-field-label i {
+            color: var(--primary-color);
+            font-size: 12px;
+        }
+        .api-input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+        }
+        .api-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 14px;
+            color: var(--text-dark);
+            background: var(--bg-white);
+            transition: var(--transition);
+        }
+        .api-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        .api-input:disabled {
+            background: #f3f4f6;
+            color: var(--text-medium);
+            cursor: not-allowed;
+        }
+        .api-action-btn {
+            padding: 12px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .api-action-btn:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+        .api-action-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        .api-action-btn:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .api-action-btn i {
+            font-size: 12px;
+        }
+        .api-hint {
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.5;
+        }
+        .api-hint i {
+            color: var(--secondary-color);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .api-hint a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .api-hint a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .api-integration-header {
+                flex-wrap: wrap;
+            }
+            .api-status-badge {
+                width: 100%;
+                justify-content: center;
+            }
+            .api-input-wrapper {
+                flex-direction: column;
+            }
+            .api-action-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
         /* Toast notifications */
         .toast {
             position: fixed;
@@ -4678,8 +4887,8 @@
                 <div class="profile-info">
                     <div class="profile-avatar">👩‍💻</div>
                     <div class="profile-details">
-                        <div class="profile-name">Вышкварко Лев</div>
-                        <div class="profile-role">Руководитель отдела</div>
+                        <div class="profile-name">Анна Волкова</div>
+                        <div class="profile-role">Оператор 1-й линии</div>
                     </div>
                 </div>
             </div>
@@ -5062,6 +5271,152 @@
                             <input type="checkbox" class="checkbox-input" checked>
                             <span>Уведомления о новых обращениях</span>
                         </label>
+                    </div>
+                </div>
+                <div class="settings-card">
+                    <h2 class="card-title">
+                        <i class="fas fa-plug"></i>
+                        Интеграции API
+                    </h2>
+                    <div class="api-integrations">
+                        <div class="api-integration-item">
+                            <div class="api-integration-header">
+                                <div class="api-integration-icon telegram-icon">
+                                    <i class="fab fa-telegram-plane"></i>
+                                </div>
+                                <div class="api-integration-info">
+                                    <h3 class="api-integration-name">Telegram Bot API</h3>
+                                    <p class="api-integration-desc">Подключение бота для обработки сообщений</p>
+                                </div>
+                                <div class="api-status-badge disconnected">
+                                    <span class="status-dot"></span>
+                                    <span>Не подключено</span>
+                                </div>
+                            </div>
+                            <div class="api-integration-body">
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-key"></i>
+                                        API Token
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="password" class="api-input" placeholder="Введите токен бота" disabled>
+                                        <button class="api-action-btn" type="button" disabled>
+                                            <i class="fas fa-link"></i>
+                                            Подключить
+                                        </button>
+                                    </div>
+                                    <p class="api-hint">
+                                        <i class="fas fa-info-circle"></i>
+                                        Получите токен у <a href="https://t.me/BotFather" target="_blank">@BotFather</a> в Telegram
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="api-integration-item">
+                            <div class="api-integration-header">
+                                <div class="api-integration-icon vk-icon">
+                                    <i class="fab fa-vk"></i>
+                                </div>
+                                <div class="api-integration-info">
+                                    <h3 class="api-integration-name">VK API</h3>
+                                    <p class="api-integration-desc">Интеграция с сообществами ВКонтакте</p>
+                                </div>
+                                <div class="api-status-badge disconnected">
+                                    <span class="status-dot"></span>
+                                    <span>Не подключено</span>
+                                </div>
+                            </div>
+                            <div class="api-integration-body">
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-key"></i>
+                                        Access Token
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="password" class="api-input" placeholder="Введите токен доступа" disabled>
+                                        <button class="api-action-btn" type="button" disabled>
+                                            <i class="fas fa-link"></i>
+                                            Подключить
+                                        </button>
+                                    </div>
+                                    <p class="api-hint">
+                                        <i class="fas fa-info-circle"></i>
+                                        Создайте приложение в <a href="https://vk.com/apps?act=manage" target="_blank">настройках VK</a>
+                                    </p>
+                                </div>
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-hashtag"></i>
+                                        ID сообщества
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="text" class="api-input" placeholder="Введите ID сообщества" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="api-integration-item">
+                            <div class="api-integration-header">
+                                <div class="api-integration-icon email-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="api-integration-info">
+                                    <h3 class="api-integration-name">Email (SMTP)</h3>
+                                    <p class="api-integration-desc">Настройка почтового сервера для отправки и получения писем</p>
+                                </div>
+                                <div class="api-status-badge disconnected">
+                                    <span class="status-dot"></span>
+                                    <span>Не подключено</span>
+                                </div>
+                            </div>
+                            <div class="api-integration-body">
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-server"></i>
+                                        SMTP сервер
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="text" class="api-input" placeholder="smtp.example.com" disabled>
+                                    </div>
+                                </div>
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-network-wired"></i>
+                                        Порт
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="number" class="api-input" placeholder="587" disabled>
+                                    </div>
+                                </div>
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-user"></i>
+                                        Email адрес
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="email" class="api-input" placeholder="support@example.com" disabled>
+                                    </div>
+                                </div>
+                                <div class="api-field-group">
+                                    <label class="api-field-label">
+                                        <i class="fas fa-key"></i>
+                                        Пароль
+                                    </label>
+                                    <div class="api-input-wrapper">
+                                        <input type="password" class="api-input" placeholder="Введите пароль" disabled>
+                                        <button class="api-action-btn" type="button" disabled>
+                                            <i class="fas fa-link"></i>
+                                            Подключить
+                                        </button>
+                                    </div>
+                                    <p class="api-hint">
+                                        <i class="fas fa-info-circle"></i>
+                                        Используйте пароль приложения для безопасного подключения
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -9059,3 +9414,4 @@
     </script>
 </body>
 </html>
+
