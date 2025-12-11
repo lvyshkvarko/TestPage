@@ -338,6 +338,77 @@
             opacity: 0;
             width: 0;
         }
+        /* Auth */
+        .auth-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(145deg, rgba(6, 95, 70, 0.35), rgba(16, 185, 129, 0.45));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+        .auth-card {
+            background: #fff;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+            width: min(420px, 90vw);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .auth-title {
+            margin: 0;
+            font-size: 20px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .auth-subtitle {
+            margin: 0;
+            color: var(--text-medium);
+            font-size: 14px;
+        }
+        .auth-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .auth-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--text-medium);
+            cursor: pointer;
+        }
+        .auth-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .auth-warning {
+            color: #b91c1c;
+            font-size: 13px;
+            display: none;
+        }
         /* Header */
         .header {
             position: fixed;
@@ -4977,6 +5048,31 @@
             </div>
         </div>
     </div>
+    <!-- Auth Overlay -->
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-card">
+            <div>
+                <h2 class="auth-title"><i class="fas fa-shield-alt"></i> Вход для сотрудников</h2>
+                <p class="auth-subtitle">Введите корпоративный логин и пароль</p>
+            </div>
+            <div>
+                <label class="form-label">Логин</label>
+                <input type="text" class="auth-input" id="authLogin" autocomplete="username" placeholder="login@example" />
+            </div>
+            <div>
+                <label class="form-label">Пароль</label>
+                <div class="password-wrapper">
+                    <input type="password" class="auth-input" id="authPassword" autocomplete="current-password" placeholder="********" />
+                    <button class="toggle-password" type="button" id="togglePassword"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="auth-warning" id="authWarning">Неверный логин или пароль</div>
+            <div class="auth-actions">
+                <button class="btn-primary" id="authSubmit">Войти</button>
+                <button class="btn-cancel" type="button" id="authFillDemo">Заполнить демо-данные</button>
+            </div>
+        </div>
+    </div>
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
         <!-- Dashboard Page -->
@@ -5303,7 +5399,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="settings-card">
+                <div class="settings-card" id="apiSettingsCard">
                     <h2 class="card-title">
                         <i class="fas fa-plug"></i>
                         Интеграции API
@@ -6170,6 +6266,20 @@
             { id: 2, title: 'Прощание', content: 'Спасибо за обращение! Хорошего дня!' },
             { id: 3, title: 'Техническая проблема', content: 'Пожалуйста, опишите проблему подробнее.' }
         ];
+        const employees = [
+            { login: 'dev.lev', password: 'LevDev#902', role: 'developer', name: 'Вышкварко Лев', position: 'Разработчик', avatar: '👨‍💻' },
+            { login: 'admin.lev', password: 'LevAdmin#842', role: 'admin', name: 'Вышкварко Лев', position: 'Администратор', avatar: '🛡️' },
+            { login: 'manager.lev', password: 'LevLead#713', role: 'manager', name: 'Вышкварко Лев', position: 'Руководитель отдела', avatar: '👔' },
+            { login: 'op2.lev', password: 'LevOp2#664', role: 'operator2', name: 'Вышкварко Лев', position: 'Оператор 2-й линии', avatar: '☎️' },
+            { login: 'op1.lev', password: 'LevOp1#558', role: 'operator1', name: 'Вышкварко Лев', position: 'Оператор 1-й линии', avatar: '🎧' }
+        ];
+        const rolePermissions = {
+            developer: { canEditKnowledge: true, canEditTemplates: true, canAccessUsers: true, canAccessKanban: true, showApi: true },
+            admin: { canEditKnowledge: true, canEditTemplates: true, canAccessUsers: true, canAccessKanban: true, showApi: true },
+            manager: { canEditKnowledge: true, canEditTemplates: true, canAccessUsers: true, canAccessKanban: true, showApi: true },
+            operator2: { canEditKnowledge: false, canEditTemplates: true, canAccessUsers: false, canAccessKanban: true, showApi: false },
+            operator1: { canEditKnowledge: false, canEditTemplates: false, canAccessUsers: false, canAccessKanban: false, showApi: false }
+        };
         const roleLabels = {
             operator1: 'Оператор 1-й линии',
             operator2: 'Оператор 2-й линии',
@@ -6249,8 +6359,93 @@
         let templateEditMode = false;
         let selectedArticleIcon = '📝';
         let showTechnicalTasksOnly = true;
+        let currentUser = null;
+        let currentPermissions = rolePermissions.operator1;
         let editorSelection = null;
         let prevWidth = window.innerWidth;
+    
+        // Security helpers
+        function sanitizeInput(value) {
+            if (!value) return '';
+            return value.replace(/[<>\"'`;]/g, '').trim();
+        }
+        function updateProfileCard(user) {
+            if (profileName) profileName.textContent = user?.name || 'Сотрудник';
+            if (profileRole) profileRole.textContent = user?.position || roleLabels[user?.role] || 'Доступ ограничен';
+            if (profileAvatar) profileAvatar.textContent = user?.avatar || '👤';
+        }
+        function applyPermissionsUI() {
+            const perms = currentPermissions || rolePermissions.operator1;
+            const usersNav = document.querySelector('.nav-item[data-page="users"]');
+            const kanbanNav = document.querySelector('.nav-item[data-page="kanban"]');
+            const apiCard = document.getElementById('apiSettingsCard');
+
+            if (usersNav) usersNav.style.display = perms.canAccessUsers ? '' : 'none';
+            if (kanbanNav) kanbanNav.style.display = perms.canAccessKanban ? '' : 'none';
+            if (apiCard) apiCard.style.display = perms.showApi ? '' : 'none';
+
+            if (newArticleBtn) newArticleBtn.style.display = perms.canEditKnowledge ? '' : 'none';
+            if (newTemplateBtn) newTemplateBtn.style.display = perms.canEditTemplates ? '' : 'none';
+        }
+        function canAccessPage(page) {
+            const perms = currentPermissions || rolePermissions.operator1;
+            if (page === 'users' && !perms.canAccessUsers) return false;
+            if (page === 'kanban' && !perms.canAccessKanban) return false;
+            return true;
+        }
+        function showAuthModal() {
+            if (authOverlay) authOverlay.classList.remove('hidden');
+        }
+        function hideAuthModal() {
+            if (authOverlay) authOverlay.classList.add('hidden');
+        }
+        function handleLogin() {
+            const login = sanitizeInput(authLogin?.value);
+            const password = authPassword?.value || '';
+
+            if (!login || !password) {
+                if (authWarning) {
+                    authWarning.textContent = 'Введите логин и пароль';
+                    authWarning.style.display = 'block';
+                }
+                return;
+            }
+
+            const employee = employees.find(u => u.login === login && u.password === password);
+            if (!employee) {
+                if (authWarning) {
+                    authWarning.textContent = 'Неверный логин или пароль';
+                    authWarning.style.display = 'block';
+                }
+                return;
+            }
+
+            if (authWarning) authWarning.style.display = 'none';
+            currentUser = employee;
+            currentPermissions = rolePermissions[employee.role] || rolePermissions.operator1;
+
+            updateProfileCard(employee);
+            applyPermissionsUI();
+            hideAuthModal();
+            renderArticles();
+            renderTemplates();
+            renderKanban();
+            showToast(`Добро пожаловать, ${employee.name}`);
+            switchPage('dashboard');
+        }
+        function togglePasswordVisibility() {
+            if (!authPassword) return;
+            const isHidden = authPassword.type === 'password';
+            authPassword.type = isHidden ? 'text' : 'password';
+            if (togglePasswordBtn) {
+                togglePasswordBtn.innerHTML = isHidden ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+            }
+        }
+        function fillDemoCredentials() {
+            if (authLogin) authLogin.value = 'dev.lev';
+            if (authPassword) authPassword.value = 'LevDev#902';
+            if (authWarning) authWarning.style.display = 'none';
+        }
     
         // Новые переменные для управления передачей обращений
         let selectedTransferOption = null;
@@ -6277,6 +6472,9 @@
         const overlay = document.getElementById('overlay');
         const notificationToast = document.getElementById('notificationToast');
         const notificationToastMessage = document.getElementById('notificationToastMessage');
+        const profileName = document.querySelector('.profile-name');
+        const profileRole = document.querySelector('.profile-role');
+        const profileAvatar = document.querySelector('.profile-avatar');
         // Dashboard elements
         const totalTickets = document.getElementById('totalTickets');
         const resolvedTickets = document.getElementById('resolvedTickets');
@@ -6344,6 +6542,14 @@
         const cancelDeleteTemplate = document.getElementById('cancelDeleteTemplate');
         const templatesSelectionModal = document.getElementById('templatesSelectionModal');
         const templateList = document.getElementById('templateList');
+        // Auth elements
+        const authOverlay = document.getElementById('authOverlay');
+        const authLogin = document.getElementById('authLogin');
+        const authPassword = document.getElementById('authPassword');
+        const authWarning = document.getElementById('authWarning');
+        const authSubmit = document.getElementById('authSubmit');
+        const authFillDemo = document.getElementById('authFillDemo');
+        const togglePasswordBtn = document.getElementById('togglePassword');
         // Modal elements
         const addUserModal = document.getElementById('addUserModal');
         const deleteUserModal = document.getElementById('deleteUserModal');
@@ -6379,6 +6585,8 @@
     
         // Initialize
         function init() {
+            updateProfileCard({ name: 'Гость', position: 'Авторизация требуется', avatar: '🔒' });
+            applyPermissionsUI();
             updateDashboardStats();
             renderRecentTickets();
             renderStatusStats();
@@ -6406,6 +6614,9 @@
 
             // Setup editor toolbar
             setupEditorToolbar();
+
+            // Show auth overlay
+            showAuthModal();
 
             // Setup article icon selection
             setupArticleIconSelection();
@@ -6744,6 +6955,37 @@
                 resetCreateUserForm();
                 showModal(createUserModal);
             });
+            if (authSubmit) authSubmit.addEventListener('click', handleLogin);
+            if (authFillDemo) authFillDemo.addEventListener('click', fillDemoCredentials);
+            if (togglePasswordBtn) togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+            if (authPassword) {
+                authPassword.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') handleLogin();
+                });
+            }
+            if (authLogin) {
+                authLogin.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') handleLogin();
+                });
+            }
+            if (newArticleBtn) {
+                newArticleBtn.addEventListener('click', () => {
+                    if (!currentPermissions?.canEditKnowledge) {
+                        showToast('Недостаточно прав для редактирования базы знаний', true);
+                        return;
+                    }
+                    showNewArticleModal();
+                });
+            }
+            if (newTemplateBtn) {
+                newTemplateBtn.addEventListener('click', () => {
+                    if (!currentPermissions?.canEditTemplates) {
+                        showToast('Недостаточно прав для редактирования шаблонов', true);
+                        return;
+                    }
+                    showNewTemplateModal();
+                });
+            }
             if (kanbanShowAll && kanbanShowTechnical) {
                 kanbanShowAll.addEventListener('click', () => {
                     showTechnicalTasksOnly = false;
@@ -6924,6 +7166,15 @@
         }
         // Page Navigation
         function switchPage(page) {
+            if (!currentUser) {
+                showToast('Авторизуйтесь для доступа', true);
+                showAuthModal();
+                return;
+            }
+            if (!canAccessPage(page)) {
+                showToast('Недостаточно прав для раздела', true);
+                return;
+            }
             currentPage = page;
    
             // Update active active nav item
@@ -8891,6 +9142,10 @@
             }
         });
 
+        document.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+
         // Knowledge Base Functions
         function filterArticles() {
             const search = searchArticles.value.toLowerCase();
@@ -8901,11 +9156,12 @@
             renderArticles();
         }
         function renderArticles() {
+            const canEdit = currentPermissions?.canEditKnowledge;
             articlesGrid.innerHTML = filteredArticles.map(article => `
                 <div class="article-card" onclick="openArticle(${article.id})">
                     <div class="article-title"><span class="article-icon">${article.icon}</span> ${article.title}</div>
                     <div class="article-excerpt">${stripHtml(article.content).substring(0, 150)}...</div>
-                    <div class="action-buttons">
+                    <div class="action-buttons" style="${canEdit ? '' : 'display:none;'}">
                         <button class="btn btn-edit" onclick="editArticle(${article.id}); event.stopPropagation();">
                             <i class="fas fa-edit"></i> Редактировать
                         </button>
@@ -8944,6 +9200,10 @@
             }, 100);
         }
         function createNewArticle() {
+            if (!currentPermissions?.canEditKnowledge) {
+                showToast('Недостаточно прав для создания статьи', true);
+                return;
+            }
             const title = newArticleTitle.value.trim();
             const content = newArticleContent.innerHTML.trim();
             if (title && content) {
@@ -8978,6 +9238,10 @@
             showModal(articleViewerModal);
         }
         function editArticle(articleId) {
+            if (!currentPermissions?.canEditKnowledge) {
+                showToast('Недостаточно прав для редактирования базы знаний', true);
+                return;
+            }
             currentArticle = articles.find(a => a.id === articleId);
             articleEditMode = true;
             renderArticleViewer();
@@ -9088,17 +9352,25 @@
                 articleViewerContent.innerHTML = `
                     <div class="article-content">${currentArticle.content}</div>
                 `;
-                articleViewerActions.innerHTML = `
-                    <button class="btn btn-edit" onclick="toggleArticleEditMode()">
-                        <i class="fas fa-edit"></i> Редактировать
-                    </button>
-                    <button class="btn btn-delete" onclick="showDeleteArticleModal()">
-                        <i class="fas fa-trash"></i> Удалить
-                    </button>
-                `;
+                if (currentPermissions?.canEditKnowledge) {
+                    articleViewerActions.innerHTML = `
+                        <button class="btn btn-edit" onclick="toggleArticleEditMode()">
+                            <i class="fas fa-edit"></i> Редактировать
+                        </button>
+                        <button class="btn btn-delete" onclick="showDeleteArticleModal()">
+                            <i class="fas fa-trash"></i> Удалить
+                        </button>
+                    `;
+                } else {
+                    articleViewerActions.innerHTML = '';
+                }
             }
         }
         function showDeleteArticleModal(articleId) {
+            if (!currentPermissions?.canEditKnowledge) {
+                showToast('Недостаточно прав для удаления статьи', true);
+                return;
+            }
             if (articleId) {
                 currentArticle = articles.find(a => a.id === articleId);
             }
@@ -9112,6 +9384,10 @@
             renderArticleViewer();
         }
         function saveArticleChanges() {
+            if (!currentPermissions?.canEditKnowledge) {
+                showToast('Недостаточно прав для сохранения статьи', true);
+                return;
+            }
             const editTitle = document.getElementById('editArticleTitle');
             const editContent = document.getElementById('editArticleContent');
             if (editTitle && editContent && currentArticle) {
@@ -9127,6 +9403,10 @@
             }
         }
         function deleteArticle() {
+            if (!currentPermissions?.canEditKnowledge) {
+                showToast('Недостаточно прав для удаления статьи', true);
+                return;
+            }
             if (currentArticle) {
                 const index = articles.findIndex(a => a.id === currentArticle.id);
                 if (index !== -1) {
@@ -9150,11 +9430,12 @@
             renderTemplates();
         }
         function renderTemplates() {
+            const canEdit = currentPermissions?.canEditTemplates;
             templatesGrid.innerHTML = filteredTemplates.map(template => `
                 <div class="template-card" onclick="openTemplate(${template.id})">
                     <div class="template-title"><i class="fas fa-file-lines"></i> ${template.title}</div>
                     <div class="template-content">${template.content}</div>
-                    <div class="action-buttons">
+                    <div class="action-buttons" style="${canEdit ? '' : 'display:none;'}">
                         <button class="btn btn-edit" onclick="editTemplate(${template.id}); event.stopPropagation();">
                             <i class="fas fa-edit"></i> Редактировать
                         </button>
@@ -9166,11 +9447,19 @@
             `).join('');
         }
         function showNewTemplateModal() {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для создания шаблонов', true);
+                return;
+            }
             newTemplateTitle.value = '';
             newTemplateContent.value = '';
             showModal(newTemplateModal);
         }
         function createNewTemplate() {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для создания шаблонов', true);
+                return;
+            }
             const title = newTemplateTitle.value.trim();
             const content = newTemplateContent.value.trim();
             if (title && content) {
@@ -9196,6 +9485,10 @@
             showModal(editTemplateModal);
         }
         function editTemplate(templateId) {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для редактирования шаблонов', true);
+                return;
+            }
             currentTemplate = templates.find(t => t.id === templateId);
             templateEditMode = true;
             renderTemplateViewer();
@@ -9214,6 +9507,10 @@
             }
         }
         function saveTemplateChanges() {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для редактирования шаблонов', true);
+                return;
+            }
             if (!templateEditMode) {
                 templateEditMode = true;
                 renderTemplateViewer();
@@ -9233,6 +9530,10 @@
             }
         }
         function showDeleteTemplateModal(templateId) {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для удаления шаблонов', true);
+                return;
+            }
             if (templateId) {
                 currentTemplate = templates.find(t => t.id === templateId);
             }
@@ -9240,6 +9541,10 @@
             showModal(deleteTemplateModal);
         }
         function deleteTemplate() {
+            if (!currentPermissions?.canEditTemplates) {
+                showToast('Недостаточно прав для удаления шаблонов', true);
+                return;
+            }
             const index = templates.findIndex(t => t.id === currentTemplate.id);
             if (index !== -1) {
                 templates.splice(index, 1);
