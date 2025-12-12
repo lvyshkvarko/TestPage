@@ -5057,7 +5057,7 @@
             </div>
             <div>
                 <label class="form-label">Логин</label>
-                <input type="text" class="auth-input" id="authLogin" autocomplete="username" placeholder="login@example" />
+                <input type="text" class="auth-input" id="authLogin" autocomplete="username" placeholder="Введите Ваш логин" />
             </div>
             <div>
                 <label class="form-label">Пароль</label>
@@ -6267,11 +6267,11 @@
             { id: 3, title: 'Техническая проблема', content: 'Пожалуйста, опишите проблему подробнее.' }
         ];
         const employees = [
-            { login: 'dev.lev', password: 'LevDev#902', role: 'developer', name: 'Вышкварко Лев', position: 'Разработчик', avatar: '👨‍💻' },
-            { login: 'admin.lev', password: 'LevAdmin#842', role: 'admin', name: 'Вышкварко Лев', position: 'Администратор', avatar: '🛡️' },
-            { login: 'manager.lev', password: 'LevLead#713', role: 'manager', name: 'Вышкварко Лев', position: 'Руководитель отдела', avatar: '👔' },
-            { login: 'op2.lev', password: 'LevOp2#664', role: 'operator2', name: 'Вышкварко Лев', position: 'Оператор 2-й линии', avatar: '☎️' },
-            { login: 'op1.lev', password: 'LevOp1#558', role: 'operator1', name: 'Вышкварко Лев', position: 'Оператор 1-й линии', avatar: '🎧' }
+            { login: 'dev', password: 'K9u!3Zp#Q4x@', role: 'developer', name: 'Вышкварко Лев', position: 'Разработчик', avatar: '👨‍💻' },
+            { login: 'admin', password: 'S7%vL2@qN8!b', role: 'admin', name: 'Вышкварко Лев', position: 'Администратор', avatar: '🛡️' },
+            { login: 'manager', password: 'P4$kT1z&Xe9!', role: 'manager', name: 'Вышкварко Лев', position: 'Руководитель отдела', avatar: '👔' },
+            { login: 'op2', password: 'R8!mQ5#dWt2^', role: 'operator2', name: 'Вышкварко Лев', position: 'Оператор 2-й линии', avatar: '☎️' },
+            { login: 'op1', password: 'Y3^bH7@pLc6!', role: 'operator1', name: 'Вышкварко Лев', position: 'Оператор 1-й линии', avatar: '🎧' }
         ];
         const rolePermissions = {
             developer: { canEditKnowledge: true, canEditTemplates: true, canAccessUsers: true, canAccessKanban: true, showApi: true },
@@ -6442,8 +6442,8 @@
             }
         }
         function fillDemoCredentials() {
-            if (authLogin) authLogin.value = 'dev.lev';
-            if (authPassword) authPassword.value = 'LevDev#902';
+            if (authLogin) authLogin.value = 'dev';
+            if (authPassword) authPassword.value = 'K9u!3Zp#Q4x@';
             if (authWarning) authWarning.style.display = 'none';
         }
     
@@ -7448,9 +7448,9 @@
                 let nameHeader = '';
                 if (message.sender === 'agent') {
                     if (previousSender !== 'agent' || (previousAgentName !== message.agentName)) {
-                        nameHeader = `<div class="agent-name">${message.agentName || 'Анна Волкова (Оператор 1-й линии)'}</div>`;
+                        nameHeader = `<div class="agent-name">${message.agentName || (currentUser ? `${currentUser.name} (${roleLabels[currentUser.role] || currentUser.role})` : 'Сотрудник')}</div>`;
                     }
-                    previousAgentName = message.agentName || 'Анна Волкова (Оператор 1-й линии)';
+                    previousAgentName = message.agentName || (currentUser ? `${currentUser.name} (${roleLabels[currentUser.role] || currentUser.role})` : 'Сотрудник');
                 }
               
                 messagesHtml += `
@@ -8418,7 +8418,7 @@
             if (!chatInput || !chatInput.value.trim() || !currentTicket) return;
             const newMessage = {
                 sender: 'agent',
-                agentName: 'Анна Волкова (Оператор 1-й линии)',
+                agentName: (currentUser ? `${currentUser.name} (${roleLabels[currentUser.role] || currentUser.role})` : 'Сотрудник'),
                 text: chatInput.value,
                 time: new Date()
             };
